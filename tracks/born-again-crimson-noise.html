@@ -4,77 +4,50 @@
   <meta charset="utf-8">
   <title>Born Again</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Minimal OG for previews (kosmetisk, ikke kritisk) -->
-  <meta property="og:title" content="Born Again">
-  <meta property="og:type" content="music.song">
-  <meta property="og:url" content="">
 </head>
 
 <body style="font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
-  <noscript>
-    <p>
-      <a href="https://open.spotify.com/track/1zqSLn6IuAaDGCSZGcZFj2">
-        Play on Spotify
-      </a>
-    </p>
-  </noscript>
 
   <p id="status">Opening Spotify…</p>
 
   <p>
-    <button id="btn"
-      style="font-size:18px;padding:14px 22px;cursor:pointer;">
+    <a id="play"
+       href="https://open.spotify.com/track/1zqSLn6IuAaDGCSZGcZFj2"
+       target="_blank"
+       style="font-size:18px;padding:14px 22px;display:inline-block;">
       Play on Spotify
-    </button>
+    </a>
   </p>
 
 <script>
 (function () {
   var TRACK_ID = "1zqSLn6IuAaDGCSZGcZFj2";
-  var APP_URI  = "spotify:track:" + TRACK_ID;
-  var WEB_URL  = "https://open.spotify.com/track/" + TRACK_ID;
+  var APP_URI = "spotify:track:" + TRACK_ID;
+  var WEB_URL = "https://open.spotify.com/track/" + TRACK_ID;
 
   var statusEl = document.getElementById("status");
-  var btn = document.getElementById("btn");
 
-  // Detect in-app browsers that block auto app-handoff
-  function isInAppBrowser() {
+  function isMessengerLike() {
     var ua = navigator.userAgent || "";
     return /FBAN|FBAV|Instagram|Messenger/i.test(ua);
   }
 
-  // Attempt app first, then web fallback
-  function openSpotify(auto) {
+  // Only attempt app-handoff where it is actually allowed
+  if (!isMessengerLike()) {
     try {
       window.location.href = APP_URI;
-    } catch (e) {}
-
-    // Fallback after a safe delay (handles iOS LPM / throttling)
-    setTimeout(function () {
+      setTimeout(function () {
+        window.location.href = WEB_URL;
+      }, 600);
+    } catch (e) {
       window.location.href = WEB_URL;
-    }, 600);
-
-    if (auto) {
-      statusEl.textContent = "If nothing happens, tap the button below.";
     }
-  }
-
-  // Button always works everywhere
-  btn.addEventListener("click", function () {
-    openSpotify(false);
-  });
-
-  // Auto attempt ONLY where allowed/reliable
-  if (!isInAppBrowser()) {
-    // Defer slightly to avoid aggressive blockers
-    setTimeout(function () {
-      openSpotify(true);
-    }, 100);
   } else {
-    statusEl.textContent = "Tap the button to open Spotify.";
+    // Messenger: web only, no app URI
+    statusEl.textContent = "Tap to open in Spotify.";
   }
 })();
 </script>
+
 </body>
 </html>
