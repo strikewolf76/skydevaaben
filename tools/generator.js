@@ -255,8 +255,6 @@
       repoBase: els.repoBase.value,
       siteName: els.siteName.value,
       title: els.title.value,
-      trackSlug: els.trackSlug.value,
-      utmCampaign: els.utmCampaign.value,
       destSpotify: els.destSpotify.checked,
       spotifyUrl: els.spotifyUrl.value,
       destApple: els.destApple.checked,
@@ -295,8 +293,6 @@
       assign(els.repoBase, s.repoBase);
       assign(els.siteName, s.siteName);
       assign(els.title, s.title);
-      assign(els.trackSlug, s.trackSlug);
-      assign(els.utmCampaign, s.utmCampaign);
       assign(els.destSpotify, s.destSpotify, true);
       assign(els.spotifyUrl, s.spotifyUrl);
       assign(els.destApple, s.destApple, true);
