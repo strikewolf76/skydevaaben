@@ -2,9 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Born Again (Meta Ads story01)</title>
+  <title>Born Again (Crimson Noise Remix)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Open Graph (Steg 3) -->
+  <meta property="og:type" content="music.song">
+  <meta property="og:site_name" content="Skydevaaben">
+  <meta property="og:title" content="Born Again (Crimson Noise Remix)">
+  <meta property="og:description" content="Tap to open in Spotify.">
   <meta property="og:url" content="https://strikewolf76.github.io/skydevaaben/tracks/born-again-crimson-noise__meta-ads__story01.html">
+  <meta property="og:image" content="https://strikewolf76.github.io/skydevaaben/assets/og/born-again-crimson-noise.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter fallback -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Born Again (Crimson Noise Remix)">
+  <meta name="twitter:description" content="Tap to open in Spotify.">
+  <meta name="twitter:image" content="https://strikewolf76.github.io/skydevaaben/assets/og/born-again-crimson-noise.jpg">
 </head>
 
 <body style="font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
@@ -13,8 +28,7 @@
 
   <p>
     <a id="play"
-       href="https://open.spotify.com/track/1zqSLn6IuAaDGCSZGcZFj2?utm_source=facebook&utm_medium=paid_social&utm_campaign=born-again-crimson-noise&utm_content=meta-story01"
-       target="_blank"
+       href="https://open.spotify.com/track/1zqSLn6IuAaDGCSZGcZFj2"
        style="font-size:18px;padding:14px 22px;display:inline-block;">
       Play on Spotify
     </a>
@@ -25,7 +39,7 @@
   var TRACK_ID = "1zqSLn6IuAaDGCSZGcZFj2";
   var APP_URI = "spotify:track:" + TRACK_ID;
 
-  // Step 2: baked-in UTMs (Valg A)
+  // Steg 2: baked-in UTMs (Valg A) for Meta Ads story01
   var WEB_URL =
     "https://open.spotify.com/track/" + TRACK_ID +
     "?utm_source=facebook" +
@@ -36,16 +50,26 @@
   var statusEl = document.getElementById("status");
   var playEl = document.getElementById("play");
 
-  function isMessengerLike() {
+  function isMetaInApp() {
     var ua = navigator.userAgent || "";
-    return /FBAN|FBAV|Instagram|Messenger/i.test(ua);
+    return /FBAN|FBAV|FB_IAB|FBIOS|FB4A|Instagram|Messenger/i.test(ua);
   }
 
-  // Ensure button always matches WEB_URL (single source of truth)
+  // Single source of truth for button
   playEl.href = WEB_URL;
 
-  // Only attempt app-handoff where it is actually allowed
-  if (!isMessengerLike()) {
+  if (isMetaInApp()) {
+    // iPhone Messenger/IG/FB in-app: avoid target=_blank
+    playEl.removeAttribute("target");
+    statusEl.textContent = "Opening Spotify…";
+
+    // Web-only redirect (no spotify: in this context)
+    setTimeout(function () {
+      window.location.href = WEB_URL;
+    }, 150);
+
+  } else {
+    // Normal browsers: attempt app handoff then web fallback
     try {
       window.location.href = APP_URI;
       setTimeout(function () {
@@ -54,9 +78,6 @@
     } catch (e) {
       window.location.href = WEB_URL;
     }
-  } else {
-    // Messenger/IG/FB in-app: web only, no app URI
-    statusEl.textContent = "Tap to open in Spotify.";
   }
 })();
 </script>
