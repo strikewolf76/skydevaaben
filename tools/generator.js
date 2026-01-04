@@ -683,23 +683,40 @@ ${normalBrowserLogic}
 
     addLogItem({ title: "Generating QR codes…", status: "RUNNING", lines: [`${batch.items.length} URLs` ] });
 
+    const lines = [];
+
+    const useApiFallback = async () => {
+      for (const it of batch.items) {
+        try {
+          const apiUrl = `https://quickchart.io/qr?text=${encodeURIComponent(it.pagesUrl)}&size=320&margin=2`;
+          const res = await fetch(apiUrl);
+          if (!res.ok) throw new Error(`QR API ${res.status}`);
+          const blob = await res.blob();
+          const dataUrl = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+          lines.push(`${it.relPath} → QR ready (API)`);
+          addLogItem({ title: `QR: ${it.relPath}`, status: "READY", linkText: "Download QR (PNG)", linkHref: dataUrl, lines: [it.pagesUrl] });
+        } catch (err) {
+          addLogItem({ title: `QR FAIL (API): ${it.relPath}`, status: "FAIL", lines: [String(err?.message || err)] });
+        }
+      }
+    };
+
     try {
       await loadQrLib();
-      const lines = [];
       for (const it of batch.items) {
         const dataUrl = await window.QRCode.toDataURL(it.pagesUrl, { width: 320, margin: 2 });
         lines.push(`${it.relPath} → QR ready`);
-        addLogItem({
-          title: `QR: ${it.relPath}`,
-          status: "READY",
-          linkText: "Download QR (PNG)",
-          linkHref: dataUrl,
-          lines: [it.pagesUrl]
-        });
+        addLogItem({ title: `QR: ${it.relPath}`, status: "READY", linkText: "Download QR (PNG)", linkHref: dataUrl, lines: [it.pagesUrl] });
       }
       addLogItem({ title: "QR batch done", status: "SUCCESS", lines });
     } catch (e) {
-      addLogItem({ title: "QR generation failed", status: "FAIL", lines: [String(e.message || e)] });
+      addLogItem({ title: "QR lib failed, using API fallback", status: "RETRY", lines: [String(e.message || e)] });
+      await useApiFallback();
     }
   }
 
