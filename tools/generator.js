@@ -132,17 +132,21 @@
     const targetW = TARGET_W, targetH = TARGET_H;
     const srcW = ogImageBitmap.width, srcH = ogImageBitmap.height;
 
-    // Background: cover + blur, inflate a bit to avoid edge clipping after blur
-    const coverScale = Math.max(targetW / srcW, targetH / srcH) * 1.2;
+    // Background: cover + blur, inflate more to avoid edge clipping and make blur obvious
+    const coverScale = Math.max(targetW / srcW, targetH / srcH) * 1.35;
     const bgW = srcW * coverScale;
     const bgH = srcH * coverScale;
     const bgX = (targetW - bgW) / 2;
     const bgY = (targetH - bgH) / 2;
 
     ctx.save();
-    ctx.filter = "blur(50px)"; // heavier blur for a soft background
+    ctx.filter = "blur(70px) brightness(0.95)"; // strong blur + slight dim for contrast
     ctx.drawImage(ogImageBitmap, 0, 0, srcW, srcH, bgX, bgY, bgW, bgH);
     ctx.restore();
+
+    // Add a subtle overlay to separate foreground
+    ctx.fillStyle = "rgba(0,0,0,0.25)";
+    ctx.fillRect(0, 0, targetW, targetH);
 
     // Foreground: fit height, center horizontally
     const fgScale = targetH / srcH;
