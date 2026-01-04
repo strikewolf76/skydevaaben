@@ -642,23 +642,39 @@ ${normalBrowserLogic}
     }
   }
 
+  const QR_LIB_URLS = [
+    "https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js",
+    "https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js",
+    "https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"
+  ];
+
   function loadQrLib() {
-    return new Promise((resolve, reject) => {
-      const existing = document.querySelector('script[data-qr-lib="1"]');
-      if (existing) {
-        if (window.QRCode) return resolve();
-        existing.addEventListener("load", () => resolve());
+    if (window.QRCode) return Promise.resolve();
+
+    const existing = document.querySelector('script[data-qr-lib="1"]');
+    if (existing) {
+      return new Promise((resolve, reject) => {
+        existing.addEventListener("load", () => window.QRCode ? resolve() : reject(new Error("QR lib loaded without QRCode")));
         existing.addEventListener("error", () => reject(new Error("QR lib failed to load")));
-        return;
-      }
-      const script = document.createElement("script");
-      script.src = "https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js";
-      script.async = true;
-      script.dataset.qrLib = "1";
-      script.onload = () => resolve();
-      script.onerror = () => reject(new Error("QR lib failed to load"));
-      document.head.appendChild(script);
-    });
+      });
+    }
+
+    const tryUrl = (urlIndex = 0) => {
+      const url = QR_LIB_URLS[urlIndex];
+      if (!url) return Promise.reject(new Error("QR lib failed to load from all CDNs"));
+
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = url;
+        script.async = true;
+        script.dataset.qrLib = "1";
+        script.onload = () => window.QRCode ? resolve() : reject(new Error(`QR lib loaded from ${url} but QRCode missing`));
+        script.onerror = () => reject(new Error(`QR lib failed from ${url}`));
+        document.head.appendChild(script);
+      }).catch(() => tryUrl(urlIndex + 1));
+    };
+
+    return tryUrl();
   }
 
   async function generateQrBatch() {
