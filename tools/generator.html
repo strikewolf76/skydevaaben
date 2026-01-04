@@ -18,11 +18,11 @@
     .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
     button { padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(127,127,127,0.35); background: rgba(127,127,127,0.12); cursor: pointer; }
     button.primary { background: rgba(0, 120, 255, 0.18); }
+    button.danger { background: rgba(255, 0, 0, 0.10); }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; }
     .hint { font-size: 12px; opacity: 0.8; margin-top: 6px; }
     .ok { color: #0a7; }
     .bad { color: #c33; }
-    .chips { display:flex; gap:10px; flex-wrap:wrap; }
     .chip { border:1px solid rgba(127,127,127,0.25); border-radius:999px; padding:8px 10px; display:flex; gap:8px; align-items:center; }
     .chip input { width:auto; }
     .small { font-size: 12px; opacity:.9; }
@@ -33,17 +33,13 @@
     .logitem { border:1px solid rgba(127,127,127,0.22); border-radius:14px; padding:12px; }
     .logitem .top { display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between; }
     .logitem .path { font-weight:600; }
-    .logitem .meta { margin-top:8px; display:grid; gap:6px; }
     .logitem a { word-break: break-all; }
-    .logitem .actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
-    .logitem .actions button { padding:8px 10px; font-size:13px; }
   </style>
 </head>
 <body>
   <h1>Skydevaaben – Redirect Generator</h1>
   <p class="muted">
-    Output-mål: HTML → <span class="mono">tracks/&lt;slug&gt;/&lt;destination&gt;/</span> og bilde → <span class="mono">assets/og/&lt;slug&gt;.jpg</span>.
-    Policy: kun bindestreker (ingen <span class="mono">_</span>).
+    Mål: HTML → <span class="mono">tracks/&lt;slug&gt;/&lt;dest&gt;/&lt;utm_content&gt;.html</span> og bilde → <span class="mono">assets/og/&lt;slug&gt;.jpg</span>.
   </p>
 
   <div class="panel">
@@ -59,18 +55,50 @@
         <input id="siteName" value="Skydevaaben" />
       </div>
 
+      <div class="full panel">
+        <div><strong>Publish target (GitHub)</strong></div>
+        <div class="hint">Token brukes kun i nettleseren din for å skrive filer via GitHub API. Ikke lagre token i repoet.</div>
+
+        <div class="grid" style="margin-top:10px;">
+          <div>
+            <label for="ghOwner">Owner</label>
+            <input id="ghOwner" value="strikewolf76" />
+          </div>
+          <div>
+            <label for="ghRepo">Repo</label>
+            <input id="ghRepo" value="skydevaaben" />
+          </div>
+
+          <div>
+            <label for="ghBranch">Branch</label>
+            <input id="ghBranch" value="main" />
+          </div>
+          <div>
+            <label for="ghToken">Fine-grained PAT (Contents: Read+Write)</label>
+            <input id="ghToken" type="password" placeholder="ghp_..." />
+          </div>
+
+          <div class="full">
+            <label class="chip">
+              <input id="rememberToken" type="checkbox">
+              <span>Husk token i denne nettleser-økten (sessionStorage)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
       <div>
-        <label for="title">Title (og:title + &lt;title&gt;)</label>
+        <label for="title">Title</label>
         <input id="title" value="Born Again (Crimson Noise Remix)" />
       </div>
 
       <div>
-        <label for="description">Description (og:description)</label>
+        <label for="description">Description</label>
         <input id="description" value="Tap to open in Spotify." />
       </div>
 
       <div>
-        <label for="trackSlug">Track slug (mappenavn)</label>
+        <label for="trackSlug">Track slug</label>
         <input id="trackSlug" value="born-again-crimson-noise" />
       </div>
 
@@ -81,7 +109,7 @@
 
       <div class="full panel">
         <div><strong>Destinations</strong></div>
-        <div class="hint">Spotify kan bygges fra Track ID. Andre destinations trenger full URL.</div>
+        <div class="hint">Spotify bygges fra Track ID. Andre trenger full URL.</div>
 
         <div class="grid" style="margin-top:10px;">
           <div class="chip">
@@ -99,7 +127,7 @@
           <div class="chip">
             <input id="destApple" type="checkbox">
             <div>
-              <div><strong>Apple / iTunes</strong> <span class="small">(requires URL)</span></div>
+              <div><strong>Apple</strong> <span class="small">(requires URL)</span></div>
               <div class="hint mono">tracks/&lt;slug&gt;/apple/…</div>
             </div>
           </div>
@@ -124,14 +152,13 @@
 
       <div class="full panel">
         <div><strong>Channels</strong></div>
-        <div class="hint">Velg hvilke filer som skal genereres. Sett <span class="mono">utm_content</span> per kanal.</div>
+        <div class="hint">Filer navngis <span class="mono">&lt;utm_content&gt;.html</span> per destination.</div>
 
         <div class="grid" style="margin-top:10px;">
           <div class="chip">
             <input id="chMeta" type="checkbox" checked>
             <div>
-              <div><strong>Meta Ads</strong> <span class="small mono">utm_source=meta</span> <span class="small mono">utm_medium=paid_social</span></div>
-              <div class="hint mono">meta-ads-story01.html</div>
+              <div><strong>Meta Ads</strong> <span class="small mono">meta / paid_social</span></div>
             </div>
           </div>
           <div>
@@ -142,8 +169,7 @@
           <div class="chip">
             <input id="chTikTok" type="checkbox" checked>
             <div>
-              <div><strong>TikTok Ads</strong> <span class="small mono">utm_source=tiktok</span> <span class="small mono">utm_medium=paid_social</span></div>
-              <div class="hint mono">tt-ads-infeed01.html</div>
+              <div><strong>TikTok Ads</strong> <span class="small mono">tiktok / paid_social</span></div>
             </div>
           </div>
           <div>
@@ -154,8 +180,7 @@
           <div class="chip">
             <input id="chYouTube" type="checkbox" checked>
             <div>
-              <div><strong>YouTube Ads</strong> <span class="small mono">utm_source=youtube</span> <span class="small mono">utm_medium=paid_video</span></div>
-              <div class="hint mono">yt-ads-instream01.html</div>
+              <div><strong>YouTube Ads</strong> <span class="small mono">youtube / paid_video</span></div>
             </div>
           </div>
           <div>
@@ -166,8 +191,7 @@
           <div class="chip">
             <input id="chIGDM" type="checkbox">
             <div>
-              <div><strong>IG DM</strong> <span class="small mono">utm_source=instagram</span> <span class="small mono">utm_medium=dm</span></div>
-              <div class="hint mono">ig-dm-v1.html</div>
+              <div><strong>IG DM</strong> <span class="small mono">instagram / dm</span></div>
             </div>
           </div>
           <div>
@@ -181,20 +205,16 @@
         <div class="ogpreview">
           <div>
             <div><strong>OG image upload</strong></div>
-            <div class="hint">Upload et bilde. Generator lager ferdig <span class="mono">1200×630</span> JPG: <span class="mono">assets/og/&lt;slug&gt;.jpg</span></div>
+            <div class="hint">På publish opprettes <span class="mono">assets/og/&lt;slug&gt;.jpg</span> automatisk.</div>
             <div style="margin-top:10px;">
               <input id="ogFile" type="file" accept="image/*" />
             </div>
             <div class="hint mono" id="ogFileInfo"></div>
-            <div class="row">
-              <button id="btnDownloadOg">Download OG image (.jpg)</button>
-            </div>
-            <div class="hint">Filnavn: <span class="mono" id="ogImageNamePreview"></span></div>
+            <div class="hint">Målfil: <span class="mono" id="ogImageNamePreview"></span></div>
           </div>
 
           <div>
             <div><strong>Preview (cropped to 1200×630)</strong></div>
-            <div class="hint">Center-crop til 1.91:1 (FB/Messenger-standard).</div>
             <canvas id="ogCanvas" width="1200" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid rgba(127,127,127,0.2);"></canvas>
           </div>
         </div>
@@ -207,14 +227,16 @@
     </div>
 
     <div class="row">
-      <button class="primary" id="btnGenerate">Generate batch</button>
-      <button id="btnReset">Create new / refresh</button>
+      <button class="primary" id="btnGenerate">Generate batch (preview log)</button>
+      <button class="primary" id="btnCheckToken">Check token</button>
+      <button class="primary" id="btnPublish">Publish to GitHub (create/update files)</button>
+      <button class="danger" id="btnReset">Create new / refresh</button>
     </div>
   </div>
 
   <div class="panel">
-    <div><strong>Created (log)</strong></div>
-    <div class="hint">Hver fil: repo-path + Pages-link + Download/Copy. Upload til korrekt mappe i repoet.</div>
+    <div><strong>Log</strong></div>
+    <div class="hint">Her ser du hvilke repo-paths og Pages-lenker som genereres/publiseres.</div>
     <div id="log" class="log" style="margin-top:10px;"></div>
   </div>
 

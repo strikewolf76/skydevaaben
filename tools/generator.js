@@ -4,6 +4,13 @@
   const els = {
     repoBase: $("repoBase"),
     siteName: $("siteName"),
+
+    ghOwner: $("ghOwner"),
+    ghRepo: $("ghRepo"),
+    ghBranch: $("ghBranch"),
+    ghToken: $("ghToken"),
+    rememberToken: $("rememberToken"),
+
     title: $("title"),
     description: $("description"),
     trackSlug: $("trackSlug"),
@@ -28,20 +35,19 @@
     ogFile: $("ogFile"),
     ogFileInfo: $("ogFileInfo"),
     ogCanvas: $("ogCanvas"),
-    btnDownloadOg: $("btnDownloadOg"),
     ogImageNamePreview: $("ogImageNamePreview"),
 
     validation: $("validation"),
     log: $("log"),
 
     btnGenerate: $("btnGenerate"),
+    btnCheckToken: $("btnCheckToken"),
+    btnPublish: $("btnPublish"),
     btnReset: $("btnReset"),
   };
 
   // ---------- utils ----------
-  function normBaseUrl(s) {
-    return (s || "").trim().replace(/\/+$/, "");
-  }
+  function normBaseUrl(s) { return (s || "").trim().replace(/\/+$/, ""); }
 
   function sanitizeSlug(s) {
     s = (s || "").trim().toLowerCase();
@@ -65,7 +71,6 @@
   }
 
   function buildUtmmedAndSource(channelKey) {
-    // Locked presets
     switch (channelKey) {
       case "meta":   return { utm_source: "meta",      utm_medium: "paid_social" };
       case "tiktok": return { utm_source: "tiktok",    utm_medium: "paid_social" };
@@ -84,21 +89,23 @@
     return u.toString();
   }
 
-  function downloadTextFile(fileName, content) {
-    const blob = new Blob([content], { type: "text/html;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
+  function addLogItem({ title, lines = [], linkText, linkHref, status }) {
+    const div = document.createElement("div");
+    div.className = "logitem";
+    const statusHtml = status ? `<div class="mono">${status}</div>` : "";
+    const linkHtml = (linkHref && linkText) ? `<a href="${linkHref}" target="_blank" rel="noreferrer">${linkText}</a>` : "";
+    div.innerHTML = `
+      <div class="top">
+        <div class="path">${title}</div>
+        <div class="mono">${linkHtml}</div>
+      </div>
+      ${statusHtml}
+      <div class="mono" style="margin-top:8px;">${lines.map(l => `${htmlEscape(l)}`).join("<br>")}</div>
+    `;
+    els.log.appendChild(div);
   }
 
-  async function copyToClipboard(text) {
-    await navigator.clipboard.writeText(text);
-  }
+  function clearLog() { els.log.innerHTML = ""; }
 
   // ---------- OG image processing ----------
   let ogImageLoaded = false;
@@ -118,12 +125,10 @@
       return;
     }
 
-    const targetW = 1200;
-    const targetH = 630;
+    const targetW = 1200, targetH = 630;
     const targetRatio = targetW / targetH;
 
-    const srcW = ogImageBitmap.width;
-    const srcH = ogImageBitmap.height;
+    const srcW = ogImageBitmap.width, srcH = ogImageBitmap.height;
     const srcRatio = srcW / srcH;
 
     let cropW, cropH, cropX, cropY;
@@ -150,6 +155,7 @@
     if (!file) {
       els.ogFileInfo.textContent = "";
       drawOgCanvasFromBitmap();
+      validateOnly();
       return;
     }
 
@@ -159,7 +165,7 @@
       ogImageLoaded = true;
       els.ogFileInfo.textContent = `Loaded: ${file.name} (${bitmap.width}×${bitmap.height})`;
       drawOgCanvasFromBitmap();
-      validateOnly(); // update validation state
+      validateOnly();
     } catch (e) {
       els.ogFileInfo.textContent = `Failed to read image: ${String(e)}`;
       ogImageLoaded = false;
@@ -169,22 +175,30 @@
     }
   }
 
-  function downloadOgJpg(fileName) {
-    const canvas = els.ogCanvas;
-    canvas.toBlob((blob) => {
-      if (!blob) return;
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    }, "image/jpeg", 0.92);
+  async function canvasToJpegBase64(canvas, quality = 0.92) {
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", quality));
+    const arr = await blob.arrayBuffer();
+    return arrayBufferToBase64(arr);
   }
 
-  // ---------- HTML template generation ----------
+  // ---------- base64 helpers ----------
+  function utf8ToBase64(str) {
+    // safe UTF-8 base64
+    const bytes = new TextEncoder().encode(str);
+    return arrayBufferToBase64(bytes.buffer);
+  }
+
+  function arrayBufferToBase64(buffer) {
+    const bytes = new Uint8Array(buffer);
+    let binary = "";
+    const chunkSize = 0x8000;
+    for (let i = 0; i < bytes.length; i += chunkSize) {
+      binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunkSize));
+    }
+    return btoa(binary);
+  }
+
+  // ---------- HTML generation ----------
   function generateHtml({
     title,
     siteName,
@@ -197,7 +211,6 @@
   }) {
     const isSpotify = destType === "spotify";
 
-    // If destination is not Spotify: no app-uri handoff; just go WEB_URL.
     const appBlock = isSpotify ? `
   var TRACK_ID = "${htmlEscape(spotifyTrackId)}";
   var APP_URI = "spotify:track:" + TRACK_ID;
@@ -225,7 +238,6 @@
   <title>${htmlEscape(title)}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Open Graph -->
   <meta property="og:type" content="music.song">
   <meta property="og:site_name" content="${htmlEscape(siteName)}">
   <meta property="og:title" content="${htmlEscape(title)}">
@@ -235,7 +247,6 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
-  <!-- Twitter fallback -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${htmlEscape(title)}">
   <meta name="twitter:description" content="${htmlEscape(description)}">
@@ -292,6 +303,22 @@ ${normalBrowserLogic}
 
     const repoBase = normBaseUrl(els.repoBase.value);
     required("Pages base URL", repoBase, errors);
+    if (repoBase) {
+      try {
+        const u = new URL(repoBase);
+        if (u.protocol !== "https:") errors.push("Pages base URL must be https");
+        if (!u.hostname) errors.push("Pages base URL must include a host");
+      } catch {
+        errors.push("Pages base URL is not a valid URL");
+      }
+    }
+
+    const owner = (els.ghOwner.value || "").trim();
+    const repo = (els.ghRepo.value || "").trim();
+    const branch = (els.ghBranch.value || "").trim();
+    required("GitHub Owner", owner, errors);
+    required("GitHub Repo", repo, errors);
+    required("GitHub Branch", branch, errors);
 
     const title = (els.title.value || "").trim();
     const description = (els.description.value || "").trim();
@@ -306,27 +333,24 @@ ${normalBrowserLogic}
     const utmCampaign = sanitizeSlug(els.utmCampaign.value);
     required("utm_campaign", utmCampaign, errors);
 
-    // Require at least one destination
     const anyDest = els.destSpotify.checked || els.destApple.checked || els.destDeezer.checked;
     if (!anyDest) errors.push("Select at least one destination.");
 
-    // Dest validations
     if (els.destSpotify.checked) required("Spotify track ID", (els.spotifyId.value || "").trim(), errors);
     if (els.destApple.checked) required("Apple URL", (els.appleUrl.value || "").trim(), errors);
     if (els.destDeezer.checked) required("Deezer URL", (els.deezerUrl.value || "").trim(), errors);
 
-    // Require at least one channel
     const anyCh = els.chMeta.checked || els.chTikTok.checked || els.chYouTube.checked || els.chIGDM.checked;
     if (!anyCh) errors.push("Select at least one channel.");
 
-    // Per-channel utm_content
     if (els.chMeta.checked) required("utm_content (Meta)", els.metaContent.value, errors);
     if (els.chTikTok.checked) required("utm_content (TikTok)", els.ttContent.value, errors);
     if (els.chYouTube.checked) required("utm_content (YouTube)", els.ytContent.value, errors);
     if (els.chIGDM.checked) required("utm_content (IG DM)", els.igdmContent.value, errors);
 
-    // Image required
     if (!ogImageLoaded) errors.push("OG image not uploaded yet (required).");
+
+    els.ogImageNamePreview.textContent = slug ? `assets/og/${slug}.jpg` : "";
 
     if (errors.length) {
       els.validation.innerHTML = `<span class="bad">FAIL</span>\n` + errors.map(e => `- ${e}`).join("\n");
@@ -335,12 +359,9 @@ ${normalBrowserLogic}
 
     els.validation.innerHTML =
       `<span class="ok">OK</span>\n` +
-      `- Output HTML → tracks/<slug>/<destination>/<utm_content>.html\n` +
-      `- Output image → assets/og/<slug>.jpg\n` +
-      `- OG uses absolute URLs (stable previews)\n`;
-
-    // Update OG image name preview
-    els.ogImageNamePreview.textContent = `${slug}.jpg`;
+      `- Publish will create/update:\n` +
+      `  - assets/og/${slug}.jpg\n` +
+      `  - tracks/${slug}/<dest>/<utm_content>.html\n`;
 
     return { ok: true };
   }
@@ -362,28 +383,19 @@ ${normalBrowserLogic}
 
     const destinations = [];
     if (els.destSpotify.checked) {
+      const sid = (els.spotifyId.value || "").trim();
       destinations.push({
         key: "spotify",
         type: "spotify",
-        baseUrl: `https://open.spotify.com/track/${encodeURIComponent((els.spotifyId.value || "").trim())}`,
-        spotifyId: (els.spotifyId.value || "").trim(),
+        baseUrl: `https://open.spotify.com/track/${encodeURIComponent(sid)}`,
+        spotifyId: sid,
       });
     }
     if (els.destApple.checked) {
-      destinations.push({
-        key: "apple",
-        type: "web",
-        baseUrl: (els.appleUrl.value || "").trim(),
-        spotifyId: "",
-      });
+      destinations.push({ key: "apple", type: "web", baseUrl: (els.appleUrl.value || "").trim(), spotifyId: "" });
     }
     if (els.destDeezer.checked) {
-      destinations.push({
-        key: "deezer",
-        type: "web",
-        baseUrl: (els.deezerUrl.value || "").trim(),
-        spotifyId: "",
-      });
+      destinations.push({ key: "deezer", type: "web", baseUrl: (els.deezerUrl.value || "").trim(), spotifyId: "" });
     }
 
     const channels = [];
@@ -399,16 +411,11 @@ ${normalBrowserLogic}
         const { utm_source, utm_medium } = buildUtmmedAndSource(ch.key);
         const utm_content = ch.content;
 
-        // WEB_URL = destination base + UTM
         let webUrl;
         try {
           webUrl = appendUtms(dest.baseUrl, { utm_source, utm_medium, utm_campaign, utm_content });
         } catch (e) {
-          // URL parsing failed
-          return {
-            ok: false,
-            error: `Invalid URL for destination "${dest.key}": ${dest.baseUrl}`
-          };
+          return { ok: false, error: `Invalid URL for destination "${dest.key}": ${dest.baseUrl}` };
         }
 
         const relPath = `tracks/${slug}/${dest.key}/${utm_content}.html`;
@@ -428,10 +435,8 @@ ${normalBrowserLogic}
         items.push({
           relPath,
           pagesUrl: ogUrlAbs,
-          ogImageRel,
-          ogImageAbs,
-          utm_source, utm_medium, utm_campaign, utm_content,
           dest: dest.key,
+          utm_source, utm_medium, utm_campaign, utm_content,
           html
         });
       }
@@ -440,69 +445,212 @@ ${normalBrowserLogic}
     return { ok: true, slug, ogImageRel, ogImageAbs, items };
   }
 
-  function renderLog(batch) {
-    els.log.innerHTML = "";
-
-    batch.items.forEach((it) => {
-      const div = document.createElement("div");
-      div.className = "logitem";
-
-      div.innerHTML = `
-        <div class="top">
-          <div>
-            <div class="path">${it.relPath}</div>
-            <div class="mono">dest: ${it.dest} | utm_source=${it.utm_source} | utm_medium=${it.utm_medium} | utm_content=${it.utm_content}</div>
-          </div>
-          <div class="mono">
-            <a href="${it.pagesUrl}" target="_blank" rel="noreferrer">Open (Pages URL)</a>
-          </div>
-        </div>
-
-        <div class="meta mono">
-          <div>Upload HTML to: <strong>${it.relPath.replace(/\/[^/]+$/, "/")}</strong></div>
-          <div>OG image required at: <strong>${batch.ogImageRel}</strong></div>
-        </div>
-
-        <div class="actions">
-          <button data-action="download">Download HTML</button>
-          <button data-action="copy">Copy HTML</button>
-        </div>
-      `;
-
-      div.querySelector('[data-action="download"]').addEventListener("click", () => {
-        const fileName = it.relPath.split("/").pop();
-        downloadTextFile(fileName, it.html);
-        alert(`Downloaded: ${fileName}\nUpload to: ${it.relPath}`);
-      });
-
-      div.querySelector('[data-action="copy"]').addEventListener("click", async () => {
-        await copyToClipboard(it.html);
-        alert(`Copied HTML.\nCreate file at: ${it.relPath}`);
-      });
-
-      els.log.appendChild(div);
+  // ---------- GitHub API (create/update contents) ----------
+  async function ghFetch(path, { method = "GET", token, body } = {}) {
+    const res = await fetch(`https://api.github.com${path}`, {
+      method,
+      headers: {
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        ...(token ? { "Authorization": `Bearer ${token}` } : {}),
+        ...(body ? { "Content-Type": "application/json" } : {})
+      },
+      body: body ? JSON.stringify(body) : undefined
     });
-
-    // Top summary
-    const summary = document.createElement("div");
-    summary.className = "logitem";
-    summary.innerHTML = `
-      <div class="top">
-        <div>
-          <div class="path">Summary</div>
-          <div class="mono">Created ${batch.items.length} HTML files under tracks/${batch.slug}/…</div>
-        </div>
-      </div>
-      <div class="meta mono">
-        <div>OG image: <strong>${batch.ogImageRel}</strong></div>
-        <div>OG image absolute: <a href="${batch.ogImageAbs}" target="_blank" rel="noreferrer">${batch.ogImageAbs}</a></div>
-      </div>
-    `;
-    els.log.prepend(summary);
+    const text = await res.text();
+    let json = null;
+    try { json = text ? JSON.parse(text) : null; } catch { /* ignore */ }
+    if (!res.ok) {
+      const msg = json?.message || `${res.status} ${res.statusText}`;
+      throw new Error(`${msg}`);
+    }
+    return json;
   }
 
+  async function getFileSha({ owner, repo, path, branch, token }) {
+    // If file doesn't exist, GitHub returns 404 -> we catch and return null
+    try {
+      const data = await ghFetch(`/repos/${owner}/${repo}/contents/${encodeURIComponent(path).replace(/%2F/g, "/")}?ref=${encodeURIComponent(branch)}`, { token });
+      return data?.sha || null;
+    } catch (e) {
+      if (String(e.message || "").includes("Not Found")) return null;
+      throw e;
+    }
+  }
+
+  async function putFile({ owner, repo, path, branch, token, message, contentBase64 }) {
+    const sha = await getFileSha({ owner, repo, path, branch, token });
+    const body = {
+      message,
+      content: contentBase64,
+      branch
+    };
+    if (sha) body.sha = sha;
+
+    // PUT create/update file contents
+    return ghFetch(`/repos/${owner}/${repo}/contents/${encodeURIComponent(path).replace(/%2F/g, "/")}`, {
+      method: "PUT",
+      token,
+      body
+    });
+  }
+
+  // ---------- publish ----------
+  async function publishAll() {
+    clearLog();
+
+    const v = validateOnly();
+    if (!v.ok) return;
+
+    const token = (els.ghToken.value || "").trim();
+    if (!token) {
+      addLogItem({ title: "Missing token", status: "FAIL", lines: ["Paste a fine-grained PAT in the token field (Contents: Read+Write)."] });
+      return;
+    }
+
+    const owner = (els.ghOwner.value || "").trim();
+    const repo = (els.ghRepo.value || "").trim();
+    const branch = (els.ghBranch.value || "").trim();
+
+    const batch = buildBatch();
+    if (!batch || !batch.ok) {
+      addLogItem({ title: "Batch build failed", status: "FAIL", lines: [batch?.error || "Unknown error"] });
+      return;
+    }
+
+    // Remember token (session only)
+    if (els.rememberToken.checked) {
+      sessionStorage.setItem("skydevaaben_pat", token);
+    } else {
+      sessionStorage.removeItem("skydevaaben_pat");
+    }
+
+    addLogItem({
+      title: "Publishing…",
+      status: "RUNNING",
+      lines: [
+        `Target: ${owner}/${repo} @ ${branch}`,
+        `OG image: ${batch.ogImageRel}`,
+        `Files: ${batch.items.length}`
+      ]
+    });
+
+    // 1) Publish OG image
+    try {
+      const ogJpgB64 = await canvasToJpegBase64(els.ogCanvas, 0.92);
+      await putFile({
+        owner, repo, branch, token,
+        path: batch.ogImageRel,
+        message: `OG image: ${batch.slug}`,
+        contentBase64: ogJpgB64
+      });
+      addLogItem({
+        title: `OK: ${batch.ogImageRel}`,
+        status: "PUBLISHED",
+        linkText: "Open OG image",
+        linkHref: batch.ogImageAbs,
+        lines: [`Repo path: ${batch.ogImageRel}`]
+      });
+    } catch (e) {
+      addLogItem({
+        title: `FAIL: ${batch.ogImageRel}`,
+        status: "ERROR",
+        lines: [String(e.message || e)]
+      });
+      return;
+    }
+
+    let failures = 0;
+
+    // 2) Publish HTML files sequentially (avoid conflicts)
+    for (const it of batch.items) {
+      try {
+        const htmlB64 = utf8ToBase64(it.html);
+        await putFile({
+          owner, repo, branch, token,
+          path: it.relPath,
+          message: `Redirect: ${batch.slug} (${it.dest}) ${it.utm_content}`,
+          contentBase64: htmlB64
+        });
+
+        addLogItem({
+          title: `OK: ${it.relPath}`,
+          status: "PUBLISHED",
+          linkText: "Open Pages URL",
+          linkHref: it.pagesUrl,
+          lines: [
+            `Repo path: ${it.relPath}`,
+            `dest=${it.dest} utm_source=${it.utm_source} utm_medium=${it.utm_medium} utm_content=${it.utm_content}`
+          ]
+        });
+      } catch (e) {
+        addLogItem({
+          title: `FAIL: ${it.relPath}`,
+          status: "ERROR",
+          lines: [String(e.message || e)]
+        });
+        failures += 1;
+        continue;
+      }
+    }
+
+    if (failures > 0) {
+      addLogItem({
+        title: "DONE (with errors)",
+        status: "PARTIAL",
+        lines: [`${failures} of ${batch.items.length} HTML files failed. Check errors above.`]
+      });
+    } else {
+      addLogItem({
+        title: "DONE",
+        status: "SUCCESS",
+        lines: ["All files created/updated in GitHub. Give Pages a few seconds, then test the Pages URLs."]
+      });
+    }
+  }
+
+  // ---------- token check ----------
+  async function checkToken() {
+    clearLog();
+
+    const token = (els.ghToken.value || "").trim();
+    const owner = (els.ghOwner.value || "").trim();
+    const repo = (els.ghRepo.value || "").trim();
+    const branch = (els.ghBranch.value || "").trim();
+
+    const errors = [];
+    required("Token", token, errors);
+    required("GitHub Owner", owner, errors);
+    required("GitHub Repo", repo, errors);
+    required("GitHub Branch", branch, errors);
+    if (errors.length) {
+      addLogItem({ title: "Check token", status: "FAIL", lines: errors });
+      return;
+    }
+
+    addLogItem({ title: "Checking token…", status: "RUNNING", lines: [`${owner}/${repo}`] });
+    try {
+      const repoInfo = await ghFetch(`/repos/${owner}/${repo}`, { token });
+      addLogItem({
+        title: "Token OK",
+        status: "PASS",
+        lines: [
+          `Default branch: ${repoInfo?.default_branch || "unknown"}`,
+          `Permissions OK for Contents (expected Read/Write).`
+        ]
+      });
+    } catch (e) {
+      addLogItem({
+        title: "Token check failed",
+        status: "FAIL",
+        lines: [String(e.message || e)]
+      });
+    }
+  }
+
+  // ---------- reset ----------
   function resetForm() {
-    // Keep repoBase + siteName (usually stable)
+    // Keep repoBase, siteName, owner/repo/branch (stable)
     els.title.value = "";
     els.description.value = "Tap to open in Spotify.";
     els.trackSlug.value = "";
@@ -524,33 +672,36 @@ ${normalBrowserLogic}
     els.chIGDM.checked = false;
     els.igdmContent.value = "ig-dm-v1";
 
-    // Clear image state
     els.ogFile.value = "";
     els.ogFileInfo.textContent = "";
     ogImageLoaded = false;
     ogImageBitmap = null;
     drawOgCanvasFromBitmap();
 
-    // Clear log + validation
-    els.log.innerHTML = "";
+    clearLog();
     els.validation.textContent = "";
     els.ogImageNamePreview.textContent = "";
   }
 
   function autoAlignCampaignToSlug() {
     const slug = sanitizeSlug(els.trackSlug.value);
-    if (!els.utmCampaign.value.trim()) {
-      els.utmCampaign.value = slug;
-    }
-    els.ogImageNamePreview.textContent = slug ? `${slug}.jpg` : "";
+    if (!els.utmCampaign.value.trim()) els.utmCampaign.value = slug;
+    els.ogImageNamePreview.textContent = slug ? `assets/og/${slug}.jpg` : "";
   }
 
   // ---------- wire ----------
   function wire() {
-    // Inputs -> validate
+    // Load token from session if present
+    const saved = sessionStorage.getItem("skydevaaben_pat");
+    if (saved) {
+      els.ghToken.value = saved;
+      els.rememberToken.checked = true;
+    }
+
     [
-      els.repoBase, els.siteName, els.title, els.description,
-      els.trackSlug, els.utmCampaign,
+      els.repoBase, els.siteName,
+      els.ghOwner, els.ghRepo, els.ghBranch, els.ghToken, els.rememberToken,
+      els.title, els.description, els.trackSlug, els.utmCampaign,
       els.destSpotify, els.spotifyId, els.destApple, els.appleUrl, els.destDeezer, els.deezerUrl,
       els.chMeta, els.metaContent, els.chTikTok, els.ttContent, els.chYouTube, els.ytContent, els.chIGDM, els.igdmContent
     ].forEach(el => el.addEventListener("input", () => {
@@ -560,36 +711,31 @@ ${normalBrowserLogic}
 
     els.trackSlug.addEventListener("input", autoAlignCampaignToSlug);
 
-    // Image upload
     els.ogFile.addEventListener("change", (e) => {
       const file = e.target.files && e.target.files[0];
       onOgFileSelected(file);
     });
 
-    els.btnDownloadOg.addEventListener("click", () => {
-      const ok = validateOnly().ok;
-      if (!ok) return;
-      const slug = sanitizeSlug(els.trackSlug.value);
-      const name = `${slug}.jpg`;
-      downloadOgJpg(name);
-      alert(`Downloaded OG image: ${name}\nUpload to: assets/og/${name}`);
-    });
-
-    // Generate batch
     els.btnGenerate.addEventListener("click", () => {
+      clearLog();
       const batch = buildBatch();
-      if (!batch) return;
-      if (!batch.ok) {
-        els.validation.innerHTML = `<span class="bad">FAIL</span>\n- ${batch.error}`;
-        return;
-      }
-      renderLog(batch);
+      if (!batch || !batch.ok) return;
+
+      addLogItem({
+        title: "Preview batch (not published)",
+        status: "READY",
+        lines: [
+          `Will publish OG image: ${batch.ogImageRel}`,
+          `Will publish ${batch.items.length} HTML files:`,
+          ...batch.items.map(i => `- ${i.relPath} → ${i.pagesUrl}`)
+        ]
+      });
     });
 
-    // Reset
+    els.btnCheckToken.addEventListener("click", () => { checkToken(); });
+    els.btnPublish.addEventListener("click", () => publishAll());
     els.btnReset.addEventListener("click", () => resetForm());
 
-    // Initial
     drawOgCanvasFromBitmap();
     autoAlignCampaignToSlug();
     validateOnly();
