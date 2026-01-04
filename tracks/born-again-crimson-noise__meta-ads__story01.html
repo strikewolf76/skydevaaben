@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Born Again (Meta Ads story01)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body style="font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
+
+  <p id="status">Opening Spotify…</p>
+
+  <p>
+    <a id="play"
+       href="https://open.spotify.com/track/1zqSLn6IuAaDGCSZGcZFj2?utm_source=facebook&utm_medium=paid_social&utm_campaign=born-again-crimson-noise&utm_content=meta-story01"
+       target="_blank"
+       style="font-size:18px;padding:14px 22px;display:inline-block;">
+      Play on Spotify
+    </a>
+  </p>
+
+<script>
+(function () {
+  var TRACK_ID = "1zqSLn6IuAaDGCSZGcZFj2";
+  var APP_URI = "spotify:track:" + TRACK_ID;
+
+  // Step 2: baked-in UTMs (Valg A)
+  var WEB_URL =
+    "https://open.spotify.com/track/" + TRACK_ID +
+    "?utm_source=facebook" +
+    "&utm_medium=paid_social" +
+    "&utm_campaign=born-again-crimson-noise" +
+    "&utm_content=meta-story01";
+
+  var statusEl = document.getElementById("status");
+  var playEl = document.getElementById("play");
+
+  function isMessengerLike() {
+    var ua = navigator.userAgent || "";
+    return /FBAN|FBAV|Instagram|Messenger/i.test(ua);
+  }
+
+  // Ensure button always matches WEB_URL (single source of truth)
+  playEl.href = WEB_URL;
+
+  // Only attempt app-handoff where it is actually allowed
+  if (!isMessengerLike()) {
+    try {
+      window.location.href = APP_URI;
+      setTimeout(function () {
+        window.location.href = WEB_URL;
+      }, 600);
+    } catch (e) {
+      window.location.href = WEB_URL;
+    }
+  } else {
+    // Messenger/IG/FB in-app: web only, no app URI
+    statusEl.textContent = "Tap to open in Spotify.";
+  }
+})();
+</script>
+
+</body>
+</html>
