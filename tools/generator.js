@@ -108,8 +108,12 @@
   function clearLog() { els.log.innerHTML = ""; }
 
   // ---------- OG image processing ----------
+  const TARGET_W = 1200;
+  const TARGET_H = 630;
+
   let ogImageLoaded = false;
   let ogImageBitmap = null;
+  let ogImageError = null;
 
   function drawOgCanvasFromBitmap() {
     const canvas = els.ogCanvas;
@@ -121,36 +125,37 @@
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = "rgba(127,127,127,0.7)";
       ctx.font = "16px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
-      ctx.fillText("Upload an image to generate 1200×630 OG image", 20, 40);
+      ctx.fillText("Upload a square image; final output is 1200×630", 20, 40);
       return;
     }
 
-    const targetW = 1200, targetH = 630;
-    const targetRatio = targetW / targetH;
-
+    const targetW = TARGET_W, targetH = TARGET_H;
     const srcW = ogImageBitmap.width, srcH = ogImageBitmap.height;
-    const srcRatio = srcW / srcH;
 
-    let cropW, cropH, cropX, cropY;
+    // Background: cover + blur
+    const coverScale = Math.max(targetW / srcW, targetH / srcH);
+    const bgW = srcW * coverScale;
+    const bgH = srcH * coverScale;
+    const bgX = (targetW - bgW) / 2;
+    const bgY = (targetH - bgH) / 2;
 
-    if (srcRatio > targetRatio) {
-      cropH = srcH;
-      cropW = Math.round(srcH * targetRatio);
-      cropX = Math.round((srcW - cropW) / 2);
-      cropY = 0;
-    } else {
-      cropW = srcW;
-      cropH = Math.round(srcW / targetRatio);
-      cropX = 0;
-      cropY = Math.round((srcH - cropH) / 2);
-    }
+    ctx.save();
+    ctx.filter = "blur(40px)"; // approx 75% blur intensity
+    ctx.drawImage(ogImageBitmap, 0, 0, srcW, srcH, bgX, bgY, bgW, bgH);
+    ctx.restore();
 
-    ctx.drawImage(ogImageBitmap, cropX, cropY, cropW, cropH, 0, 0, targetW, targetH);
+    // Foreground: fit height, center horizontally
+    const fgScale = targetH / srcH;
+    const fgW = srcW * fgScale;
+    const fgH = targetH;
+    const fgX = (targetW - fgW) / 2;
+    ctx.drawImage(ogImageBitmap, 0, 0, srcW, srcH, fgX, 0, fgW, fgH);
   }
 
   async function onOgFileSelected(file) {
     ogImageLoaded = false;
     ogImageBitmap = null;
+    ogImageError = null;
 
     if (!file) {
       els.ogFileInfo.textContent = "";
@@ -162,8 +167,17 @@
     try {
       const bitmap = await createImageBitmap(file);
       ogImageBitmap = bitmap;
-      ogImageLoaded = true;
-      els.ogFileInfo.textContent = `Loaded: ${file.name} (${bitmap.width}×${bitmap.height})`;
+
+      const square = bitmap.width === bitmap.height;
+      const tallEnough = bitmap.height > TARGET_H;
+      const messages = [`Loaded: ${file.name} (${bitmap.width}×${bitmap.height})`];
+      if (!square) ogImageError = "Image must be square";
+      else if (!tallEnough) ogImageError = `Image height must be > ${TARGET_H}`;
+
+      if (ogImageError) messages.push(`INVALID: ${ogImageError}`);
+
+      ogImageLoaded = !ogImageError;
+      els.ogFileInfo.textContent = messages.join(" | ");
       drawOgCanvasFromBitmap();
       validateOnly();
     } catch (e) {
@@ -349,6 +363,7 @@ ${normalBrowserLogic}
     if (els.chIGDM.checked) required("utm_content (IG DM)", els.igdmContent.value, errors);
 
     if (!ogImageLoaded) errors.push("OG image not uploaded yet (required).");
+    if (ogImageError) errors.push(ogImageError);
 
     els.ogImageNamePreview.textContent = slug ? `assets/og/${slug}.jpg` : "";
 
