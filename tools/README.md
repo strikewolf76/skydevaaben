@@ -17,9 +17,9 @@ This tool lets you generate and publish redirect HTML files plus OG images direc
 
 ## Use the token in the generator
 1. Open `tools/generator.html` in your browser (double-click or serve locally).
-2. Fill in fields, upload the OG image, and select destinations/channels.
-3. Paste the token in the "Fine-grained PAT (Contents: Read+Write)" field.
-4. Optionally tick "Husk token" to store it in `sessionStorage` for this session only.
+2. Paste the token in the Publish token field (fine-grained PAT, Contents: Read+Write).
+3. Fill in fields (no description input; it auto-fills per destination), upload the OG image, and select destinations/channels.
+4. Spotify: paste the full track URL; the ID is parsed automatically. Apple/Deezer: paste full URLs.
 5. Upload a square source image (height > 630). The generator will blur it as background and center the foreground at 1200×630.
 6. Click "Publish to GitHub". The tool will:
    - PUT `assets/og/<slug>.jpg` (generated from the canvas)

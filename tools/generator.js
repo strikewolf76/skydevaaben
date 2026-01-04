@@ -4,20 +4,14 @@
   const els = {
     repoBase: $("repoBase"),
     siteName: $("siteName"),
-
-    ghOwner: $("ghOwner"),
-    ghRepo: $("ghRepo"),
-    ghBranch: $("ghBranch"),
     ghToken: $("ghToken"),
-    rememberToken: $("rememberToken"),
 
     title: $("title"),
-    description: $("description"),
     trackSlug: $("trackSlug"),
     utmCampaign: $("utmCampaign"),
 
     destSpotify: $("destSpotify"),
-    spotifyId: $("spotifyId"),
+    spotifyUrl: $("spotifyUrl"),
     destApple: $("destApple"),
     appleUrl: $("appleUrl"),
     destDeezer: $("destDeezer"),
@@ -107,9 +101,30 @@
 
   function clearLog() { els.log.innerHTML = ""; }
 
+  function parseSpotifyTrackId(url) {
+    if (!url) return null;
+    try {
+      const u = new URL(url.trim());
+      const match = u.pathname.match(/\/track\/([A-Za-z0-9]{10,})/);
+      if (match) return match[1];
+    } catch (_) { /* ignore */ }
+    return null;
+  }
+
+  function autoDescription({ hasSpotify, hasApple, hasDeezer }) {
+    if (hasSpotify) return "Tap to open in Spotify.";
+    if (hasApple) return "Tap to open in Apple Music.";
+    if (hasDeezer) return "Tap to open in Deezer.";
+    return "Tap to open.";
+  }
+
   // ---------- OG image processing ----------
   const TARGET_W = 1200;
   const TARGET_H = 630;
+
+  const OWNER = "strikewolf76";
+  const REPO = "skydevaaben";
+  const BRANCH = "main";
 
   let ogImageLoaded = false;
   let ogImageBitmap = null;
@@ -331,17 +346,8 @@ ${normalBrowserLogic}
       }
     }
 
-    const owner = (els.ghOwner.value || "").trim();
-    const repo = (els.ghRepo.value || "").trim();
-    const branch = (els.ghBranch.value || "").trim();
-    required("GitHub Owner", owner, errors);
-    required("GitHub Repo", repo, errors);
-    required("GitHub Branch", branch, errors);
-
     const title = (els.title.value || "").trim();
-    const description = (els.description.value || "").trim();
     required("Title", title, errors);
-    required("Description", description, errors);
 
     const slugRaw = (els.trackSlug.value || "");
     if (/_/.test(slugRaw)) errors.push("Track slug contains '_' (underscore). Use hyphens only.");
@@ -354,7 +360,11 @@ ${normalBrowserLogic}
     const anyDest = els.destSpotify.checked || els.destApple.checked || els.destDeezer.checked;
     if (!anyDest) errors.push("Select at least one destination.");
 
-    if (els.destSpotify.checked) required("Spotify track ID", (els.spotifyId.value || "").trim(), errors);
+    let spotifyIdParsed = null;
+    if (els.destSpotify.checked) {
+      spotifyIdParsed = parseSpotifyTrackId(els.spotifyUrl.value || "");
+      if (!spotifyIdParsed) errors.push("Spotify URL must contain a track ID");
+    }
     if (els.destApple.checked) required("Apple URL", (els.appleUrl.value || "").trim(), errors);
     if (els.destDeezer.checked) required("Deezer URL", (els.deezerUrl.value || "").trim(), errors);
 
@@ -392,7 +402,12 @@ ${normalBrowserLogic}
     const repoBase = normBaseUrl(els.repoBase.value);
     const siteName = (els.siteName.value || "").trim();
     const title = (els.title.value || "").trim();
-    const description = (els.description.value || "").trim();
+    const spotifyIdParsed = parseSpotifyTrackId(els.spotifyUrl.value || "");
+
+    const hasSpotify = !!(els.destSpotify.checked && spotifyIdParsed);
+    const hasApple = !!els.destApple.checked;
+    const hasDeezer = !!els.destDeezer.checked;
+    const description = autoDescription({ hasSpotify, hasApple, hasDeezer });
 
     const slug = sanitizeSlug(els.trackSlug.value);
     const utm_campaign = sanitizeSlug(els.utmCampaign.value);
@@ -402,7 +417,7 @@ ${normalBrowserLogic}
 
     const destinations = [];
     if (els.destSpotify.checked) {
-      const sid = (els.spotifyId.value || "").trim();
+      const sid = spotifyIdParsed;
       destinations.push({
         key: "spotify",
         type: "spotify",
@@ -527,28 +542,17 @@ ${normalBrowserLogic}
       return;
     }
 
-    const owner = (els.ghOwner.value || "").trim();
-    const repo = (els.ghRepo.value || "").trim();
-    const branch = (els.ghBranch.value || "").trim();
-
     const batch = buildBatch();
     if (!batch || !batch.ok) {
       addLogItem({ title: "Batch build failed", status: "FAIL", lines: [batch?.error || "Unknown error"] });
       return;
     }
 
-    // Remember token (session only)
-    if (els.rememberToken.checked) {
-      sessionStorage.setItem("skydevaaben_pat", token);
-    } else {
-      sessionStorage.removeItem("skydevaaben_pat");
-    }
-
     addLogItem({
       title: "Publishing…",
       status: "RUNNING",
       lines: [
-        `Target: ${owner}/${repo} @ ${branch}`,
+        `Target: ${OWNER}/${REPO} @ ${BRANCH}`,
         `OG image: ${batch.ogImageRel}`,
         `Files: ${batch.items.length}`
       ]
@@ -558,7 +562,7 @@ ${normalBrowserLogic}
     try {
       const ogJpgB64 = await canvasToJpegBase64(els.ogCanvas, 0.92);
       await putFile({
-        owner, repo, branch, token,
+        owner: OWNER, repo: REPO, branch: BRANCH, token,
         path: batch.ogImageRel,
         message: `OG image: ${batch.slug}`,
         contentBase64: ogJpgB64
@@ -586,7 +590,7 @@ ${normalBrowserLogic}
       try {
         const htmlB64 = utf8ToBase64(it.html);
         await putFile({
-          owner, repo, branch, token,
+          owner: OWNER, repo: REPO, branch: BRANCH, token,
           path: it.relPath,
           message: `Redirect: ${batch.slug} (${it.dest}) ${it.utm_content}`,
           contentBase64: htmlB64
@@ -633,23 +637,17 @@ ${normalBrowserLogic}
     clearLog();
 
     const token = (els.ghToken.value || "").trim();
-    const owner = (els.ghOwner.value || "").trim();
-    const repo = (els.ghRepo.value || "").trim();
-    const branch = (els.ghBranch.value || "").trim();
 
     const errors = [];
     required("Token", token, errors);
-    required("GitHub Owner", owner, errors);
-    required("GitHub Repo", repo, errors);
-    required("GitHub Branch", branch, errors);
     if (errors.length) {
       addLogItem({ title: "Check token", status: "FAIL", lines: errors });
       return;
     }
 
-    addLogItem({ title: "Checking token…", status: "RUNNING", lines: [`${owner}/${repo}`] });
+    addLogItem({ title: "Checking token…", status: "RUNNING", lines: [`${OWNER}/${REPO}`] });
     try {
-      const repoInfo = await ghFetch(`/repos/${owner}/${repo}`, { token });
+      const repoInfo = await ghFetch(`/repos/${OWNER}/${REPO}`, { token });
       addLogItem({
         title: "Token OK",
         status: "PASS",
@@ -669,14 +667,13 @@ ${normalBrowserLogic}
 
   // ---------- reset ----------
   function resetForm() {
-    // Keep repoBase, siteName, owner/repo/branch (stable)
+    // Keep repoBase, siteName (stable)
     els.title.value = "";
-    els.description.value = "Tap to open in Spotify.";
     els.trackSlug.value = "";
     els.utmCampaign.value = "";
 
     els.destSpotify.checked = true;
-    els.spotifyId.value = "";
+    els.spotifyUrl.value = "";
     els.destApple.checked = false;
     els.appleUrl.value = "";
     els.destDeezer.checked = false;
@@ -710,18 +707,11 @@ ${normalBrowserLogic}
 
   // ---------- wire ----------
   function wire() {
-    // Load token from session if present
-    const saved = sessionStorage.getItem("skydevaaben_pat");
-    if (saved) {
-      els.ghToken.value = saved;
-      els.rememberToken.checked = true;
-    }
-
     [
       els.repoBase, els.siteName,
-      els.ghOwner, els.ghRepo, els.ghBranch, els.ghToken, els.rememberToken,
-      els.title, els.description, els.trackSlug, els.utmCampaign,
-      els.destSpotify, els.spotifyId, els.destApple, els.appleUrl, els.destDeezer, els.deezerUrl,
+      els.ghToken,
+      els.title, els.trackSlug, els.utmCampaign,
+      els.destSpotify, els.spotifyUrl, els.destApple, els.appleUrl, els.destDeezer, els.deezerUrl,
       els.chMeta, els.metaContent, els.chTikTok, els.ttContent, els.chYouTube, els.ytContent, els.chIGDM, els.igdmContent
     ].forEach(el => el.addEventListener("input", () => {
       if (el === els.trackSlug) autoAlignCampaignToSlug();

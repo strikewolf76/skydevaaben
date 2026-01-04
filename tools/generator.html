@@ -55,46 +55,15 @@
         <input id="siteName" value="Skydevaaben" />
       </div>
 
-      <div class="full panel">
-        <div><strong>Publish target (GitHub)</strong></div>
-        <div class="hint">Token brukes kun i nettleseren din for å skrive filer via GitHub API. Ikke lagre token i repoet.</div>
-
-        <div class="grid" style="margin-top:10px;">
-          <div>
-            <label for="ghOwner">Owner</label>
-            <input id="ghOwner" value="strikewolf76" />
-          </div>
-          <div>
-            <label for="ghRepo">Repo</label>
-            <input id="ghRepo" value="skydevaaben" />
-          </div>
-
-          <div>
-            <label for="ghBranch">Branch</label>
-            <input id="ghBranch" value="main" />
-          </div>
-          <div>
-            <label for="ghToken">Fine-grained PAT (Contents: Read+Write)</label>
-            <input id="ghToken" type="password" placeholder="ghp_..." />
-          </div>
-
-          <div class="full">
-            <label class="chip">
-              <input id="rememberToken" type="checkbox">
-              <span>Husk token i denne nettleser-økten (sessionStorage)</span>
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div>
+      <div class="full">
         <label for="title">Title</label>
         <input id="title" value="Born Again (Crimson Noise Remix)" />
       </div>
 
-      <div>
-        <label for="description">Description</label>
-        <input id="description" value="Tap to open in Spotify." />
+      <div class="full">
+        <label for="ghToken">Publish token (fine-grained PAT)</label>
+        <input id="ghToken" type="password" placeholder="Paste PAT (Contents: Read+Write)" />
+        <div class="hint">Brukes kun i nettleseren for å publisere; ikke lagres i repo.</div>
       </div>
 
       <div>
@@ -109,19 +78,19 @@
 
       <div class="full panel">
         <div><strong>Destinations</strong></div>
-        <div class="hint">Spotify bygges fra Track ID. Andre trenger full URL.</div>
+        <div class="hint">Spotify bygges fra URL (ID hentes automatisk). Andre trenger full URL.</div>
 
         <div class="grid" style="margin-top:10px;">
           <div class="chip">
             <input id="destSpotify" type="checkbox" checked>
             <div>
-              <div><strong>Spotify</strong> <span class="small">(build from Track ID)</span></div>
+              <div><strong>Spotify</strong> <span class="small">(parse from URL)</span></div>
               <div class="hint mono">tracks/&lt;slug&gt;/spotify/…</div>
             </div>
           </div>
           <div>
-            <label for="spotifyId">Spotify track ID</label>
-            <input id="spotifyId" value="1zqSLn6IuAaDGCSZGcZFj2" />
+            <label for="spotifyUrl">Spotify track URL</label>
+            <input id="spotifyUrl" placeholder="https://open.spotify.com/track/..." />
           </div>
 
           <div class="chip">
