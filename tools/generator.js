@@ -38,6 +38,14 @@
     btnCheckToken: $("btnCheckToken"),
     btnPublish: $("btnPublish"),
     btnReset: $("btnReset"),
+    btnForgetToken: $("btnForgetToken"),
+    btnDestSpotifyOnly: $("btnDestSpotifyOnly"),
+    btnDestAll: $("btnDestAll"),
+    btnChAdsAll: $("btnChAdsAll"),
+    btnChSocialLight: $("btnChSocialLight"),
+    btnChMinimal: $("btnChMinimal"),
+    btnCopyUrls: $("btnCopyUrls"),
+    btnQrBatch: $("btnQrBatch"),
   };
 
   // ---------- utils ----------
@@ -121,6 +129,9 @@
   // ---------- OG image processing ----------
   const TARGET_W = 1200;
   const TARGET_H = 630;
+
+  const SETTINGS_KEY = "sv-generator-settings-v1";
+  const TOKEN_KEY = "sv-generator-token";
 
   const OWNER = "strikewolf76";
   const REPO = "skydevaaben";
@@ -229,6 +240,92 @@
       binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunkSize));
     }
     return btoa(binary);
+  }
+
+  // ---------- persistence (localStorage) ----------
+  function safeGet(key) {
+    try { return localStorage.getItem(key); } catch { return null; }
+  }
+  function safeSet(key, value) {
+    try { if (value === null) localStorage.removeItem(key); else localStorage.setItem(key, value); } catch { /* ignore */ }
+  }
+
+  function collectSettings() {
+    return {
+      repoBase: els.repoBase.value,
+      siteName: els.siteName.value,
+      title: els.title.value,
+      trackSlug: els.trackSlug.value,
+      utmCampaign: els.utmCampaign.value,
+      destSpotify: els.destSpotify.checked,
+      spotifyUrl: els.spotifyUrl.value,
+      destApple: els.destApple.checked,
+      appleUrl: els.appleUrl.value,
+      destDeezer: els.destDeezer.checked,
+      deezerUrl: els.deezerUrl.value,
+      chMeta: els.chMeta.checked,
+      metaContent: els.metaContent.value,
+      chTikTok: els.chTikTok.checked,
+      ttContent: els.ttContent.value,
+      chYouTube: els.chYouTube.checked,
+      ytContent: els.ytContent.value,
+      chIGDM: els.chIGDM.checked,
+      igdmContent: els.igdmContent.value,
+    };
+  }
+
+  let saveTimer = null;
+  function persistSettingsSoon() {
+    if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      const data = collectSettings();
+      safeSet(SETTINGS_KEY, JSON.stringify(data));
+    }, 200);
+  }
+
+  function applySettings() {
+    const raw = safeGet(SETTINGS_KEY);
+    if (!raw) return;
+    try {
+      const s = JSON.parse(raw);
+      const assign = (el, val, isCheckbox) => {
+        if (typeof val === "undefined") return;
+        if (isCheckbox) el.checked = !!val; else el.value = val;
+      };
+      assign(els.repoBase, s.repoBase);
+      assign(els.siteName, s.siteName);
+      assign(els.title, s.title);
+      assign(els.trackSlug, s.trackSlug);
+      assign(els.utmCampaign, s.utmCampaign);
+      assign(els.destSpotify, s.destSpotify, true);
+      assign(els.spotifyUrl, s.spotifyUrl);
+      assign(els.destApple, s.destApple, true);
+      assign(els.appleUrl, s.appleUrl);
+      assign(els.destDeezer, s.destDeezer, true);
+      assign(els.deezerUrl, s.deezerUrl);
+      assign(els.chMeta, s.chMeta, true);
+      assign(els.metaContent, s.metaContent);
+      assign(els.chTikTok, s.chTikTok, true);
+      assign(els.ttContent, s.ttContent);
+      assign(els.chYouTube, s.chYouTube, true);
+      assign(els.ytContent, s.ytContent);
+      assign(els.chIGDM, s.chIGDM, true);
+      assign(els.igdmContent, s.igdmContent);
+    } catch { /* ignore */ }
+  }
+
+  function loadToken() {
+    return safeGet(TOKEN_KEY) || "";
+  }
+
+  function persistToken(token) {
+    if (token && token.trim()) safeSet(TOKEN_KEY, token.trim());
+    else safeSet(TOKEN_KEY, null);
+  }
+
+  function forgetToken() {
+    persistToken("");
+    els.ghToken.value = "";
   }
 
   // ---------- HTML generation ----------
@@ -479,6 +576,111 @@ ${normalBrowserLogic}
     return { ok: true, slug, ogImageRel, ogImageAbs, items };
   }
 
+  // ---------- presets ----------
+  function setDestPreset(kind) {
+    if (kind === "spotify") {
+      els.destSpotify.checked = true;
+      els.destApple.checked = false;
+      els.destDeezer.checked = false;
+    } else if (kind === "all") {
+      els.destSpotify.checked = true;
+      els.destApple.checked = true;
+      els.destDeezer.checked = true;
+    }
+    persistSettingsSoon();
+    validateOnly();
+  }
+
+  function setChannelPreset(kind) {
+    if (kind === "ads") {
+      els.chMeta.checked = true;
+      els.chTikTok.checked = true;
+      els.chYouTube.checked = true;
+      els.chIGDM.checked = false;
+    } else if (kind === "social") {
+      els.chMeta.checked = true;
+      els.chTikTok.checked = false;
+      els.chYouTube.checked = false;
+      els.chIGDM.checked = true;
+    } else if (kind === "minimal") {
+      els.chMeta.checked = true;
+      els.chTikTok.checked = false;
+      els.chYouTube.checked = false;
+      els.chIGDM.checked = false;
+    }
+    persistSettingsSoon();
+    validateOnly();
+  }
+
+  // ---------- drag & drop OG ----------
+  function wireOgDragDrop() {
+    const canvas = els.ogCanvas;
+    const prevent = (e) => { e.preventDefault(); e.stopPropagation(); };
+    ["dragenter", "dragover", "dragleave", "drop"].forEach(ev => canvas.addEventListener(ev, prevent));
+    canvas.addEventListener("drop", (e) => {
+      const file = e.dataTransfer?.files?.[0];
+      if (file) onOgFileSelected(file);
+    });
+  }
+
+  // ---------- clipboard + QR ----------
+  async function copyPagesUrls() {
+    const batch = buildBatch();
+    if (!batch || !batch.ok) return;
+    const urls = batch.items.map(i => i.pagesUrl).join("\n");
+    try {
+      await navigator.clipboard.writeText(urls);
+      addLogItem({ title: "Copied Pages URLs", status: "OK", lines: ["Alle genererte Pages-URLer kopiert til utklippstavle."] });
+    } catch (e) {
+      addLogItem({ title: "Copy failed", status: "FAIL", lines: [String(e.message || e)] });
+    }
+  }
+
+  function loadQrLib() {
+    return new Promise((resolve, reject) => {
+      const existing = document.querySelector('script[data-qr-lib="1"]');
+      if (existing) {
+        if (window.QRCode) return resolve();
+        existing.addEventListener("load", () => resolve());
+        existing.addEventListener("error", () => reject(new Error("QR lib failed to load")));
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js";
+      script.async = true;
+      script.dataset.qrLib = "1";
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error("QR lib failed to load"));
+      document.head.appendChild(script);
+    });
+  }
+
+  async function generateQrBatch() {
+    const batch = buildBatch();
+    if (!batch || !batch.ok) return;
+
+    addLogItem({ title: "Generating QR codes…", status: "RUNNING", lines: [`${batch.items.length} URLs` ] });
+
+    try {
+      await loadQrLib();
+      const lines = [];
+      for (const it of batch.items) {
+        const dataUrl = await window.QRCode.toDataURL(it.pagesUrl, { width: 320, margin: 2 });
+        lines.push(`${it.relPath} → QR ready`);
+        addLogItem({
+          title: `QR: ${it.relPath}`,
+          status: "READY",
+          linkText: "Download QR (PNG)",
+          linkHref: dataUrl,
+          lines: [it.pagesUrl]
+        });
+      }
+      addLogItem({ title: "QR batch done", status: "SUCCESS", lines });
+    } catch (e) {
+      addLogItem({ title: "QR generation failed", status: "FAIL", lines: [String(e.message || e)] });
+    }
+  }
+
   // ---------- GitHub API (create/update contents) ----------
   async function ghFetch(path, { method = "GET", token, body } = {}) {
     const res = await fetch(`https://api.github.com${path}`, {
@@ -529,6 +731,14 @@ ${normalBrowserLogic}
     });
   }
 
+  function normalizeTokenError(e) {
+    const msg = String(e?.message || e || "").trim();
+    const isToken = /bad credentials|expired|authentication|unauthorized/i.test(msg);
+    if (isToken) forgetToken();
+    const extra = isToken ? "Token kan være utløpt. Lag ny fine-grained PAT med Contents Read/Write." : "";
+    return extra ? `${msg} | ${extra}` : msg;
+  }
+
   // ---------- publish ----------
   async function publishAll() {
     clearLog();
@@ -538,9 +748,13 @@ ${normalBrowserLogic}
 
     const token = (els.ghToken.value || "").trim();
     if (!token) {
-      addLogItem({ title: "Missing token", status: "FAIL", lines: ["Paste a fine-grained PAT in the token field (Contents: Read+Write)."] });
+      addLogItem({ title: "Missing token", status: "FAIL", lines: [
+        "Fant ingen token. Lag en fine-grained PAT med Contents Read/Write og lim inn her.",
+        "Hurtiglenke: https://github.com/settings/personal-access-tokens/new"
+      ] });
       return;
     }
+    persistToken(token);
 
     const batch = buildBatch();
     if (!batch || !batch.ok) {
@@ -578,7 +792,7 @@ ${normalBrowserLogic}
       addLogItem({
         title: `FAIL: ${batch.ogImageRel}`,
         status: "ERROR",
-        lines: [String(e.message || e)]
+        lines: [normalizeTokenError(e)]
       });
       return;
     }
@@ -610,7 +824,7 @@ ${normalBrowserLogic}
         addLogItem({
           title: `FAIL: ${it.relPath}`,
           status: "ERROR",
-          lines: [String(e.message || e)]
+          lines: [normalizeTokenError(e)]
         });
         failures += 1;
         continue;
@@ -648,6 +862,7 @@ ${normalBrowserLogic}
     addLogItem({ title: "Checking token…", status: "RUNNING", lines: [`${OWNER}/${REPO}`] });
     try {
       const repoInfo = await ghFetch(`/repos/${OWNER}/${REPO}`, { token });
+      persistToken(token);
       addLogItem({
         title: "Token OK",
         status: "PASS",
@@ -660,7 +875,7 @@ ${normalBrowserLogic}
       addLogItem({
         title: "Token check failed",
         status: "FAIL",
-        lines: [String(e.message || e)]
+        lines: [normalizeTokenError(e), "Hurtiglenke: https://github.com/settings/personal-access-tokens/new"]
       });
     }
   }
@@ -697,6 +912,8 @@ ${normalBrowserLogic}
     clearLog();
     els.validation.textContent = "";
     els.ogImageNamePreview.textContent = "";
+
+    persistSettingsSoon();
   }
 
   function autoAlignCampaignToSlug() {
@@ -707,6 +924,10 @@ ${normalBrowserLogic}
 
   // ---------- wire ----------
   function wire() {
+    applySettings();
+    const savedToken = loadToken();
+    if (savedToken) els.ghToken.value = savedToken;
+
     [
       els.repoBase, els.siteName,
       els.ghToken,
@@ -716,6 +937,8 @@ ${normalBrowserLogic}
     ].forEach(el => el.addEventListener("input", () => {
       if (el === els.trackSlug) autoAlignCampaignToSlug();
       validateOnly();
+      if (el !== els.ghToken) persistSettingsSoon();
+      else persistToken(els.ghToken.value);
     }));
 
     els.trackSlug.addEventListener("input", autoAlignCampaignToSlug);
@@ -730,13 +953,16 @@ ${normalBrowserLogic}
       const batch = buildBatch();
       if (!batch || !batch.ok) return;
 
+      const firstSnippet = batch.items[0]?.html?.split("\n").slice(0, 12).join("\n");
+
       addLogItem({
         title: "Preview batch (not published)",
         status: "READY",
         lines: [
           `Will publish OG image: ${batch.ogImageRel}`,
           `Will publish ${batch.items.length} HTML files:`,
-          ...batch.items.map(i => `- ${i.relPath} → ${i.pagesUrl}`)
+          ...batch.items.map(i => `- ${i.relPath} → ${i.pagesUrl}`),
+          ...(firstSnippet ? ["--- First file preview ---", firstSnippet] : [])
         ]
       });
     });
@@ -744,6 +970,19 @@ ${normalBrowserLogic}
     els.btnCheckToken.addEventListener("click", () => { checkToken(); });
     els.btnPublish.addEventListener("click", () => publishAll());
     els.btnReset.addEventListener("click", () => resetForm());
+
+    els.btnForgetToken.addEventListener("click", () => { forgetToken(); clearLog(); addLogItem({ title: "Token cleared", status: "OK", lines: ["Token fjernet fra nettleseren."] }); });
+
+    els.btnDestSpotifyOnly.addEventListener("click", () => setDestPreset("spotify"));
+    els.btnDestAll.addEventListener("click", () => setDestPreset("all"));
+    els.btnChAdsAll.addEventListener("click", () => setChannelPreset("ads"));
+    els.btnChSocialLight.addEventListener("click", () => setChannelPreset("social"));
+    els.btnChMinimal.addEventListener("click", () => setChannelPreset("minimal"));
+
+    els.btnCopyUrls.addEventListener("click", () => copyPagesUrls());
+    els.btnQrBatch.addEventListener("click", () => generateQrBatch());
+
+    wireOgDragDrop();
 
     drawOgCanvasFromBitmap();
     autoAlignCampaignToSlug();

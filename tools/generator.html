@@ -63,7 +63,11 @@
       <div class="full">
         <label for="ghToken">Publish token (fine-grained PAT)</label>
         <input id="ghToken" type="password" placeholder="Paste PAT (Contents: Read+Write)" />
-        <div class="hint">Brukes kun i nettleseren for å publisere; ikke lagres i repo.</div>
+        <div class="hint">Brukes kun i nettleseren for å publisere; ikke lagres i repo. Lagres lokalt i nettleseren for gjenbruk.</div>
+        <div class="row" style="margin-top:8px;">
+          <button id="btnForgetToken">Forget saved token</button>
+          <div class="hint">Hvis token mangler/feiler, vi ber deg lage nytt og lagrer det lokalt.</div>
+        </div>
       </div>
 
       <div>
@@ -79,6 +83,11 @@
       <div class="full panel">
         <div><strong>Destinations</strong></div>
         <div class="hint">Spotify bygges fra URL (ID hentes automatisk). Andre trenger full URL.</div>
+
+        <div class="row" style="margin-top:6px;">
+          <button id="btnDestSpotifyOnly">Preset: Spotify only</button>
+          <button id="btnDestAll">Preset: All destinations</button>
+        </div>
 
         <div class="grid" style="margin-top:10px;">
           <div class="chip">
@@ -122,6 +131,12 @@
       <div class="full panel">
         <div><strong>Channels</strong></div>
         <div class="hint">Filer navngis <span class="mono">&lt;utm_content&gt;.html</span> per destination.</div>
+
+        <div class="row" style="margin-top:6px;">
+          <button id="btnChAdsAll">Preset: Ads (Meta+TikTok+YouTube)</button>
+          <button id="btnChSocialLight">Preset: Social light (Meta+IG DM)</button>
+          <button id="btnChMinimal">Preset: Minimal (Meta only)</button>
+        </div>
 
         <div class="grid" style="margin-top:10px;">
           <div class="chip">
@@ -180,6 +195,7 @@
             </div>
             <div class="hint mono" id="ogFileInfo"></div>
             <div class="hint">Målfil: <span class="mono" id="ogImageNamePreview"></span></div>
+            <div class="hint">Drag & drop et bilde på previewen for rask opplasting.</div>
           </div>
 
           <div>
@@ -200,6 +216,8 @@
       <button class="primary" id="btnCheckToken">Check token</button>
       <button class="primary" id="btnPublish">Publish to GitHub (create/update files)</button>
       <button class="danger" id="btnReset">Create new / refresh</button>
+      <button id="btnCopyUrls">Copy all Pages URLs</button>
+      <button id="btnQrBatch">Generate QR PNGs (batch)</button>
     </div>
   </div>
 
