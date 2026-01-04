@@ -219,7 +219,9 @@
     }
   }
 
-  async function canvasToJpegBase64(canvas, quality = 0.92) {
+  const JPEG_QUALITY = 0.88; // good balance: smaller files, visually lossless for OG
+
+  async function canvasToJpegBase64(canvas, quality = JPEG_QUALITY) {
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", quality));
     const arr = await blob.arrayBuffer();
     return arrayBufferToBase64(arr);
