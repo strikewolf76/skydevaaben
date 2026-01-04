@@ -328,6 +328,13 @@
     els.ghToken.value = "";
   }
 
+  function syncSlugAndCampaignFromTitle() {
+    const slug = sanitizeSlug(els.title.value || "");
+    els.trackSlug.value = slug;
+    els.utmCampaign.value = slug;
+    els.ogImageNamePreview.textContent = slug ? `assets/og/${slug}.jpg` : "";
+  }
+
   // ---------- HTML generation ----------
   function generateHtml({
     title,
@@ -429,6 +436,7 @@ ${normalBrowserLogic}
 
   // ---------- validation + batch build ----------
   function validateOnly() {
+    syncSlugAndCampaignFromTitle();
     const errors = [];
 
     const repoBase = normBaseUrl(els.repoBase.value);
@@ -913,13 +921,8 @@ ${normalBrowserLogic}
     els.validation.textContent = "";
     els.ogImageNamePreview.textContent = "";
 
+    syncSlugAndCampaignFromTitle();
     persistSettingsSoon();
-  }
-
-  function autoAlignCampaignToSlug() {
-    const slug = sanitizeSlug(els.trackSlug.value);
-    if (!els.utmCampaign.value.trim()) els.utmCampaign.value = slug;
-    els.ogImageNamePreview.textContent = slug ? `assets/og/${slug}.jpg` : "";
   }
 
   // ---------- wire ----------
@@ -927,21 +930,20 @@ ${normalBrowserLogic}
     applySettings();
     const savedToken = loadToken();
     if (savedToken) els.ghToken.value = savedToken;
+    syncSlugAndCampaignFromTitle();
 
     [
       els.repoBase, els.siteName,
       els.ghToken,
-      els.title, els.trackSlug, els.utmCampaign,
+      els.title,
       els.destSpotify, els.spotifyUrl, els.destApple, els.appleUrl, els.destDeezer, els.deezerUrl,
       els.chMeta, els.metaContent, els.chTikTok, els.ttContent, els.chYouTube, els.ytContent, els.chIGDM, els.igdmContent
     ].forEach(el => el.addEventListener("input", () => {
-      if (el === els.trackSlug) autoAlignCampaignToSlug();
+      if (el === els.title) syncSlugAndCampaignFromTitle();
       validateOnly();
       if (el !== els.ghToken) persistSettingsSoon();
       else persistToken(els.ghToken.value);
     }));
-
-    els.trackSlug.addEventListener("input", autoAlignCampaignToSlug);
 
     els.ogFile.addEventListener("change", (e) => {
       const file = e.target.files && e.target.files[0];
