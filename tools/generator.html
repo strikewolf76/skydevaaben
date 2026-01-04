@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Skydevaaben Redirect Generator</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; max-width: 1040px; margin: 24px auto; padding: 0 16px; }
+    h1 { font-size: 22px; margin: 0 0 10px; }
+    .muted { opacity: .8; font-size: 13px; margin: 0 0 14px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }
+    label { display: block; font-size: 12px; opacity: 0.85; margin-bottom: 6px; }
+    input, select, textarea { width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(127,127,127,0.35); background: transparent; }
+    textarea { min-height: 110px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
+    button { padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(127,127,127,0.35); background: rgba(127,127,127,0.12); cursor: pointer; }
+    button.primary { background: rgba(0, 120, 255, 0.18); }
+    button.preset { padding: 8px 10px; font-size: 13px; }
+    .panel { border: 1px solid rgba(127,127,127,0.25); border-radius: 14px; padding: 14px; margin-top: 14px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; }
+    .ok { color: #0a7; }
+    .bad { color: #c33; }
+    .hint { font-size: 12px; opacity: 0.8; margin-top: 6px; }
+    .full { grid-column: 1 / -1; }
+    .ogpreview { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+    .thumb { border: 1px solid rgba(127,127,127,0.25); border-radius: 14px; padding: 10px; }
+    img { max-width: 100%; height: auto; border-radius: 12px; display:block; }
+    @media (max-width: 900px) { .grid, .ogpreview { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>Skydevaaben – Spotify Redirect Generator</h1>
+  <p class="muted">
+    Output: HTML → <span class="mono">tracks/</span>, OG-bilde → <span class="mono">assets/og/</span>.
+    Bindestrek-policy (ingen underscores).
+  </p>
+
+  <div class="panel">
+    <div class="row">
+      <strong>Presets</strong>
+      <button class="preset" id="presetMeta">Meta Ads</button>
+      <button class="preset" id="presetTikTok">TikTok Ads</button>
+      <button class="preset" id="presetYouTube">YouTube Ads</button>
+      <button class="preset" id="presetIGDM">IG DM</button>
+    </div>
+    <div class="hint">
+      Preset fyller <span class="mono">utm_source</span> og <span class="mono">utm_medium</span>. Du setter normalt bare <span class="mono">utm_content</span>.
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="grid">
+      <div>
+        <label for="repoBase">Pages base URL</label>
+        <input id="repoBase" value="https://strikewolf76.github.io/skydevaaben" />
+        <div class="hint">Brukes til å bygge absolute <span class="mono">og:url</span> og <span class="mono">og:image</span>.</div>
+      </div>
+
+      <div>
+        <label for="siteName">og:site_name</label>
+        <input id="siteName" value="Skydevaaben" />
+      </div>
+
+      <div>
+        <label for="title">Title (og:title + &lt;title&gt;)</label>
+        <input id="title" value="Born Again (Crimson Noise Remix)" />
+      </div>
+
+      <div>
+        <label for="description">Description (og:description)</label>
+        <input id="description" value="Tap to open in Spotify." />
+      </div>
+
+      <div>
+        <label for="trackSlug">Track slug (bindestreker)</label>
+        <input id="trackSlug" value="born-again-crimson-noise" />
+        <div class="hint">Ingen underscores. Slug brukes også som default bilde-navn.</div>
+      </div>
+
+      <div>
+        <label for="spotifyId">Spotify track ID</label>
+        <input id="spotifyId" value="1zqSLn6IuAaDGCSZGcZFj2" />
+      </div>
+
+      <div>
+        <label for="utmSource">utm_source</label>
+        <input id="utmSource" value="meta" />
+      </div>
+
+      <div>
+        <label for="utmMedium">utm_medium</label>
+        <input id="utmMedium" value="paid_social" />
+      </div>
+
+      <div>
+        <label for="utmCampaign">utm_campaign</label>
+        <input id="utmCampaign" value="born-again-crimson-noise" />
+      </div>
+
+      <div>
+        <label for="utmContent">utm_content</label>
+        <input id="utmContent" value="meta-ads-story01" />
+      </div>
+
+      <div class="full">
+        <div class="panel">
+          <div class="ogpreview">
+            <div class="thumb">
+              <div><strong>OG image upload</strong></div>
+              <div class="hint">Generatoren lager en ferdig <span class="mono">1200×630</span> JPG som du laster ned og uploader til <span class="mono">assets/og/</span>.</div>
+              <div style="margin-top:10px;">
+                <input id="ogFile" type="file" accept="image/*" />
+              </div>
+              <div class="hint mono" id="ogFileInfo"></div>
+
+              <div class="row">
+                <button id="btnDownloadOg">Download OG image (.jpg)</button>
+              </div>
+              <div class="hint">Filnavn: <span class="mono" id="ogImageNamePreview"></span></div>
+            </div>
+
+            <div class="thumb">
+              <div><strong>Preview (cropped to 1200×630)</strong></div>
+              <div class="hint">Center-crop til 1.91:1. Dette er det som lastes ned.</div>
+              <canvas id="ogCanvas" width="1200" height="630" style="width:100%;height:auto;border-radius:12px;border:1px solid rgba(127,127,127,0.2);"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="full">
+        <div class="panel">
+          <div><strong>Generated paths</strong></div>
+          <div class="mono">HTML: <span id="htmlPathPreview"></span></div>
+          <div class="mono">OG image: <span id="ogPathPreview"></span></div>
+          <div class="mono">og:url: <span id="ogUrlPreview"></span></div>
+          <div class="mono">og:image: <span id="ogImgPreview"></span></div>
+          <div class="mono">Spotify WEB_URL: <span id="webUrlPreview"></span></div>
+        </div>
+      </div>
+
+      <div class="full">
+        <div class="panel">
+          <div><strong>Validation</strong></div>
+          <div id="validation" class="mono"></div>
+        </div>
+      </div>
+
+      <div class="full">
+        <label for="generatedHtml">Generated HTML</label>
+        <textarea id="generatedHtml" spellcheck="false"></textarea>
+        <div class="hint">Download HTML og upload til <span class="mono">tracks/</span>.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <button class="primary" id="btnGenerate">Generate</button>
+      <button id="btnCopy">Copy HTML</button>
+      <button id="btnDownloadHtml">Download .html</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <strong>Praktisk</strong>
+    <div class="hint">
+      1) Upload OG-bilde til <span class="mono">assets/og/</span> (samme filnavn som generatoren foreslår).<br>
+      2) Upload HTML til <span class="mono">tracks/</span>.<br>
+      3) Ved preview-endringer: bruk Facebook Sharing Debugger “Scrape again” for å tvinge cache refresh.
+    </div>
+  </div>
+
+  <script src="./generator.js"></script>
+</body>
+</html>
