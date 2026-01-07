@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Glass People - Sky.AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+
+  <meta property="og:type" content="music.song">
+  <meta property="og:site_name" content="Skydevaaben">
+  <meta property="og:title" content="Glass People - Sky.AI">
+  <meta property="og:description" content="Tap to open in Spotify.">
+  <meta property="og:url" content="https://skydevaaben.no/tracks/glass-people-skyai/spotify/meta.html">
+  <meta property="og:image" content="https://skydevaaben.no/assets/og/glass-people-skyai.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Glass People - Sky.AI">
+  <meta name="twitter:description" content="Tap to open in Spotify.">
+  <meta name="twitter:image" content="https://skydevaaben.no/assets/og/glass-people-skyai.jpg">
+
+  <style>
+    body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; margin: 16px; }
+    .cta { font-size: 18px; padding: 14px 22px; display: inline-block; text-decoration: none; }
+  </style>
+</head>
+
+<body>
+
+  <p id="status">Opening…</p>
+
+  <p>
+    <a id="play"
+       class="cta"
+       href="https://open.spotify.com/track/530YM22qICcy0vap1EFWJH?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=glass-people-skyai&amp;utm_content=meta-ads-reel01">
+      Open
+    </a>
+  </p>
+
+<script>
+(function () {
+  var TRACK_ID = "530YM22qICcy0vap1EFWJH";
+  var APP_URI = "spotify:track:" + TRACK_ID;
+
+  var WEB_URL = "https://open.spotify.com/track/530YM22qICcy0vap1EFWJH?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=glass-people-skyai&amp;utm_content=meta-ads-reel01";
+  WEB_URL = WEB_URL.replace(/&amp;/g, "&");
+  var META_PIXEL_ID = "1180248374269239";
+  var TRACK_SLUG = "glass-people-skyai";
+  var DEST_KEY = "spotify";
+  var CHANNEL = "meta";
+  var UTM_CAMPAIGN = "glass-people-skyai";
+  var UTM_CONTENT = "meta-ads-reel01";
+
+  var params = new URLSearchParams(window.location.search || "");
+  var CID = params.get("cid") || "";
+  var autoSent = false;
+
+  // Allow known social crawlers to fetch OG tags (no redirect)
+  var ua = navigator.userAgent || "";
+  var isCrawler = /(facebookexternalhit|facebot|twitterbot|linkedinbot|discordbot|pinterest)/i.test(ua);
+  if (isCrawler) return;
+
+  if (META_PIXEL_ID) {
+    !(function (f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+      if (!f._fbq) f._fbq = n;
+      n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = [];
+      t = b.createElement(e); t.async = !0; t.src = v;
+      s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+    })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+
+    try { fbq("consent", "revoke"); } catch (_) {}
+    fbq("init", META_PIXEL_ID);
+    try {
+      var consent = localStorage.getItem("sv_cookie_consent");
+      if (consent === "granted") fbq("consent", "grant");
+    } catch (_) { /* ignore */ }
+    fbq("track", "PageView");
+  }
+
+  var statusEl = document.getElementById("status");
+  var playEl = document.getElementById("play");
+  if (!statusEl || !playEl) return;
+
+  function isMetaInApp() {
+    var ua = navigator.userAgent || "";
+    return /FBAN|FBAV|FB_IAB|FBIOS|FB4A|Instagram|Messenger/i.test(ua);
+  }
+
+  function trackOutbound(kind) {
+    if (!window.fbq || !META_PIXEL_ID) return;
+    fbq("trackCustom", "OutboundSpotify", {
+      kind: kind,
+      cid: CID,
+      slug: TRACK_SLUG,
+      dest: DEST_KEY,
+      channel: CHANNEL,
+      utm_campaign: UTM_CAMPAIGN,
+      utm_content: UTM_CONTENT,
+      track_id: TRACK_ID || ""
+    });
+  }
+
+  function trackAutoOnce() {
+    if (autoSent) return;
+    autoSent = true;
+    trackOutbound("auto");
+  }
+
+  playEl.href = WEB_URL;
+  playEl.addEventListener("click", function () { trackOutbound("click"); });
+
+  if (isMetaInApp()) {
+    playEl.removeAttribute("target");
+    statusEl.textContent = "Opening…";
+    setTimeout(function () {
+      trackAutoOnce();
+      window.location.href = WEB_URL;
+    }, 150);
+  } else {
+    statusEl.textContent = "Opening…";
+
+      try {
+        trackAutoOnce();
+        window.location.href = APP_URI;
+        setTimeout(function () {
+          window.location.href = WEB_URL;
+        }, 600);
+      } catch (e) {
+        window.location.href = WEB_URL;
+      }
+  
+  }
+})();
+</script>
+
+</body>
+</html>
