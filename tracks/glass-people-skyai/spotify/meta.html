@@ -112,4 +112,32 @@
   var playEl = document.getElementById("play");
 
   playEl.href = WEB_URL;
-  playEl
+  playEl.addEventListener("click", function () {
+    trackOutbound("click");
+  });
+
+  function isMetaInApp() {
+    return /FBAN|FBAV|FB_IAB|FBIOS|FB4A|Instagram|Messenger/i.test(navigator.userAgent || "");
+  }
+
+  statusEl.textContent = "Opening…";
+
+  // HARD DELAY – ensure pixel fires
+  setTimeout(function () {
+    trackOutbound("auto");
+
+    if (isMetaInApp()) {
+      window.location.href = WEB_URL;
+    } else {
+      window.location.href = APP_URI;
+      setTimeout(function () {
+        window.location.href = WEB_URL;
+      }, 700);
+    }
+  }, 900);
+
+})();
+</script>
+
+</body>
+</html>
