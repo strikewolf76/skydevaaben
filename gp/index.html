@@ -1,1 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Redirecting…</title>
+  <meta name="robots" content="noindex,nofollow" />
+</head>
+<body>
+<script>
+  (function () {
+    const targetBase = "https://skydevaaben.no/tracks/glass-people-skyai/spotify/meta.html";
+    const params = new URLSearchParams(window.location.search);
+
+    // Default cid hvis ingen er oppgitt
+    if (!params.has("cid")) {
+      params.set("cid", "ig-org-gp-reel01-cold-romance");
+    }
+
+    // Forward alt (cid, utm_ osv.)
+    const target = targetBase + "?" + params.toString();
+    window.location.replace(target);
+  })();
+</script>
+
+<noscript>
+  <p>
+    JavaScript is required. Continue:
+    <a href="https://skydevaaben.no/tracks/glass-people-skyai/spotify/meta.html?cid=ig-org-gp-reel01-cold-romance">Open link</a>
+  </p>
+</noscript>
+</body>
+</html>
 
