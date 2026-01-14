@@ -17,9 +17,13 @@
   var params = new URLSearchParams(window.location.search || "");
   var cid = params.get("cid") || "org";
 
-  // Optional: let you pass platform=ig/tt/yt/fb to set utm_source automatically
-  var platform = (params.get("platform") || "").toLowerCase();
-  var utm_source = platform || "social";
+  // utm_source fra cid-prefiks (ig/tt/yt/fb)
+  var utm_source = "social";
+  if (cid.indexOf("ig-") === 0) utm_source = "instagram";
+  else if (cid.indexOf("tt-") === 0) utm_source = "tiktok";
+  else if (cid.indexOf("yt-") === 0) utm_source = "youtube";
+  else if (cid.indexOf("fb-") === 0) utm_source = "facebook";
+
   var utm_medium = "organic_social";
   var utm_campaign = SLUG;
   var utm_content = cid;
