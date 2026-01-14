@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Glass People - Sky.AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<p>Opening…</p>
+
+<script>
+(function () {
+  var TRACK_ID = "530YM22qICcy0vap1EFWJH";
+  var SLUG = "glass-people-skyai";
+
+  var params = new URLSearchParams(window.location.search || "");
+  var cid = params.get("cid") || "org";
+
+  // Optional: let you pass platform=ig/tt/yt/fb to set utm_source automatically
+  var platform = (params.get("platform") || "").toLowerCase();
+  var utm_source = platform || "social";
+  var utm_medium = "organic_social";
+  var utm_campaign = SLUG;
+  var utm_content = cid;
+
+  var web =
+    "https://open.spotify.com/track/" + TRACK_ID +
+    "?utm_source=" + encodeURIComponent(utm_source) +
+    "&utm_medium=" + encodeURIComponent(utm_medium) +
+    "&utm_campaign=" + encodeURIComponent(utm_campaign) +
+    "&utm_content=" + encodeURIComponent(utm_content);
+
+  window.location.replace(web);
+})();
+</script>
+
+<noscript>
+  <p><a href="https://open.spotify.com/track/530YM22qICcy0vap1EFWJH">Open in Spotify</a></p>
+</noscript>
+</body>
+</html>
