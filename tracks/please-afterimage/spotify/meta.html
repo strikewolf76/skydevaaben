@@ -21,19 +21,47 @@
   <meta name="twitter:image" content="https://skydevaaben.no/assets/og/please-afterimage.jpg">
 
   <style>
-    body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; margin: 16px; }
-    .cta { font-size: 18px; padding: 14px 22px; display: inline-block; text-decoration: none; }
-    .consent-info { font-size: 13px; opacity: 0.75; margin-top: 16px; max-width: 480px; line-height: 1.4; }
+    body {
+      background: url('https://skydevaaben.no/assets/og/please-afterimage.jpg') no-repeat center center;
+      background-size: cover;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      color: white;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      text-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .cta {
+      background: rgba(0,0,0,0.7);
+      color: white;
+      border: 2px solid white;
+      text-decoration: none;
+      padding: 14px 22px;
+      font-size: 18px;
+      border-radius: 10px;
+      transition: background 0.3s ease;
+    }
+    .cta:hover {
+      background: rgba(0,0,0,0.9);
+    }
+    .consent-info {
+      font-size: 13px;
+      opacity: 0.9;
+      margin-top: 20px;
+      max-width: 480px;
+      line-height: 1.4;
+      text-align: center;
+    }
   </style>
 </head>
 
 <body>
 
-  <p id="status">Click the button to open the link in a new tab.</p>
-
-  <p>
-    <a id="play" class="cta" href="https://open.spotify.com/track/530YM22qICcy0vap1EFWJH?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=please-afterimage&amp;utm_content=meta-ads-reel03" target="_blank">Open</a>
-  </p>
+  <a id="play" class="cta" href="https://open.spotify.com/track/530YM22qICcy0vap1EFWJH?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=please-afterimage&amp;utm_content=meta-ads-reel04" target="_blank">Listen on Spotify</a>
 
   <p id="consent-info" class="consent-info" style="display:none;">
     This link uses measurement to improve campaigns. By continuing, you agree.
@@ -41,14 +69,14 @@
 
 <script>
 (function () {
-  var WEB_URL = "https://open.spotify.com/track/530YM22qICcy0vap1EFWJH?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=please-afterimage&amp;utm_content=meta-ads-reel03";
+  var WEB_URL = "https://open.spotify.com/track/530YM22qICcy0vap1EFWJH?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=please-afterimage&amp;utm_content=meta-ads-reel04";
   WEB_URL = WEB_URL.replace(/&amp;/g, "&");
   var META_PIXEL_ID = "802257822837167";
   var TRACK_SLUG = "please-afterimage";
   var DEST_KEY = "spotify";
   var CHANNEL = "meta";
   var UTM_CAMPAIGN = "please-afterimage";
-  var UTM_CONTENT = "meta-ads-reel03";
+  var UTM_CONTENT = "meta-ads-reel04";
 
   var params = new URLSearchParams(window.location.search || "");
   var CID = params.get("cid") || "";
@@ -117,7 +145,7 @@
 
   var statusEl = document.getElementById("status");
   var playEl = document.getElementById("play");
-  if (!statusEl || !playEl) return;
+  if (!playEl) return;
 
   function trackOutbound(kind) {
     if (!window.fbq || !META_PIXEL_ID) return;
