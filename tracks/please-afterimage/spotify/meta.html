@@ -22,18 +22,32 @@
 
   <style>
     body {
-      background: url('https://skydevaaben.no/assets/og/please-afterimage.jpg') no-repeat center center;
+      background: url('https://skydevaaben.no/assets/og/please-afterimage-bg.jpg') no-repeat center center;
       background-size: cover;
       margin: 0;
       padding: 20px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
       color: white;
       font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
       text-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .cover {
+      width: min(300px, 80vw);
+      height: min(300px, 80vw);
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      margin-bottom: 20px;
     }
     .cta {
       background: rgba(0,0,0,0.7);
@@ -61,7 +75,10 @@
 
 <body>
 
-  <a id="play" class="cta" href="https://open.spotify.com/track/530YM22qICcy0vap1EFWJH?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=please-afterimage&amp;utm_content=meta-ads-reel04" target="_blank">Listen on Spotify</a>
+  <div class="content">
+    <img src="https://skydevaaben.no/assets/og/please-afterimage-fg.jpg" alt="" class="cover">
+    <a id="play" class="cta" href="https://open.spotify.com/track/530YM22qICcy0vap1EFWJH?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=please-afterimage&amp;utm_content=meta-ads-reel06" target="_blank">Listen on Spotify</a>
+  </div>
 
   <p id="consent-info" class="consent-info" style="display:none;">
     This link uses measurement to improve campaigns. By continuing, you agree.
@@ -69,14 +86,14 @@
 
 <script>
 (function () {
-  var WEB_URL = "https://open.spotify.com/track/530YM22qICcy0vap1EFWJH?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=please-afterimage&amp;utm_content=meta-ads-reel04";
+  var WEB_URL = "https://open.spotify.com/track/530YM22qICcy0vap1EFWJH?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=please-afterimage&amp;utm_content=meta-ads-reel06";
   WEB_URL = WEB_URL.replace(/&amp;/g, "&");
   var META_PIXEL_ID = "802257822837167";
   var TRACK_SLUG = "please-afterimage";
   var DEST_KEY = "spotify";
   var CHANNEL = "meta";
   var UTM_CAMPAIGN = "please-afterimage";
-  var UTM_CONTENT = "meta-ads-reel04";
+  var UTM_CONTENT = "meta-ads-reel06";
 
   var params = new URLSearchParams(window.location.search || "");
   var CID = params.get("cid") || "";
