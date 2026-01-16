@@ -21,120 +21,196 @@
   <meta name="twitter:image" content="https://skydevaaben.no/assets/og/glass-people-skyai.jpg">
 
   <style>
-    body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; margin: 16px; }
-    .cta { font-size: 18px; padding: 14px 22px; display: inline-block; text-decoration: none; }
+    body {
+      background: url('https://skydevaaben.no/assets/og/glass-people-skyai-bg.jpg') no-repeat center center;
+      background-size: cover;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      text-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .cover {
+      width: min(300px, 80vw);
+      height: min(300px, 80vw);
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      margin-bottom: 20px;
+    }
+    .cta {
+      background: rgba(0,0,0,0.7);
+      color: white;
+      border: 2px solid white;
+      text-decoration: none;
+      padding: 14px 22px;
+      font-size: 18px;
+      border-radius: 10px;
+      transition: background 0.3s ease;
+    }
+    .cta:hover {
+      background: rgba(0,0,0,0.9);
+    }
+    .consent-info {
+      font-size: 13px;
+      opacity: 0.9;
+      margin-top: 20px;
+      max-width: 480px;
+      line-height: 1.4;
+      text-align: center;
+    }
   </style>
 </head>
 
 <body>
 
-<p id="status">Opening…</p>
+  <div class="content">
+    <img src="https://skydevaaben.no/assets/og/glass-people-skyai-fg.jpg" alt="" class="cover">
+    <a id="play" class="cta" href="https://open.spotify.com/track/530YM22qICcy0vap1EFWJH?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=glass-people-skyai&amp;utm_content=meta-ads-reel02" rel="noopener noreferrer">Listen on Spotify</a>
+  </div>
 
-<p>
-  <a id="play"
-     class="cta"
-     href="https://open.spotify.com/track/530YM22qICcy0vap1EFWJH">
-    Open
-  </a>
-</p>
+  <p id="consent-info" class="consent-info" style="display:none;">
+    This link uses measurement to improve campaigns. By continuing, you agree.
+  </p>
 
 <script>
 (function () {
-
-  /* =======================
-     CONFIG
-  ======================= */
-
+  var WEB_URL = "https://open.spotify.com/track/530YM22qICcy0vap1EFWJH?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=glass-people-skyai&amp;utm_content=meta-ads-reel02".replace(/&amp;/g, "&");
   var META_PIXEL_ID = "802257822837167";
   var TRACK_ID = "530YM22qICcy0vap1EFWJH";
   var TRACK_SLUG = "glass-people-skyai";
-
-  var WEB_URL =
-    "https://open.spotify.com/track/530YM22qICcy0vap1EFWJH" +
-    "?utm_source=meta" +
-    "&utm_medium=paid_social" +
-    "&utm_campaign=glass-people-skyai" +
-    "&utm_content=meta-ads-reel01";
-
-  var APP_URI = "spotify:track:" + TRACK_ID;
-
-  /* =======================
-     PARAMS
-  ======================= */
+  var DEST_KEY = "spotify";
+  var CHANNEL = "meta";
+  var UTM_CAMPAIGN = "glass-people-skyai";
+  var UTM_CONTENT = "meta-ads-reel02";
 
   var params = new URLSearchParams(window.location.search || "");
   var CID = params.get("cid") || "";
-  var TEST_EVENT_CODE = params.get("test_event_code");
+  var consentGranted = false;
+  var pixelEventsQueued = [];
 
-  /* =======================
-     CRAWLER GUARD
-  ======================= */
-
+  // Allow known social crawlers to fetch OG tags (no redirect)
   var ua = navigator.userAgent || "";
-  if (/(facebookexternalhit|facebot|twitterbot|linkedinbot|discordbot|pinterest)/i.test(ua)) {
-    return;
+  var isCrawler = /(facebookexternalhit|facebot|twitterbot|linkedinbot|discordbot|pinterest|slackbot|whatsapp|telegrambot|skypeuripreview)/i.test(ua);
+  if (isCrawler) return;
+
+  // Check existing consent
+  var hasConsent = false;
+  try {
+    hasConsent = localStorage.getItem("sv_cookie_consent") === "granted";
+  } catch (_) {}
+
+  // Show consent info for new users
+  if (!hasConsent) {
+    var consentInfoEl = document.getElementById("consent-info");
+    if (consentInfoEl) consentInfoEl.style.display = "block";
   }
 
-  /* =======================
-     META PIXEL
-  ======================= */
+  // Grant consent (once only)
+  function grantConsent() {
+    if (consentGranted) return;
+    consentGranted = true;
+    try {
+      localStorage.setItem("sv_cookie_consent", "granted");
+    } catch (_) {}
+    if (window.fbq && META_PIXEL_ID) {
+      fbq("consent", "grant");
+      // Fire queued events
+      while (pixelEventsQueued.length > 0) {
+        var ev = pixelEventsQueued.shift();
+        ev();
+      }
+    }
+  }
 
-  !function(f,b,e,v,n,t,s){
-    if(f.fbq)return;
-    n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;
-    n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];
-    t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)
-  }(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");
+  // Initialize Meta Pixel (if ID present)
+  if (META_PIXEL_ID) {
+    !(function (f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+      if (!f._fbq) f._fbq = n;
+      n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = [];
+      t = b.createElement(e); t.async = !0; t.src = v;
+      s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+    })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
 
-  fbq("init", META_PIXEL_ID);
-  fbq("track", "PageView");
+    fbq("init", META_PIXEL_ID);
+    
+    // Default: consent revoked
+    try { fbq("consent", "revoke"); } catch (_) {}
+
+    // If returning user: grant immediately
+    if (hasConsent) {
+      grantConsent();
+      fbq("track", "PageView");
+    } else {
+      // Queue PageView until consent granted
+      pixelEventsQueued.push(function () { fbq("track", "PageView"); });
+    }
+  }
+
+  var playEl = document.getElementById("play");
+  if (!playEl) return;
 
   function trackOutbound(kind) {
-    fbq("trackCustom", "OutboundSpotify", {
-      kind: kind,
-      cid: CID,
-      slug: TRACK_SLUG,
-      dest: "spotify",
-      channel: "meta",
-      track_id: TRACK_ID
-    });
-  }
-
-  /* =======================
-     UI + REDIRECT
-  ======================= */
-
-  var statusEl = document.getElementById("status");
-  var playEl = document.getElementById("play");
-
-  playEl.href = WEB_URL;
-  playEl.addEventListener("click", function () {
-    trackOutbound("click");
-  });
-
-  function isMetaInApp() {
-    return /FBAN|FBAV|FB_IAB|FBIOS|FB4A|Instagram|Messenger/i.test(navigator.userAgent || "");
-  }
-
-  statusEl.textContent = "Opening…";
-
-  // HARD DELAY – ensure pixel fires
-  setTimeout(function () {
-    trackOutbound("auto");
-
-    if (isMetaInApp()) {
-      window.location.href = WEB_URL;
+    if (!META_PIXEL_ID) return;
+    var fireEvent = function () {
+      if (typeof fbq !== "function") return;
+      fbq("trackCustom", "OutboundSpotify", {
+        kind: kind,
+        cid: CID,
+        slug: TRACK_SLUG,
+        dest: DEST_KEY,
+        channel: CHANNEL,
+        utm_campaign: UTM_CAMPAIGN,
+        utm_content: UTM_CONTENT,
+        track_id: TRACK_ID
+      });
+    };
+    // If consent already granted, fire immediately; else queue
+    if (consentGranted) {
+      fireEvent();
     } else {
-      window.location.href = APP_URI;
-      setTimeout(function () {
-        window.location.href = WEB_URL;
-      }, 700);
+      pixelEventsQueued.push(fireEvent);
     }
-  }, 900);
+  }
+
+  playEl.addEventListener("click", function (e) {
+    // Allow modified clicks (open in new tab etc.)
+    if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1)) return;
+
+    if (e && e.preventDefault) e.preventDefault();
+
+    // Open immediately to preserve user gesture (avoids popup blocking)
+    var w = null;
+    try {
+      w = window.open("about:blank", "_blank");
+      if (w) w.opener = null;
+    } catch (_) {}
+
+    grantConsent();
+    trackOutbound("click");
+
+    setTimeout(function () {
+      try {
+        if (w && !w.closed) w.location.href = WEB_URL;
+        else window.location.href = WEB_URL; // fallback
+      } catch (_) {
+        window.location.href = WEB_URL;
+      }
+    }, 150);
+  });
 
 })();
 </script>
