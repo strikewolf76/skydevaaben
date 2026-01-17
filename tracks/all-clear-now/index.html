@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>All CLear Now</title>
+  <title>All Clear Now</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
 
   <meta property="og:type" content="music.song">
   <meta property="og:site_name" content="Skydevaaben">
-  <meta property="og:title" content="All CLear Now">
+  <meta property="og:title" content="All Clear Now">
   <meta property="og:description" content="Tap to open in Spotify.">
   <meta property="og:url" content="https://skydevaaben.no/tracks/all-clear-now/index.html">
   <meta property="og:image" content="https://skydevaaben.no/assets/og/all-clear-now-cover.jpg">
@@ -16,7 +16,7 @@
   <meta property="og:image:height" content="630">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="All CLear Now">
+  <meta name="twitter:title" content="All Clear Now">
   <meta name="twitter:description" content="Tap to open in Spotify.">
   <meta name="twitter:image" content="https://skydevaaben.no/assets/og/all-clear-now-cover.jpg">
 
@@ -95,10 +95,13 @@
   var CID = params.get("cid") || "";
   var consentGranted = false;
   var pixelEventsQueued = [];
+  var clickLocked = false;
+  var pageViewFired = false;
 
   // Allow known social crawlers to fetch OG tags (no redirect)
   var ua = navigator.userAgent || "";
   var isCrawler = /(facebookexternalhit|facebot|twitterbot|linkedinbot|discordbot|pinterest|slackbot|whatsapp|telegrambot|skypeuripreview)/i.test(ua);
+  var isInAppBrowser = /(FBAN|FBAV|Instagram|Messenger|Line|TikTok)/i.test(ua);
   if (isCrawler) return;
 
   // Check existing consent
@@ -130,6 +133,13 @@
     }
   }
 
+  function firePageView() {
+    if (pageViewFired) return;
+    if (!window.fbq || !META_PIXEL_ID) return;
+    pageViewFired = true;
+    try { fbq("track", "PageView"); } catch (_) {}
+  }
+
   // Initialize Meta Pixel (if ID present)
   if (META_PIXEL_ID) {
     !(function (f, b, e, v, n, t, s) {
@@ -143,16 +153,16 @@
 
     fbq("init", META_PIXEL_ID);
     
-    // Default: consent revoked
-    try { fbq("consent", "revoke"); } catch (_) {}
+    // TEMP DEBUG: always grant consent (remove when verified)
+    try { fbq("consent", "grant"); } catch (_) {}
 
     // If returning user: grant immediately
     if (hasConsent) {
       grantConsent();
-      fbq("track", "PageView");
+      firePageView();
     } else {
       // Queue PageView until consent granted
-      pixelEventsQueued.push(function () { fbq("track", "PageView"); });
+      pixelEventsQueued.push(function () { firePageView(); });
     }
   }
 
@@ -164,35 +174,57 @@
     return u.toString();
   }
 
+  function trackOutbound(destKey, dest) {
+    if (!window.fbq || !META_PIXEL_ID) return;
+    try {
+      var eventId = "ob_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+      fbq("trackCustom", "OutboundSpotify", {
+        kind: "click",
+        cid: CID || "",
+        slug: TRACK_SLUG || "",
+        dest: destKey === "spotify" ? "spotify" : destKey,
+        channel: "meta",
+        track_id: (dest && dest.spotifyId) ? dest.spotifyId : ""
+      }, { eventID: eventId });
+    } catch (_) {}
+  }
+
   function handleClick(destKey, e) {
     // Allow modified clicks (open in new tab etc.)
     if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1)) return;
+
+    if (clickLocked) return;
 
     if (e && e.preventDefault) e.preventDefault();
 
     var dest = DESTINATIONS.find(d => d.key === destKey);
     if (!dest) return;
 
+    clickLocked = true;
+
     var webUrl = appendUtms(dest.baseUrl, { utm_campaign: UTM_CAMPAIGN, utm_content: CID });
 
-    // Open immediately to preserve user gesture (avoids popup blocking)
-    var w = null;
+    grantConsent();
+    firePageView();
+    trackOutbound(destKey, dest);
+
     try {
-      w = window.open("about:blank", "_blank");
-      if (w) w.opener = null;
+      if (navigator.sendBeacon && META_PIXEL_ID) {
+        navigator.sendBeacon("https://www.facebook.com/tr/", new Blob([], { type: "application/x-www-form-urlencoded" }));
+      }
     } catch (_) {}
 
-    grantConsent();
-    trackOutbound(destKey);
+    // 1) Try Spotify app only for Spotify destination (and only if we have an ID)
+    if (destKey === "spotify" && dest.spotifyId && !isInAppBrowser) {
+      setTimeout(function () {
+        window.location.href = "spotify:track:" + dest.spotifyId;
+      }, 200);
+    }
 
+    // 2) Always fallback to web URL
     setTimeout(function () {
-      try {
-        if (w && !w.closed) w.location.href = webUrl;
-        else window.location.href = webUrl; // fallback
-      } catch (_) {
-        window.location.href = webUrl;
-      }
-    }, 150);
+      window.location.href = webUrl;
+    }, 1300);
   }
 
   // Attach click handlers
