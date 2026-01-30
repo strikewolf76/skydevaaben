@@ -13,7 +13,7 @@
   var params = new URLSearchParams(window.location.search || "");
 
   // Default cid if none provided
-  if (!params.has("cid")) params.set("cid", "org-fb-lwy-r1");
+  if (!params.has("cid")) params.set("cid", "notcidded");
 
   window.location.replace(targetBase + "?" + params.toString());
 })();
