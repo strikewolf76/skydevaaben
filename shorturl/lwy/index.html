@@ -12,8 +12,8 @@
   var targetBase = "https://skydevaaben.no/tracks/lost-without-you-lucid/index.html";
   var params = new URLSearchParams(window.location.search || "");
 
-  // Default: org-yt-lwy-r1
-  if (!params.has("cid")) params.set("cid", "org-yt-lwy-r1");
+  // Default cid if none provided
+  if (!params.has("cid")) params.set("cid", "org-fb-lwy-r1");
 
   window.location.replace(targetBase + "?" + params.toString());
 })();
