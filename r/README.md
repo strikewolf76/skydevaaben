@@ -24,6 +24,22 @@ This folder contains ultra-short URL redirects for song landing pages on GitHub 
   - `r/ttlwy1/` → `shorturl/lwy/?cid=org-tt-lwy-r1`
   - `r/ttlwy2/` → `shorturl/lwy/?cid=org-tt-lwy-r2`
   - `r/ttlwy3/` → `shorturl/lwy/?cid=org-tt-lwy-r3`
+- **YouTube Shorts**:
+  - `r/ytacn1/` → `shorturl/acn/?cid=org-yt-acn-r1`
+  - `r/ytacn2/` → `shorturl/acn/?cid=org-yt-acn-r2`
+  - `r/ytacn3/` → `shorturl/acn/?cid=org-yt-acn-r3`
+- **Instagram Reels**:
+  - `r/igacn1/` → `shorturl/acn/?cid=org-ig-acn-r1`
+  - `r/igacn2/` → `shorturl/acn/?cid=org-ig-acn-r2`
+  - `r/igacn3/` → `shorturl/acn/?cid=org-ig-acn-r3`
+- **Facebook Reels**:
+  - `r/fbacn1/` → `shorturl/acn/?cid=org-fb-acn-r1`
+  - `r/fbacn2/` → `shorturl/acn/?cid=org-fb-acn-r2`
+  - `r/fbacn3/` → `shorturl/acn/?cid=org-fb-acn-r3`
+- **TikTok**:
+  - `r/ttacn1/` → `shorturl/acn/?cid=org-tt-acn-r1`
+  - `r/ttacn2/` → `shorturl/acn/?cid=org-tt-acn-r2`
+  - `r/ttacn3/` → `shorturl/acn/?cid=org-tt-acn-r3`
 
 ## How to Add a New Short URL
 1. Create a subfolder in `r/` (e.g., `r/newshort/`).
