@@ -110,7 +110,7 @@
     const versions = ['1', '2', '3', '4'];
     const artists = ['Skydevaaben'];
 
-    const data = window.slugs.map(slug => {
+    const data = window.slugs.filter(slug => !slug.startsWith('shorturl/')).map(slug => {
       const platform = slug.substring(0, 2);
       const song = slug.substring(2, slug.length - 1);
       const version = slug.substring(slug.length - 1);
