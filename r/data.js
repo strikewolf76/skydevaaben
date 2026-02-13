@@ -102,5 +102,10 @@ window.slugs = [
   'ytplce1',
   'ytplcn1',
   'ytplee1',
-  'ytplpe1'
+  'ytplpe1',
+  'shorturl/aflcn',
+  'ytaflcn1',
+  'igaflcn1',
+  'fbaflcn1',
+  'ttaflcn1'
 ];
