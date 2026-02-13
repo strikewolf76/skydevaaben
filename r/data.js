@@ -1,7 +1,7 @@
 // Data for Skydevaaben redirects
 window.songs = ['acn', 'bace', 'bacn', 'baswi', 'blcn', 'blswi', 'blswv', 'fwaf', 'glp', 'lwy', 'plai', 'plce', 'plcn', 'plee', 'plpe', 'aflcn'];
 window.songNames = { 'acn': 'All Clear Now', 'bace': 'Born Again (Crimson Echo)', 'bacn': 'Born Again (Crimson Noise)', 'baswi': 'Born Again (Synthwave Instrumental)', 'blcn': 'Bleeding (Crimson Noise)', 'blswi': 'Bleeding (Synthwave Instrumental)', 'blswv': 'Bleeding (Synthwave Vocal)', 'fwaf': 'Fire Without a Flame', 'glp': 'Glass People', 'lwy': 'Lost Without You Lucid', 'plai': 'Please (Afterimage)', 'plce': 'Please (Crimson Echo)', 'plcn': 'Please (Crimson Noise)', 'plee': 'Please (Echoexe)', 'plpe': 'Please (Pleaexe)', 'aflcn': 'Low (Crimson Noise)' };
-window.songImages = { 'acn': 'https', 'bace': 'https', 'bacn': 'https', 'baswi': 'https', 'blcn': 'https', 'blswi': 'https', 'blswv': 'https', 'fwaf': 'https', 'glp': 'https', 'lwy': 'https', 'plai': 'https', 'plce': 'https', 'plcn': 'https', 'plee': 'https', 'plpe': 'https', 'aflcn': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg' };
+window.songImages = { 'acn': 'https', 'bace': 'https', 'bacn': 'https', 'baswi': 'https', 'blcn': 'https', 'blswi': 'https', 'blswv': 'https', 'fwaf': 'https', 'glp': 'https', 'lwy': 'https', 'plai': 'https', 'plce': 'https', 'plcn': 'https', 'plee': 'https', 'plpe': 'https', 'aflcn': 'https' };
 window.slugs = [
   'fbacn1',
   'fbacn2',
