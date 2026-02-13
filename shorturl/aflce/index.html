@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Redirecting…</title>
+</head>
+<body>
+<script>
+(function () {
+  var targetBase = "https://skydevaaben.no/tracks/low-crimson-echo/index.html";
+  var params = new URLSearchParams(window.location.search || "");
+
+  // Default cid if none provided
+  if (!params.has("cid")) params.set("cid", "notcidded");
+
+  window.location.replace(targetBase + "?" + params.toString());
+})();
+</script>
+</body>
+</html>
