@@ -1,11 +1,12 @@
 // Data for Skydevaaben redirects
-window.songs = ['acn', 'bace', 'bacn', 'baswi', 'blcn', 'blswi', 'blswv', 'fwaf', 'glp', 'lwy', 'plai', 'plce', 'plcn', 'plee', 'plpe'];
-window.songNames = { 'acn': 'All Clear Now', 'bace': 'Born Again (Crimson Echo)', 'bacn': 'Born Again (Crimson Noise)', 'baswi': 'Born Again (Synthwave Instrumental)', 'blcn': 'Bleeding (Crimson Noise)', 'blswi': 'Bleeding (Synthwave Instrumental)', 'blswv': 'Bleeding (Synthwave Vocal)', 'fwaf': 'Fire Without a Flame', 'glp': 'Glass People', 'lwy': 'Lost Without You Lucid', 'plai': 'Please (Afterimage)', 'plce': 'Please (Crimson Echo)', 'plcn': 'Please (Crimson Noise)', 'plee': 'Please (Echoexe)', 'plpe': 'Please (Pleaexe)' };
-window.songImages = { 'acn': 'https://skydevaaben.no/assets/og/ba467427-ce13-4f29-a348-c1470180a425-1.jpg', 'bace': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'bacn': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'baswi': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'blcn': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'blswi': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'blswv': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'fwaf': 'https://skydevaaben.no/assets/og/fire-album-cover.jpg', 'glp': 'https://skydevaaben.no/assets/og/glasspeople-cover-3000-sharpened.jpg', 'lwy': 'https://skydevaaben.no/assets/og/lost-song-cover.jpg', 'plai': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plce': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plcn': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plee': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plpe': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg' };
+window.songs = ['aflcn', 'acn', 'blcn', 'blswi', 'blswv', 'bace', 'bacn', 'baswi', 'fwaf', 'glp', 'lwy', 'plai', 'plce', 'plcn', 'plee', 'plpe'];
+window.songNames = { 'acn': 'All Clear Now', 'bace': 'Born Again (Crimson Echo)', 'bacn': 'Born Again (Crimson Noise)', 'baswi': 'Born Again (Synthwave Instrumental)', 'blcn': 'Bleeding (Crimson Noise)', 'blswi': 'Bleeding (Synthwave Instrumental)', 'blswv': 'Bleeding (Synthwave Vocal)', 'fwaf': 'Fire Without a Flame', 'glp': 'Glass People', 'lwy': 'Lost Without You Lucid', 'plai': 'Please (Afterimage)', 'plce': 'Please (Crimson Echo)', 'plcn': 'Please (Crimson Noise)', 'plee': 'Please (Echoexe)', 'plpe': 'Please (Pleaexe)', 'aflcn': 'Low (Crimson Noise)' };
+window.songImages = { 'acn': 'https://skydevaaben.no/assets/og/ba467427-ce13-4f29-a348-c1470180a425-1.jpg', 'bace': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'bacn': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'baswi': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'blcn': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'blswi': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'blswv': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'fwaf': 'https://skydevaaben.no/assets/og/fire-album-cover.jpg', 'glp': 'https://skydevaaben.no/assets/og/glasspeople-cover-3000-sharpened.jpg', 'lwy': 'https://skydevaaben.no/assets/og/lost-song-cover.jpg', 'plai': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plce': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plcn': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plee': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plpe': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'aflcn': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg' };
 window.slugs = [
   'fbacn1',
   'fbacn2',
   'fbacn3',
+  'fbaflcn1',
   'fbbace1',
   'fbbacn1',
   'fbbaswi1',
@@ -31,6 +32,7 @@ window.slugs = [
   'igacn1',
   'igacn2',
   'igacn3',
+  'igaflcn1',
   'igbace1',
   'igbacn1',
   'igbaswi1',
@@ -53,9 +55,11 @@ window.slugs = [
   'igplcn1',
   'igplee1',
   'igplpe1',
+  'shorturl/aflcn',
   'ttacn1',
   'ttacn2',
   'ttacn3',
+  'ttaflcn1',
   'ttbace1',
   'ttbacn1',
   'ttbaswi1',
@@ -81,6 +85,7 @@ window.slugs = [
   'ytacn1',
   'ytacn2',
   'ytacn3',
+  'ytaflcn1',
   'ytbace1',
   'ytbacn1',
   'ytbaswi1',
