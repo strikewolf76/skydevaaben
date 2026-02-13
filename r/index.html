@@ -86,7 +86,20 @@
       <select id="songFilter">
         <option value="all">All Songs</option>
         <option value="acn">All Clear Now</option>
+        <option value="bace">Born Again (Crimson Echo)</option>
+        <option value="bacn">Born Again (Crimson Noise)</option>
+        <option value="baswi">Born Again (Synthwave Instrumental)</option>
+        <option value="blcn">Bleeding (Crimson Noise)</option>
+        <option value="blswi">Bleeding (Synthwave Instrumental)</option>
+        <option value="blswv">Bleeding (Synthwave Vocal)</option>
+        <option value="fwaf">Fire Without a Flame</option>
+        <option value="glp">Glass People</option>
         <option value="lwy">Lost Without You Lucid</option>
+        <option value="plai">Please (Afterimage)</option>
+        <option value="plce">Please (Crimson Echo)</option>
+        <option value="plcn">Please (Crimson Noise)</option>
+        <option value="plee">Please (Echoexe)</option>
+        <option value="plpe">Please (Pleaexe)</option>
       </select>
       <select id="platformFilter">
         <option value="all">All Platforms</option>
@@ -104,26 +117,30 @@
   <script>
     const platforms = ['fb', 'ig', 'tt', 'yt'];
     const platformNames = { fb: 'Facebook', ig: 'Instagram', tt: 'Twitter', yt: 'YouTube' };
-    const songs = ['acn', 'lwy'];
-    const songNames = { acn: 'All Clear Now', lwy: 'Lost Without You Lucid' };
-    const versions = ['1', '2', '3'];
-    const songImages = { acn: 'https://skydevaaben.no/assets/og/ba467427-ce13-4f29-a348-c1470180a425-1.jpg', lwy: 'https://skydevaaben.no/assets/og/lost-song-cover.jpg' };
+    const songs = ['acn', 'bace', 'bacn', 'baswi', 'blcn', 'blswi', 'blswv', 'fwaf', 'glp', 'lwy', 'plai', 'plce', 'plcn', 'plee', 'plpe'];
+    const songNames = { acn: 'All Clear Now', bace: 'Born Again (Crimson Echo)', bacn: 'Born Again (Crimson Noise)', baswi: 'Born Again (Synthwave Instrumental)', blcn: 'Bleeding (Crimson Noise)', blswi: 'Bleeding (Synthwave Instrumental)', blswv: 'Bleeding (Synthwave Vocal)', fwaf: 'Fire Without a Flame', glp: 'Glass People', lwy: 'Lost Without You Lucid', plai: 'Please (Afterimage)', plce: 'Please (Crimson Echo)', plcn: 'Please (Crimson Noise)', plee: 'Please (Echoexe)', plpe: 'Please (Pleaexe)' };
+    const versions = ['1', '2', '3', '4'];
+    const songImages = { acn: 'https://skydevaaben.no/assets/og/ba467427-ce13-4f29-a348-c1470180a425-1.jpg', bace: 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', bacn: 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', baswi: 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', blcn: 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', blswi: 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', blswv: 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', fwaf: 'https://skydevaaben.no/assets/og/fire-album-cover.jpg', glp: 'https://skydevaaben.no/assets/og/glasspeople-cover-3000-sharpened.jpg', lwy: 'https://skydevaaben.no/assets/og/lost-song-cover.jpg', plai: 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', plce: 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', plcn: 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', plee: 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', plpe: 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg' };
 
-    const data = [];
-    platforms.forEach(platform => {
-      songs.forEach(song => {
-        versions.forEach(version => {
-          const slug = platform + song + version;
-          data.push({
-            slug: slug,
-            platform: platform,
-            song: song,
-            version: version,
-            title: `${platformNames[platform]} - ${songNames[song]} ${version}`,
-            image: songImages[song]
-          });
-        });
-      });
+    const slugs = [
+      'fbacn1', 'fbacn2', 'fbacn3', 'fbbace1', 'fbbacn1', 'fbbaswi1', 'fbblcn1', 'fbblcn2', 'fbblswi1', 'fbblswi2', 'fbblswv1', 'fbblswv2', 'fbfwaf1', 'fbglp1', 'fbglp2', 'fbglp3', 'fbglp4', 'fblwy1', 'fblwy2', 'fblwy3', 'fbplai1', 'fbplce1', 'fbplcn1', 'fbplee1', 'fbplpe1',
+      'igacn1', 'igacn2', 'igacn3', 'igbace1', 'igbacn1', 'igbaswi1', 'igblcn1', 'igblcn2', 'igblswi1', 'igblswi2', 'igblswv1', 'igblswv2', 'igfwaf1', 'igglp1', 'igglp2', 'igglp3', 'igglp4', 'iglwy1', 'iglwy2', 'iglwy3', 'igplai1', 'igplce1', 'igplcn1', 'igplee1', 'igplpe1',
+      'ttacn1', 'ttacn2', 'ttacn3', 'ttbace1', 'ttbacn1', 'ttbaswi1', 'ttblcn1', 'ttblcn2', 'ttblswi1', 'ttblswi2', 'ttblswv1', 'ttblswv2', 'ttfwaf1', 'ttglp1', 'ttglp2', 'ttglp3', 'ttglp4', 'ttlwy1', 'ttlwy2', 'ttlwy3', 'ttplai1', 'ttplce1', 'ttplcn1', 'ttplee1', 'ttplpe1',
+      'ytacn1', 'ytacn2', 'ytacn3', 'ytbace1', 'ytbacn1', 'ytbaswi1', 'ytblcn1', 'ytblcn2', 'ytblswi1', 'ytblswi2', 'ytblswv1', 'ytblswv2', 'ytfwaf1', 'ytglp1', 'ytglp2', 'ytglp3', 'ytglp4', 'ytlwy1', 'ytlwy2', 'ytlwy3', 'ytplai1', 'ytplce1', 'ytplcn1', 'ytplee1', 'ytplpe1'
+    ];
+
+    const data = slugs.map(slug => {
+      const platform = slug.substring(0, 2);
+      const song = slug.substring(2, slug.length - 1);
+      const version = slug.substring(slug.length - 1);
+      return {
+        slug: slug,
+        platform: platform,
+        song: song,
+        version: version,
+        title: `${platformNames[platform]} - ${songNames[song]} ${version}`,
+        image: songImages[song]
+      };
     });
 
     const grid = document.getElementById('cardsGrid');
