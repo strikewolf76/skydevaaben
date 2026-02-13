@@ -125,6 +125,9 @@
       };
     });
 
+    // Sort data by song name
+    data.sort((a, b) => window.songNames[a.song].localeCompare(window.songNames[b.song]));
+
     // Populate song filter options
     const songFilter = document.getElementById('songFilter');
     songFilter.innerHTML = '<option value="all">All Songs</option>';
