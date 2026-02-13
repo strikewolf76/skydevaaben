@@ -55,7 +55,6 @@ window.slugs = [
   'igplcn1',
   'igplee1',
   'igplpe1',
-  'shorturl/aflcn',
   'ttacn1',
   'ttacn2',
   'ttacn3',
