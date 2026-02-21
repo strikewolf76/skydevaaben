@@ -131,16 +131,13 @@
     }
     .follow-btn {
       color: white;
-      text-decoration: underline;
-      text-decoration-color: rgba(255,255,255,0.5);
-      text-decoration-thickness: 1px;
-      text-underline-offset: 2px;
       font-size: 14px;
       text-align: center;
       background: none;
       border: none;
       padding: 0;
       transition: opacity 0.3s ease;
+      cursor: pointer;
     }
     .follow-btn:hover {
       opacity: 0.8;
@@ -281,9 +278,9 @@
     var followDiv = document.createElement('div');
     followDiv.className = 'follow-cta-container';
     followDiv.innerHTML = `
-      <a class="follow-btn" href="${ARTIST_SPOTIFY_URL}" data-dest="spotify_artist" rel="noopener noreferrer">
+      <button class="follow-btn" type="button" data-dest="spotify_artist">
         If this found you… follow ${ARTIST_NAME}.
-      </a>
+      </button>
       <div class="follow-subline">New drops go straight to Release Radar.</div>
     `;
     if (serviceButtons) { serviceButtons.appendChild(followDiv); }
