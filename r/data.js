@@ -5,7 +5,7 @@ window.songArtists = {
   'acn': 'Sky.AI',
   'fwaf': 'Sky.AI',
   'lwy': 'Sky.AI',
-  'glp': 'Skydevaaben',
+  'glp': 'Sky.AI',
   'skdh': 'Skydevaaben',
   'bace': 'After Brügge',
   'bacn': 'After Brügge',
