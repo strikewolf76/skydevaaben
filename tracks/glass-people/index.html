@@ -281,12 +281,12 @@
     var followDiv = document.createElement('div');
     followDiv.className = 'follow-cta-container';
     followDiv.innerHTML = `
-      <a class="cta follow-btn" href="${ARTIST_SPOTIFY_URL}" data-dest="spotify_artist" rel="noopener noreferrer">
+      <a class="follow-btn" href="${ARTIST_SPOTIFY_URL}" data-dest="spotify_artist" rel="noopener noreferrer">
         If this found you… follow ${ARTIST_NAME}.
       </a>
       <div class="follow-subline">New drops go straight to Release Radar.</div>
     `;
-    serviceButtons.appendChild(followDiv);
+    if (serviceButtons) { serviceButtons.appendChild(followDiv); }
   }
 
   function appendUtms(url, utms) {
@@ -346,7 +346,8 @@
       if (isInAppBrowser) {
         window.location.href = webUrl;
       } else {
-        window.open(webUrl, "_blank", "noopener");
+        var w = window.open(webUrl, "_blank", "noopener");
+        if (!w) window.location.href = webUrl;
         clickLocked = false; // Unlock since not navigating away
       }
     } else {
