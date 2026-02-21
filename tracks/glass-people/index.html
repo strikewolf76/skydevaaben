@@ -123,6 +123,12 @@
       text-align: center;
     }
     /* New styles for follow CTA */
+    .follow-cta-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 16px;
+    }
     .follow-btn {
       color: white;
       text-decoration: underline;
@@ -131,7 +137,6 @@
       text-underline-offset: 2px;
       font-size: 14px;
       text-align: center;
-      margin-top: 8px;
       background: none;
       border: none;
       padding: 0;
@@ -274,6 +279,7 @@
   if (ARTIST_SPOTIFY_URL) {
     var serviceButtons = document.querySelector('.service-buttons');
     var followDiv = document.createElement('div');
+    followDiv.className = 'follow-cta-container';
     followDiv.innerHTML = `
       <a class="cta follow-btn" href="${ARTIST_SPOTIFY_URL}" data-dest="spotify_artist" rel="noopener noreferrer">
         If this found you… follow ${ARTIST_NAME}.
