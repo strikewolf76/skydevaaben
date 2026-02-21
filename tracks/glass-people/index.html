@@ -130,17 +130,18 @@
       margin-top: 16px;
     }
     .follow-btn {
+      font-size: 13px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
       color: white;
-      font-size: 14px;
-      text-align: center;
-      background: none;
-      border: none;
-      padding: 0;
-      transition: opacity 0.3s ease;
+      transition: all 0.25s ease;
       cursor: pointer;
     }
     .follow-btn:hover {
-      opacity: 0.8;
+      background: rgba(30,215,96,0.15);
+      border-color: #1ed760;
     }
     .follow-subline {
       font-size: 12px;
@@ -281,7 +282,7 @@
               type="button"
               data-dest="spotify_artist"
               data-url="${ARTIST_SPOTIFY_URL}">
-        If this found you… follow ${ARTIST_NAME}.
+        [ + Follow ${ARTIST_NAME} ]
       </button>
       <div class="follow-subline">New drops go straight to Release Radar.</div>
     `;
