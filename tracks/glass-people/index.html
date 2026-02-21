@@ -198,7 +198,6 @@
   var CID = params.get("cid") || "";
   var consentGranted = false;
   var pixelEventsQueued = [];
-  var clickLocked = false;
   var pageViewFired = false;
 
   // Allow known social crawlers to fetch OG tags (no redirect)
@@ -315,8 +314,6 @@
   }
 
   function handleClick(destKey, e) {
-    var isModified = !!(e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1));
-
     // Finn URL fra DESTINATIONS, eller fra data-url på elementet (artist)
     var el = e && e.currentTarget ? e.currentTarget : null;
     var dataUrl = el ? el.getAttribute("data-url") : null;
@@ -331,13 +328,12 @@
       utm_content: (CID || UTM_CONTENT_DEFAULT)
     });
 
-    // Track alltid (også ved modified clicks)
+    // Track alltid
     if (!hasConsent()) setConsentGranted();
     firePageViewOnce();
     fireOutboundSpotify("click", destKey, dest || { spotifyId: "" });
 
-    // Modified clicks: la browseren åpne ny fane selv (så slipper vi dobbel)
-    if (isModified) return;
+
 
     // Normal click: vi styrer navigasjon for stabilitet (og for in-app)
     if (e) { e.preventDefault(); e.stopPropagation(); }
