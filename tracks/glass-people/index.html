@@ -361,7 +361,7 @@
   }
 
   // Attach click handlers
-  document.querySelectorAll('.cta').forEach(function(btn) {
+  document.querySelectorAll('[data-dest]').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       var destKey = this.getAttribute('data-dest');
       handleClick(destKey, e);
