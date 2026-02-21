@@ -122,6 +122,28 @@
       line-height: 1.4;
       text-align: center;
     }
+    /* New styles for follow CTA */
+    .follow-btn {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.5);
+      text-decoration: none;
+      padding: 10px 16px;
+      font-size: 14px;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+      text-align: center;
+      margin-top: 8px;
+    }
+    .follow-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    .follow-subline {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-top: 4px;
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -148,6 +170,21 @@
 <script>
 (function () {
   var DESTINATIONS = [{"key":"spotify","baseUrl":"https://open.spotify.com/track/530YM22qICcy0vap1EFWJH","spotifyId":"530YM22qICcy0vap1EFWJH"}];
+  // New artist mapping and detection
+  var ARTIST_MAP = {
+    "Sky.AI": "https://open.spotify.com/artist/1cs70zffipwWQAyTsxLN31",
+    "After Brügge": "https://open.spotify.com/artist/06E3D1UmG9DDDH3ooE6jLq",
+    "Skydevaaben": "https://open.spotify.com/artist/3NqNiVvNvYg9j8wYSy6YQc"
+  };
+  var ARTIST_NAME = (document.title || "").split(" - ")[0].trim();
+  var ARTIST_SPOTIFY_URL = ARTIST_MAP[ARTIST_NAME] || null;
+  if (ARTIST_SPOTIFY_URL) {
+    DESTINATIONS.push({
+      key: "spotify_artist",
+      baseUrl: ARTIST_SPOTIFY_URL,
+      spotifyId: ""
+    });
+  }
   var META_PIXEL_ID = "802257822837167";
   var TRACK_SLUG = "glass-people";
   var UTM_CAMPAIGN = "glass-people";
@@ -231,6 +268,19 @@
     }
   }
 
+  // New: Append follow CTA if artist URL exists
+  if (ARTIST_SPOTIFY_URL) {
+    var serviceButtons = document.querySelector('.service-buttons');
+    var followDiv = document.createElement('div');
+    followDiv.innerHTML = `
+      <a class="cta follow-btn" href="${ARTIST_SPOTIFY_URL}" data-dest="spotify_artist" rel="noopener noreferrer">
+        If this found you… follow ${ARTIST_NAME}.
+      </a>
+      <div class="follow-subline">New drops go straight to Release Radar.</div>
+    `;
+    serviceButtons.appendChild(followDiv);
+  }
+
   function appendUtms(url, utms) {
     var u = new URL(url);
     Object.keys(utms).forEach(function(k) {
@@ -283,11 +333,21 @@
       }
     } catch (_) {}
     
-    // Always redirect to web URL (instant in in-app browsers; short delay elsewhere)
-    if (isInAppBrowser) {
-      window.location.href = webUrl;
+    // Modified navigation logic for artist destination
+    if (destKey === "spotify_artist") {
+      if (isInAppBrowser) {
+        window.location.href = webUrl;
+      } else {
+        window.open(webUrl, "_blank", "noopener");
+        clickLocked = false; // Unlock since not navigating away
+      }
     } else {
-      setTimeout(function () { window.location.href = webUrl; }, 120);
+      // Existing logic for track
+      if (isInAppBrowser) {
+        window.location.href = webUrl;
+      } else {
+        setTimeout(function () { window.location.href = webUrl; }, 120);
+      }
     }
   }
 
