@@ -6,144 +6,248 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: radial-gradient(circle at top, #4f46e5 0%, #1e1b4b 42%, #0b1025 100%);
       margin: 0;
-      padding: 20px;
+      padding: 24px;
       min-height: 100vh;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      color: white;
+      color: #f8fafc;
     }
     .container {
-      max-width: 1200px;
+      max-width: 1240px;
       margin: 0 auto;
     }
+    .hero {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 18px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 40px rgba(2, 6, 23, 0.4);
+    }
     h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      text-shadow: 0 0 10px rgba(0,0,0,0.5);
+      margin: 0 0 8px;
+      font-size: 30px;
+      letter-spacing: 0.2px;
+    }
+    .subline {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 15px;
     }
     .filters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .filter-control {
       display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .filter-control label {
+      font-size: 13px;
+      color: #cbd5e1;
     }
     select {
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      background: rgba(255,255,255,0.9);
-      color: #333;
-      font-size: 16px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(15, 23, 42, 0.78);
+      color: #f8fafc;
+      font-size: 15px;
+      outline: none;
+    }
+    .status-row {
+      margin: 6px 0 16px;
+      color: #cbd5e1;
+      font-size: 14px;
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
     }
     .card {
-      background: rgba(0,0,0,0.3);
-      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.68);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease;
+      box-shadow: 0 12px 24px rgba(2, 6, 23, 0.35);
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
     .card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
+      border-color: rgba(129, 140, 248, 0.6);
     }
     .card img {
       width: 100%;
-      height: 150px;
+      height: 160px;
       object-fit: cover;
     }
     .card-content {
       padding: 15px;
     }
     .card-title {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 600;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
+      color: #f8fafc;
+    }
+    .card-meta {
+      font-size: 13px;
+      color: #cbd5e1;
+      margin-bottom: 10px;
     }
     .card-link {
-      color: #fff;
+      color: #e2e8f0;
       text-decoration: none;
       display: inline-block;
-      margin-top: 10px;
-      padding: 8px 16px;
-      background: rgba(255,255,255,0.2);
+      padding: 8px 14px;
+      background: rgba(99, 102, 241, 0.35);
       border-radius: 6px;
-      transition: background 0.3s ease;
+      transition: background 0.2s ease;
+      font-size: 14px;
     }
-
+    .card-link:hover {
+      background: rgba(99, 102, 241, 0.55);
+    }
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px dashed rgba(148, 163, 184, 0.35);
+      border-radius: 14px;
+      padding: 28px;
+      color: #cbd5e1;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Skydevaaben Redirect Pages</h1>
-    <div class="filters">
-      <select id="songFilter">
-        <option value="all">All Songs</option>
-      </select>
-      <select id="platformFilter">
-        <option value="all">All Platforms</option>
-        <option value="fb">Facebook</option>
-        <option value="ig">Instagram</option>
-        <option value="tt">TikTok</option>
-        <option value="yt">YouTube</option>
-      </select>
-      <select id="artistFilter">
-        <option value="all">All Artists</option>
-        <option value="Skydevaaben">Skydevaaben</option>
-      </select>
+    <div class="hero">
+      <h1>Skydevaaben Redirect Pages</h1>
+      <p class="subline">Browse live redirect links by artist, song, and platform.</p>
     </div>
+    <div class="filters">
+      <div class="filter-control">
+        <label for="artistFilter">Artist</label>
+        <select id="artistFilter">
+          <option value="all">All Artists</option>
+        </select>
+      </div>
+      <div class="filter-control">
+        <label for="songFilter">Song</label>
+        <select id="songFilter">
+          <option value="all">All Songs</option>
+        </select>
+      </div>
+      <div class="filter-control">
+        <label for="platformFilter">Platform</label>
+        <select id="platformFilter">
+          <option value="all">All Platforms</option>
+          <option value="fb">Facebook</option>
+          <option value="ig">Instagram</option>
+          <option value="tt">TikTok</option>
+          <option value="yt">YouTube</option>
+        </select>
+      </div>
+    </div>
+    <div class="status-row" id="resultsInfo"></div>
     <div class="grid" id="cardsGrid">
-      <!-- Cards will be generated by JS -->
     </div>
   </div>
 
   <script src="data.js"></script>
   <script>
-    const platforms = ['fb', 'ig', 'tt', 'yt'];
     const platformNames = { fb: 'Facebook', ig: 'Instagram', tt: 'TikTok', yt: 'YouTube' };
-    const versions = ['1', '2', '3', '4'];
-    const artists = ['Skydevaaben'];
+    const songArtists = window.songArtists || {};
 
-    const data = window.slugs.filter(slug => !slug.startsWith('shorturl/')).map(slug => {
-      const platform = slug.substring(0, 2);
-      const song = slug.substring(2, slug.length - 1);
-      const version = slug.substring(slug.length - 1);
+    function inferArtist(song) {
+      if (songArtists[song]) return songArtists[song];
+      if (/^(ba|bl|afl|pl)/.test(song)) return 'After Brügge';
+      return 'Skydevaaben';
+    }
+
+    function parseSlug(slug) {
+      const match = slug.match(/^([a-z]{2})(.+?)(\d+)$/i);
+      if (!match) return null;
+      return {
+        platform: match[1].toLowerCase(),
+        song: match[2].toLowerCase(),
+        version: match[3]
+      };
+    }
+
+    const data = window.slugs
+      .filter(slug => !slug.startsWith('shorturl/'))
+      .map(slug => {
+      const parsed = parseSlug(slug);
+      if (!parsed) return null;
+
+      const { platform, song, version } = parsed;
+      if (!platformNames[platform] || !window.songNames[song]) return null;
+
+      const artist = inferArtist(song);
       return {
         slug: slug,
         platform: platform,
         song: song,
         version: version,
-        artist: 'Skydevaaben',
-        title: `${platformNames[platform]} - ${window.songNames[song]} ${version}`,
+        artist: artist,
+        title: window.songNames[song],
         image: window.songImages[song]
       };
-    });
+    })
+    .filter(Boolean);
 
-    // Sort data by song name
-    data.sort((a, b) => window.songNames[a.song].localeCompare(window.songNames[b.song]));
+    data.sort((a, b) => a.title.localeCompare(b.title));
 
-    // Populate song filter options
     const songFilter = document.getElementById('songFilter');
-    songFilter.innerHTML = '<option value="all">All Songs</option>';
-    window.songs.forEach(song => {
+    const platformFilter = document.getElementById('platformFilter');
+    const artistFilter = document.getElementById('artistFilter');
+    const grid = document.getElementById('cardsGrid');
+    const resultsInfo = document.getElementById('resultsInfo');
+
+    Array.from(new Set(data.map(item => item.song)))
+      .sort((a, b) => window.songNames[a].localeCompare(window.songNames[b]))
+      .forEach(song => {
       const option = document.createElement('option');
       option.value = song;
       option.textContent = window.songNames[song];
       songFilter.appendChild(option);
     });
 
-    const grid = document.getElementById('cardsGrid');
-    const platformFilter = document.getElementById('platformFilter');
-    const artistFilter = document.getElementById('artistFilter');
+    Array.from(new Set(data.map(item => item.artist)))
+      .sort((a, b) => a.localeCompare(b))
+      .forEach(artist => {
+        const option = document.createElement('option');
+        option.value = artist;
+        option.textContent = artist;
+        artistFilter.appendChild(option);
+      });
 
     function renderCards(filteredData) {
       grid.innerHTML = '';
+
+      if (!filteredData.length) {
+        const empty = document.createElement('div');
+        empty.className = 'empty';
+        empty.textContent = 'No redirects match the current filters.';
+        grid.appendChild(empty);
+        return;
+      }
+
       filteredData.forEach(item => {
         const card = document.createElement('div');
         card.className = 'card';
@@ -151,7 +255,8 @@
           <img src="${item.image}" alt="${item.title}">
           <div class="card-content">
             <div class="card-title">${item.title}</div>
-            <a href="https://skydevaaben.no/r/${item.slug}" class="card-link">Visit</a>
+            <div class="card-meta">${item.artist} · ${platformNames[item.platform]} · r${item.version}</div>
+            <a href="https://skydevaaben.no/r/${item.slug}/" class="card-link">Open Redirect</a>
           </div>
         `;
         grid.appendChild(card);
@@ -167,6 +272,8 @@
                (platformValue === 'all' || item.platform === platformValue) &&
                (artistValue === 'all' || item.artist === artistValue);
       });
+
+      resultsInfo.textContent = `${filtered.length} redirect${filtered.length === 1 ? '' : 's'} shown`;
       renderCards(filtered);
     }
 
@@ -174,8 +281,7 @@
     platformFilter.addEventListener('change', filterData);
     artistFilter.addEventListener('change', filterData);
 
-    // Initial render
-    renderCards(data);
+    filterData();
   </script>
 </body>
 </html>
