@@ -124,19 +124,21 @@
     }
     /* New styles for follow CTA */
     .follow-btn {
-      background: rgba(255,255,255,0.1);
       color: white;
-      border: 1px solid rgba(255,255,255,0.5);
-      text-decoration: none;
-      padding: 10px 16px;
+      text-decoration: underline;
+      text-decoration-color: rgba(255,255,255,0.5);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
       font-size: 14px;
-      border-radius: 8px;
-      transition: background 0.3s ease;
       text-align: center;
       margin-top: 8px;
+      background: none;
+      border: none;
+      padding: 0;
+      transition: opacity 0.3s ease;
     }
     .follow-btn:hover {
-      background: rgba(255,255,255,0.2);
+      opacity: 0.8;
     }
     .follow-subline {
       font-size: 12px;
