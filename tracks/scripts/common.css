@@ -115,7 +115,7 @@ body {
   background: rgba(255,255,255,0.5);
   color: #191414;
   border: none;
-  font-size: 0.96rem;
+  font-size: 1.056rem;
   font-weight: 400;
   border-radius: 8px;
   padding: 14px 0;
@@ -136,6 +136,6 @@ body {
   text-align: center;
 }
 .follow-text {
-  font-size: 1.4rem;
+  font-size: 1.12rem;
   font-weight: 400;
 }
