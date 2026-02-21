@@ -278,7 +278,11 @@
     var followDiv = document.createElement('div');
     followDiv.className = 'follow-cta-container';
     followDiv.innerHTML = `
-      <a class="follow-btn" href="#" data-dest="spotify_artist" rel="noopener noreferrer">
+      <a class="follow-btn"
+         href="${ARTIST_SPOTIFY_URL}"
+         data-dest="spotify_artist"
+         data-url="${ARTIST_SPOTIFY_URL}"
+         rel="noopener noreferrer">
         If this found you… follow ${ARTIST_NAME}.
       </a>
       <div class="follow-subline">New drops go straight to Release Radar.</div>
@@ -312,49 +316,47 @@
   }
 
   function handleClick(destKey, e) {
-    // Allow modified clicks (open in new tab etc.)
-    if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1)) return;
+    var isModified = !!(e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1));
 
-    if (clickLocked) return;
+    // Finn URL fra DESTINATIONS, eller fra data-url på elementet (artist)
+    var el = e && e.currentTarget ? e.currentTarget : null;
+    var dataUrl = el ? el.getAttribute("data-url") : null;
 
-    if (e && e.preventDefault) e.preventDefault();
+    var dest = DESTINATIONS.find(d => d.key === destKey) || null;
+    var baseUrl = (dest && dest.baseUrl) ? dest.baseUrl : dataUrl;
 
-    var dest = DESTINATIONS.find(d => d.key === destKey);
-    if (!dest) return;
+    if (!baseUrl) return;
 
-    clickLocked = true;
+    var webUrl = appendUtms(baseUrl, {
+      utm_campaign: UTM_CAMPAIGN,
+      utm_content: (CID || UTM_CONTENT_DEFAULT)
+    });
 
-    var webUrl = appendUtms(dest.baseUrl, { utm_campaign: UTM_CAMPAIGN, utm_content: (CID || UTM_CONTENT_DEFAULT) });
-
-    if (!hasConsent()) {
-      setConsentGranted();
-    }
+    // Track alltid (også ved modified clicks)
+    if (!hasConsent()) setConsentGranted();
     firePageViewOnce();
-    fireOutboundSpotify("click", destKey, dest);
+    fireOutboundSpotify("click", destKey, dest || { spotifyId: "" });
 
-    try {
-      if (navigator.sendBeacon && META_PIXEL_ID) {
-        navigator.sendBeacon("https://www.facebook.com/tr/", new Blob([], { type: "application/x-www-form-urlencoded" }));
-      }
-    } catch (_) {}
-    
-    // Modified navigation logic for artist destination
+    // Modified clicks: la browseren åpne ny fane selv (så slipper vi dobbel)
+    if (isModified) return;
+
+    // Normal click: vi styrer navigasjon for stabilitet (og for in-app)
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+
     if (destKey === "spotify_artist") {
       if (isInAppBrowser) {
         window.location.href = webUrl;
       } else {
+        // Åpne i ny tab UDEN at current tab også navigerer
         var w = window.open(webUrl, "_blank", "noopener");
-        if (!w) window.location.href = webUrl;
-        clickLocked = false; // Unlock since not navigating away
+        if (!w) window.location.href = webUrl; // popup-block fallback
+        // Ingen redirect i current tab hvis popup funker
       }
-    } else {
-      // Existing logic for track
-      if (isInAppBrowser) {
-        window.location.href = webUrl;
-      } else {
-        setTimeout(function () { window.location.href = webUrl; }, 120);
-      }
+      return;
     }
+
+    // Track-klikk: gå til Spotify i samme tab (stabilt)
+    window.location.href = webUrl;
   }
 
   // Attach click handlers
