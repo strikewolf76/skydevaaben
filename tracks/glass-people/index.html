@@ -278,9 +278,9 @@
     var followDiv = document.createElement('div');
     followDiv.className = 'follow-cta-container';
     followDiv.innerHTML = `
-      <button class="follow-btn" type="button" data-dest="spotify_artist">
+      <a class="follow-btn" href="#" data-dest="spotify_artist" rel="noopener noreferrer">
         If this found you… follow ${ARTIST_NAME}.
-      </button>
+      </a>
       <div class="follow-subline">New drops go straight to Release Radar.</div>
     `;
     if (serviceButtons) { serviceButtons.appendChild(followDiv); }
