@@ -134,8 +134,8 @@
       font-weight: 600;
       padding: 12px 16px;
       border-radius: 8px;
-      background: #fff;
-      color: #191414;
+      background: rgba(255,255,255,0.85);
+      color: rgba(25,20,20,0.9);
       border: none;
       box-shadow: 0 2px 8px rgba(30,215,96,0.10);
       transition: background 0.2s;
@@ -285,9 +285,9 @@
               type="button"
               data-dest="spotify_artist"
               data-url="${ARTIST_SPOTIFY_URL}">
-        If this found you… follow ${ARTIST_NAME}.
+        Follow ${ARTIST_NAME}
       </button>
-      <div class="follow-subline">New drops go straight to Release Radar.</div>
+      <div class="follow-subline">If this found you… New drops go straight to Release Radar.</div>
     `;
     if (serviceButtons) { serviceButtons.appendChild(followDiv); }
   }
