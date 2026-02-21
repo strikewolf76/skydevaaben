@@ -1,67 +1,59 @@
 # Skydevaaben
 
-Music landing pages and short URL redirects for Sky.AI tracks, hosted on GitHub Pages.
+Static music landing pages, redirects, and campaign tracking assets for https://skydevaaben.no.
 
-## Overview
+## Quick Links
+- Live site: https://skydevaaben.no
+- Redirect index: https://skydevaaben.no/r/
+- Generator (publishes here): https://tools.skydevaaben.no
+- Generator source repo: https://github.com/strikewolf76/skydevaaben-tools
 
-This repository contains landing pages for various music tracks by Sky.AI and related artists. Each track has its own landing page with:
+## What this repo contains
+- Track landing pages with shared runtime behavior (play links, UTM handling, follow CTA, consent logic)
+- Ultra-short social redirect routes for campaign links
+- OG image assets and generated QR codes
+- Redirect index UI for browsing social slugs
 
-- Custom background images
-- Spotify integration with tracking
-- Meta Pixel analytics for campaign measurement
-- Follow artist CTAs for supported artists (Sky.AI, After Brügge, Skydevaaben)
-- Cookie consent handling
-- Mobile-optimized design
+## Repository Structure
+- `tracks/` – one folder per release page (`tracks/<track-slug>/index.html`)
+- `tracks/scripts/common.css` – shared landing page styles
+- `tracks/scripts/common.js` – shared click handling, UTM/pixel logic, follow CTA injection
+- `shorturl/` – short redirect entry points (`shorturl/<shortslug>/index.html`)
+- `r/` – platform/reel redirects (`r/<platform><shortslug><n>/index.html`) plus redirect index data/UI
+- `assets/og/` – OG images (`.jpg`, `-bg.jpg`, `-fg.jpg`)
+- `qrs/` – generated QR PNGs
 
-## Architecture
+## Runtime Flow
+1. User opens a campaign redirect (`/r/...`)
+2. Redirect forwards to `/shorturl/...` and preserves/sets `cid`
+3. Short URL forwards to `/tracks/<slug>/index.html?cid=...`
+4. Track page (`common.js`) applies UTMs, tracking, and follow CTA logic
 
-### Shared Assets
-- `tracks/scripts/common.css` - Shared styles for layout, buttons, and follow CTAs
-- `tracks/scripts/common.js` - Shared JavaScript for tracking, click handling, and artist detection
+## Authoring Workflow (Recommended)
+Use the generator for all new releases and campaign redirects.
 
-### Track Pages
-Each track page in `tracks/` follows a consistent structure:
-- Links to shared `common.css` and `common.js`
-- Inline background CSS for unique visuals
-- Track-specific variables (DESTINATIONS, TRACK_SLUG, UTM_CAMPAIGN)
-- Automatic follow CTA injection for supported artists
+1. Create content in the generator
+2. Publish to this repo (`main`)
+3. Verify redirect chain and track page behavior live
 
-### Short URLs
-Ultra-short redirects in `r/` folder for social media sharing, each with unique tracking CIDs.
+This keeps `r/data.js` and redirect slugs synchronized with generated files.
 
-## Songs
+## Validation Checklist
+For each new release, verify:
+- Track page renders and CTA buttons work
+- Follow CTA appears for supported artists
+- `cid` survives full redirect chain (`r -> shorturl -> tracks`)
+- UTM params are present on outbound destinations
+- New slugs appear in redirect index (`/r/`)
 
-The repository contains landing pages for numerous tracks. Some highlights:
+## Related Artist Support
+Current shared landing logic supports artist follow CTA mapping for:
+- Sky.AI
+- After Brügge
+- Skydevaaben
 
-- [All Clear Now](tracks/all-clear-now/index.html)
-- [Lost Without You Lucid](tracks/lost-without-you-lucid/index.html)
-- [Glass People](tracks/glass-people/index.html)
-- [Fire Without A Flame](tracks/fire-without-a-flame/index.html)
-- [Bleeding (Synthwave Instrumental)](tracks/bleeding-synthwave-instrumental/index.html)
-- [Born Again (Crimson Echo)](tracks/born-again-crimson-echo/index.html)
-- [Low (Crimson Echo)](tracks/low-crimson-echo/index.html)
-- [Please (Afterimage)](tracks/please-afterimage/index.html)
-
-See the `tracks/` directory for the complete list of available landing pages.
-
-## Development
-
-### Adding New Tracks
-1. Create a new folder in `tracks/` with the track slug
-2. Create `index.html` with basic HTML structure
-3. Link to `../scripts/common.css` and `../scripts/common.js`
-4. Add inline background style and track variables
-5. Test locally with Python HTTP server
-
-### Generator Tool
-Use the [Redirect Generator](https://tools.skydevaaben.no) to create new landing pages and short URLs programmatically.
-
-## Recent Updates
-
-- **2025**: Refactored all track pages to use shared `common.css` and `common.js` for maintainability
-- **2025**: Added follow artist CTAs for Sky.AI, After Brügge, and Skydevaaben tracks
-- **2025**: Implemented Meta Pixel tracking for campaign analytics
-- **2025**: Standardized cookie consent and click handling across all pages
+## Deployment
+GitHub Pages serves this repo from `main` root with custom domain `skydevaaben.no`.
 
 ## License
 All rights reserved.
