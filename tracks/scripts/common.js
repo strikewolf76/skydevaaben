@@ -162,13 +162,14 @@
     // Normal click: vi styrer navigasjon for stabilitet (og for in-app)
     if (e) { e.preventDefault(); e.stopPropagation(); }
 
-    if (destKey === "spotify_artist") {
+    if (isInAppBrowser) {
       window.location.href = webUrl;
       return;
     }
 
-    // Track-klikk: gå til Spotify i samme tab (stabilt)
-    window.location.href = webUrl;
+    setTimeout(function () {
+      window.location.href = webUrl;
+    }, 120);
   }
 
   // Attach click handlers

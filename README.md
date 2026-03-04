@@ -29,6 +29,12 @@ Static music landing pages, redirects, and campaign tracking assets for https://
 3. Short URL forwards to `/tracks/<slug>/index.html?cid=...`
 4. Track page (`common.js`) applies UTMs, tracking, and follow CTA logic
 
+### Click Navigation Behavior
+- Track pages should load shared runtime from `tracks/scripts/common.js` (avoid inline per-track click logic)
+- On click, tracking is fired first (consent/pageview/custom outbound event)
+- In-app browsers (FB/IG/Messenger/Line/TikTok UAs): immediate `window.location.href` redirect
+- Other browsers: redirect delayed by 120ms to improve Meta Pixel flush reliability
+
 ## Authoring Workflow (Recommended)
 Use the generator for all new releases and campaign redirects.
 
