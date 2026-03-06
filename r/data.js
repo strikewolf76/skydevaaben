@@ -1,29 +1,7 @@
 // Data for Skydevaaben redirects
-window.songs = ['acn', 'blcn', 'blswi', 'blswv', 'bace', 'bacn', 'baswi', 'skdh', 'fwaf', 'glp', 'lwy', 'afla', 'aflce', 'aflcn', 'aflec', 'plai', 'plce', 'plcn', 'plee', 'plpe'];
-window.songNames = { 'acn': 'All Clear Now', 'bace': 'Born Again (Crimson Echo)', 'bacn': 'Born Again (Crimson Noise)', 'baswi': 'Born Again (Synthwave Instrumental)', 'blcn': 'Bleeding (Crimson Noise)', 'blswi': 'Bleeding (Synthwave Instrumental)', 'blswv': 'Bleeding (Synthwave Vocal)', 'fwaf': 'Fire Without a Flame', 'glp': 'Glass People', 'lwy': 'Lost Without You Lucid', 'plai': 'Please (Afterimage)', 'plce': 'Please (Crimson Echo)', 'plcn': 'Please (Crimson Noise)', 'plee': 'Please (Echoexe)', 'plpe': 'Please (Pleaexe)', 'aflcn': 'Low (Crimson Noise)', 'aflce': 'Low (Crimson Echo)', 'afla': 'Low (Annihilate)', 'aflec': 'Low (End Credits)', 'skdh': 'Digital Heartbeat' };
-window.songArtists = {
-  'acn': 'Sky.AI',
-  'fwaf': 'Sky.AI',
-  'lwy': 'Sky.AI',
-  'glp': 'Sky.AI',
-  'skdh': 'Skydevaaben',
-  'bace': 'After Brügge',
-  'bacn': 'After Brügge',
-  'baswi': 'After Brügge',
-  'blcn': 'After Brügge',
-  'blswi': 'After Brügge',
-  'blswv': 'After Brügge',
-  'afla': 'After Brügge',
-  'aflce': 'After Brügge',
-  'aflcn': 'After Brügge',
-  'aflec': 'After Brügge',
-  'plai': 'After Brügge',
-  'plce': 'After Brügge',
-  'plcn': 'After Brügge',
-  'plee': 'After Brügge',
-  'plpe': 'After Brügge'
-};
-window.songImages = { 'acn': 'https://skydevaaben.no/assets/og/ba467427-ce13-4f29-a348-c1470180a425-1.jpg', 'bace': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'bacn': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'baswi': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'blcn': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'blswi': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'blswv': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'fwaf': 'https://skydevaaben.no/assets/og/fire-album-cover.jpg', 'glp': 'https://skydevaaben.no/assets/og/glasspeople-cover-3000-sharpened.jpg', 'lwy': 'https://skydevaaben.no/assets/og/lost-song-cover.jpg', 'plai': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plce': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plcn': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plee': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plpe': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'aflcn': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'aflce': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'afla': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'aflec': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'skdh': 'https://skydevaaben.no/assets/og/digital-heartbeat-cover.jpg' };
+window.songs = ['acn', 'blcn', 'blswi', 'blswv', 'bace', 'bacn', 'baswi', 'skdh', 'fwaf', 'glp', 'lwy', 'afla', 'aflce', 'aflcn', 'aflec', 'plai', 'plce', 'plcn', 'plee', 'plpe', 'sks'];
+window.songNames = { 'acn': 'All Clear Now', 'bace': 'Born Again (Crimson Echo)', 'bacn': 'Born Again (Crimson Noise)', 'baswi': 'Born Again (Synthwave Instrumental)', 'blcn': 'Bleeding (Crimson Noise)', 'blswi': 'Bleeding (Synthwave Instrumental)', 'blswv': 'Bleeding (Synthwave Vocal)', 'fwaf': 'Fire Without a Flame', 'glp': 'Glass People', 'lwy': 'Lost Without You Lucid', 'plai': 'Please (Afterimage)', 'plce': 'Please (Crimson Echo)', 'plcn': 'Please (Crimson Noise)', 'plee': 'Please (Echoexe)', 'plpe': 'Please (Pleaexe)', 'aflcn': 'Low (Crimson Noise)', 'aflce': 'Low (Crimson Echo)', 'afla': 'Low (Annihilate)', 'aflec': 'Low (End Credits)', 'skdh': 'Digital Heartbeat', 'sks': 'Stillform' };
+window.songImages = { 'acn': 'https://skydevaaben.no/assets/og/ba467427-ce13-4f29-a348-c1470180a425-1.jpg', 'bace': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'bacn': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'baswi': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'blcn': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'blswi': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'blswv': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'fwaf': 'https://skydevaaben.no/assets/og/fire-album-cover.jpg', 'glp': 'https://skydevaaben.no/assets/og/glasspeople-cover-3000-sharpened.jpg', 'lwy': 'https://skydevaaben.no/assets/og/lost-song-cover.jpg', 'plai': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plce': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plcn': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plee': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plpe': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'aflcn': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'aflce': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'afla': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'aflec': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'skdh': 'https://skydevaaben.no/assets/og/digital-heartbeat-cover.jpg', 'sks': 'https://skydevaaben.no/assets/og/stillform-1.jpg' };
 window.slugs = [
   'fbacn1',
   'fbacn2',
@@ -55,6 +33,7 @@ window.slugs = [
   'fbplee1',
   'fbplpe1',
   'fbskdh1',
+  'fbsks1',
   'igacn1',
   'igacn2',
   'igacn3',
@@ -85,6 +64,7 @@ window.slugs = [
   'igplee1',
   'igplpe1',
   'igskdh1',
+  'igsks1',
   'ttacn1',
   'ttacn2',
   'ttacn3',
@@ -115,6 +95,7 @@ window.slugs = [
   'ttplee1',
   'ttplpe1',
   'ttskdh1',
+  'ttsks1',
   'ytacn1',
   'ytacn2',
   'ytacn3',
@@ -144,5 +125,6 @@ window.slugs = [
   'ytplcn1',
   'ytplee1',
   'ytplpe1',
-  'ytskdh1'
+  'ytskdh1',
+  'ytsks1'
 ];
