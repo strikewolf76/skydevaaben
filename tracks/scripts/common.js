@@ -39,11 +39,12 @@
   }
 
   function setConsentGranted() {
-    if (consentGranted) return;
-    consentGranted = true;
-    try {
-      localStorage.setItem("sv_cookie_consent", "granted");
-    } catch (_) {}
+    if (!consentGranted) {
+      consentGranted = true;
+      try {
+        localStorage.setItem("sv_cookie_consent", "granted");
+      } catch (_) {}
+    }
     if (typeof window.fbq === "function" && META_PIXEL_ID) {
       fbq("consent", "grant");
     }
