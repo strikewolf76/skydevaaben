@@ -17,9 +17,11 @@
 
   var params = new URLSearchParams(window.location.search || "");
   var CID = params.get("cid") || "";
+  var TIKTOK_PIXEL_ID = "D6M222RC77U160FIC4CG";
   var consentGranted = false;
   var pixelEventsQueued = [];
   var pageViewFired = false;
+  var tiktokPageViewFired = false;
 
   // Allow known social crawlers to fetch OG tags (no redirect)
   var ua = navigator.userAgent || "";
@@ -44,11 +46,13 @@
     } catch (_) {}
     if (typeof window.fbq === "function" && META_PIXEL_ID) {
       fbq("consent", "grant");
-      // Fire queued events
-      while (pixelEventsQueued.length > 0) {
-        var ev = pixelEventsQueued.shift();
-        ev();
-      }
+    }
+    if (typeof window.ttq === "object" && window.ttq && typeof window.ttq.grantConsent === "function") {
+      try { window.ttq.grantConsent(); } catch (_) {}
+    }
+    while (pixelEventsQueued.length > 0) {
+      var ev = pixelEventsQueued.shift();
+      ev();
     }
   }
 
@@ -64,6 +68,19 @@
     if (typeof window.fbq !== "function" || !META_PIXEL_ID) return;
     pageViewFired = true;
     try { fbq("track", "PageView"); } catch (_) {}
+  }
+
+  function isTikTokCid() {
+    if (!CID) return false;
+    return /(^|[-_])tt([_-]|$)/i.test(CID);
+  }
+
+  function fireTikTokPageViewOnce() {
+    if (tiktokPageViewFired) return;
+    if (!isTikTokCid()) return;
+    if (typeof window.ttq !== "object" || !window.ttq || typeof window.ttq.page !== "function") return;
+    tiktokPageViewFired = true;
+    try { window.ttq.page(); } catch (_) {}
   }
 
   // Show consent notice for new users
@@ -89,6 +106,51 @@
     } else {
       // Queue PageView until consent granted
       pixelEventsQueued.push(function () { firePageViewOnce(); });
+    }
+  }
+
+  if (TIKTOK_PIXEL_ID && isTikTokCid()) {
+    !(function (w, d, t) {
+      w.TiktokAnalyticsObject = t;
+      var ttq = w[t] = w[t] || [];
+      ttq.methods = ["page", "track", "identify", "instances", "debug", "on", "off", "once", "ready", "alias", "group", "enableCookie", "disableCookie", "holdConsent", "revokeConsent", "grantConsent"];
+      ttq.setAndDefer = function (target, method) {
+        target[method] = function () {
+          target.push([method].concat(Array.prototype.slice.call(arguments, 0)));
+        };
+      };
+      for (var i = 0; i < ttq.methods.length; i++) ttq.setAndDefer(ttq, ttq.methods[i]);
+      ttq.instance = function (id) {
+        var instance = ttq._i[id] || [];
+        for (var n = 0; n < ttq.methods.length; n++) ttq.setAndDefer(instance, ttq.methods[n]);
+        return instance;
+      };
+      ttq.load = function (id, cfg) {
+        var src = "https://analytics.tiktok.com/i18n/pixel/events.js";
+        var partner = cfg && cfg.partner;
+        ttq._i = ttq._i || {};
+        ttq._i[id] = [];
+        ttq._i[id]._u = src;
+        ttq._t = ttq._t || {};
+        ttq._t[id] = +new Date();
+        ttq._o = ttq._o || {};
+        ttq._o[id] = cfg || {};
+        var script = d.createElement("script");
+        script.type = "text/javascript";
+        script.async = true;
+        script.src = src + "?sdkid=" + id + "&lib=" + t;
+        var firstScript = d.getElementsByTagName("script")[0];
+        firstScript.parentNode.insertBefore(script, firstScript);
+      };
+      ttq.load(TIKTOK_PIXEL_ID);
+      if (typeof ttq.holdConsent === "function") ttq.holdConsent();
+    })(window, document, "ttq");
+
+    if (hasConsent()) {
+      setConsentGranted();
+      fireTikTokPageViewOnce();
+    } else {
+      pixelEventsQueued.push(function () { fireTikTokPageViewOnce(); });
     }
   }
 

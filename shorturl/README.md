@@ -41,5 +41,7 @@ To add a new song (e.g., "new-song"), follow these steps:
 
 ## Notes
 - For auto-redirect songs (like GP), use the `gp/` structure instead.
-- This process can be automated in a tools repo by scripting the file copies and variable replacements.
 - Ensure `cid` values are unique per campaign for accurate tracking.
+
+## Backlog reference
+- Track future implementation ideas in `skydevaaben-tools/BACKLOG.md`.

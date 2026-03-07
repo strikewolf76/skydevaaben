@@ -35,6 +35,11 @@ Static music landing pages, redirects, and campaign tracking assets for https://
 - In-app browsers (FB/IG/Messenger/Line/TikTok UAs): immediate `window.location.href` redirect
 - Other browsers: redirect delayed by 120ms to improve Meta Pixel flush reliability
 
+## TikTok Pixel Scope
+- TikTok Pixel is loaded only when `cid` indicates TikTok traffic (for example `org-tt-...`).
+- Facebook, Instagram, and YouTube `cid` traffic does not initialize TikTok Pixel.
+- Direct opens without TikTok `cid` do not initialize TikTok Pixel.
+
 ## Authoring Workflow (Recommended)
 Use the generator for all new releases and campaign redirects.
 

@@ -50,3 +50,6 @@ This folder contains ultra-short URL redirects for song landing pages on GitHub 
 - These are HTML-based redirects (GitHub Pages limitation—no server redirects).
 - For new songs, first set up the `shorturl/song-slug/` redirector, then create short URLs here.
 - Test each URL to ensure the redirect and tracking work.
+
+## Backlog reference
+- Track future implementation ideas in `skydevaaben-tools/BACKLOG.md`.
