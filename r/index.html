@@ -5,30 +5,46 @@
   <title>Skydevaaben Redirects</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg-start: #6d28d9;
+      --bg-mid: #1f1147;
+      --bg-end: #070b1f;
+      --panel: rgba(15, 23, 42, 0.56);
+      --panel-border: rgba(148, 163, 184, 0.25);
+      --text-main: #f8fafc;
+      --text-soft: #d5deee;
+      --accent: #f472b6;
+      --accent-soft: rgba(244, 114, 182, 0.32);
+    }
     * {
       box-sizing: border-box;
     }
     body {
-      background: radial-gradient(circle at top, #4f46e5 0%, #1e1b4b 42%, #0b1025 100%);
+      background: radial-gradient(circle at top, var(--bg-start) 0%, var(--bg-mid) 44%, var(--bg-end) 100%);
       margin: 0;
       padding: 24px;
       min-height: 100vh;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      color: #f8fafc;
+      font-family: 'Sora', 'Segoe UI', sans-serif;
+      color: var(--text-main);
+      transition: background 320ms ease, color 240ms ease;
     }
     .container {
       max-width: 1240px;
       margin: 0 auto;
     }
     .hero {
-      background: rgba(15, 23, 42, 0.5);
-      border: 1px solid rgba(148, 163, 184, 0.2);
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
       border-radius: 16px;
       padding: 24px;
       margin-bottom: 18px;
       backdrop-filter: blur(10px);
       box-shadow: 0 20px 40px rgba(2, 6, 23, 0.4);
+      transition: border-color 240ms ease, background 240ms ease;
     }
     h1 {
       margin: 0 0 8px;
@@ -37,18 +53,19 @@
     }
     .subline {
       margin: 0;
-      color: #cbd5e1;
+      color: var(--text-soft);
       font-size: 15px;
     }
     .filters {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 14px;
-      background: rgba(15, 23, 42, 0.5);
-      border: 1px solid rgba(148, 163, 184, 0.2);
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
       border-radius: 16px;
       padding: 16px;
       margin-bottom: 16px;
+      transition: border-color 240ms ease, background 240ms ease;
     }
     .filter-control {
       display: flex;
@@ -57,20 +74,121 @@
     }
     .filter-control label {
       font-size: 13px;
-      color: #cbd5e1;
+      color: var(--text-soft);
     }
     select {
       padding: 10px 12px;
       border-radius: 10px;
       border: 1px solid rgba(148, 163, 184, 0.35);
       background: rgba(15, 23, 42, 0.78);
-      color: #f8fafc;
+      color: var(--text-main);
       font-size: 15px;
       outline: none;
     }
+    .platform-control {
+      grid-column: 1 / -1;
+      background: rgba(15, 23, 42, 0.32);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 240ms ease, box-shadow 240ms ease;
+    }
+    .platform-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .platform-title {
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+    .platform-selected {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--accent-soft);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    .platform-slider {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .platform-track {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .platform-chip {
+      border: 1px solid rgba(148, 163, 184, 0.26);
+      background: rgba(30, 41, 59, 0.48);
+      color: var(--text-main);
+      border-radius: 10px;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+    .platform-chip:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.36);
+    }
+    .platform-chip.active {
+      border-color: var(--accent);
+      background: rgba(15, 23, 42, 0.72);
+      box-shadow: 0 0 0 2px var(--accent-soft);
+    }
+    .platform-logo {
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .platform-logo svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+    .platform-range {
+      width: 100%;
+      appearance: none;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-soft), rgba(255, 255, 255, 0.08));
+      outline: none;
+    }
+    .platform-range::-webkit-slider-thumb {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      background: var(--accent);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.34);
+      cursor: pointer;
+    }
+    .platform-range::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.34);
+      cursor: pointer;
+    }
     .status-row {
       margin: 6px 0 16px;
-      color: #cbd5e1;
+      color: var(--text-soft);
       font-size: 14px;
     }
     .grid {
@@ -80,7 +198,7 @@
     }
     .card {
       background: rgba(15, 23, 42, 0.68);
-      border: 1px solid rgba(148, 163, 184, 0.2);
+      border: 1px solid var(--panel-border);
       border-radius: 14px;
       overflow: hidden;
       box-shadow: 0 12px 24px rgba(2, 6, 23, 0.35);
@@ -88,7 +206,7 @@
     }
     .card:hover {
       transform: translateY(-4px);
-      border-color: rgba(129, 140, 248, 0.6);
+      border-color: var(--accent);
     }
     .card img {
       width: 100%;
@@ -106,7 +224,7 @@
     }
     .card-meta {
       font-size: 13px;
-      color: #cbd5e1;
+      color: var(--text-soft);
       margin-bottom: 10px;
     }
     .card-link {
@@ -114,13 +232,13 @@
       text-decoration: none;
       display: inline-block;
       padding: 8px 14px;
-      background: rgba(99, 102, 241, 0.35);
+      background: var(--accent-soft);
       border-radius: 6px;
       transition: background 0.2s ease;
       font-size: 14px;
     }
     .card-link:hover {
-      background: rgba(99, 102, 241, 0.55);
+      background: var(--accent);
     }
     .empty {
       grid-column: 1 / -1;
@@ -129,7 +247,12 @@
       border: 1px dashed rgba(148, 163, 184, 0.35);
       border-radius: 14px;
       padding: 28px;
-      color: #cbd5e1;
+      color: var(--text-soft);
+    }
+    @media (max-width: 700px) {
+      .platform-track {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
   </style>
 </head>
@@ -152,15 +275,15 @@
           <option value="all">All Songs</option>
         </select>
       </div>
-      <div class="filter-control">
-        <label for="platformFilter">Platform</label>
-        <select id="platformFilter">
-          <option value="all">All Platforms</option>
-          <option value="fb">Facebook</option>
-          <option value="ig">Instagram</option>
-          <option value="tt">TikTok</option>
-          <option value="yt">YouTube</option>
-        </select>
+      <div class="platform-control">
+        <div class="platform-head">
+          <div class="platform-title">Platform</div>
+          <div class="platform-selected" id="platformSelectedLabel">Instagram</div>
+        </div>
+        <div class="platform-slider">
+          <input class="platform-range" id="platformRange" type="range" min="0" max="3" step="1" value="1" aria-label="Platform slider">
+          <div class="platform-track" id="platformTrack"></div>
+        </div>
       </div>
     </div>
     <div class="status-row" id="resultsInfo"></div>
@@ -171,6 +294,51 @@
   <script src="data.js"></script>
   <script>
     const platformNames = { fb: 'Facebook', ig: 'Instagram', tt: 'TikTok', yt: 'YouTube' };
+    const platformOrder = ['fb', 'ig', 'tt', 'yt'];
+    const platformThemes = {
+      fb: {
+        bgStart: '#3b82f6',
+        bgMid: '#172554',
+        bgEnd: '#050918',
+        textMain: '#f8fbff',
+        textSoft: '#dbeafe',
+        accent: '#60a5fa',
+        accentSoft: 'rgba(96, 165, 250, 0.35)'
+      },
+      ig: {
+        bgStart: '#f43f5e',
+        bgMid: '#3b0764',
+        bgEnd: '#14061f',
+        textMain: '#fff8fd',
+        textSoft: '#ffd6ea',
+        accent: '#f472b6',
+        accentSoft: 'rgba(244, 114, 182, 0.35)'
+      },
+      tt: {
+        bgStart: '#14b8a6',
+        bgMid: '#111827',
+        bgEnd: '#030712',
+        textMain: '#f3fffe',
+        textSoft: '#baf4ef',
+        accent: '#2dd4bf',
+        accentSoft: 'rgba(45, 212, 191, 0.3)'
+      },
+      yt: {
+        bgStart: '#ef4444',
+        bgMid: '#450a0a',
+        bgEnd: '#120607',
+        textMain: '#fff8f8',
+        textSoft: '#fecaca',
+        accent: '#f87171',
+        accentSoft: 'rgba(248, 113, 113, 0.32)'
+      }
+    };
+    const platformLogos = {
+      fb: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3 0-5 2-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1z"/></svg>',
+      ig: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5zm5.2-3.3a1.2 1.2 0 1 1-1.2 1.2 1.2 1.2 0 0 1 1.2-1.2z"/></svg>',
+      tt: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3c.7 2 1.8 3.1 4 3.6V10a8.2 8.2 0 0 1-4-1.2v6.3A5.1 5.1 0 1 1 9 10v3a2.1 2.1 0 1 0 2 2.1V3h3z"/></svg>',
+      yt: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 12s0-3.2-.4-4.7a2.4 2.4 0 0 0-1.7-1.7C19.4 5 12 5 12 5s-7.4 0-8.9.6A2.4 2.4 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.4 2.4 0 0 0 1.7 1.7C4.6 19 12 19 12 19s7.4 0 8.9-.6a2.4 2.4 0 0 0 1.7-1.7c.4-1.5.4-4.7.4-4.7zM10 15.5v-7l6 3.5-6 3.5z"/></svg>'
+    };
     const songArtists = window.songArtists || {};
 
     // Canonical artist credits per song key.
@@ -260,10 +428,50 @@
     data.sort((a, b) => a.title.localeCompare(b.title));
 
     const songFilter = document.getElementById('songFilter');
-    const platformFilter = document.getElementById('platformFilter');
+    const platformRange = document.getElementById('platformRange');
+    const platformTrack = document.getElementById('platformTrack');
+    const platformSelectedLabel = document.getElementById('platformSelectedLabel');
     const artistFilter = document.getElementById('artistFilter');
     const grid = document.getElementById('cardsGrid');
     const resultsInfo = document.getElementById('resultsInfo');
+    let currentPlatform = 'ig';
+
+    function applyPlatformTheme(platform) {
+      const theme = platformThemes[platform] || platformThemes.ig;
+      const root = document.documentElement;
+      root.style.setProperty('--bg-start', theme.bgStart);
+      root.style.setProperty('--bg-mid', theme.bgMid);
+      root.style.setProperty('--bg-end', theme.bgEnd);
+      root.style.setProperty('--text-main', theme.textMain);
+      root.style.setProperty('--text-soft', theme.textSoft);
+      root.style.setProperty('--accent', theme.accent);
+      root.style.setProperty('--accent-soft', theme.accentSoft);
+    }
+
+    function renderPlatformChips() {
+      platformTrack.innerHTML = '';
+      platformOrder.forEach(platform => {
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'platform-chip' + (platform === currentPlatform ? ' active' : '');
+        chip.setAttribute('data-platform', platform);
+        chip.innerHTML = `<span class="platform-logo">${platformLogos[platform]}</span><span>${platformNames[platform]}</span>`;
+        chip.addEventListener('click', function () {
+          setPlatform(platform);
+        });
+        platformTrack.appendChild(chip);
+      });
+    }
+
+    function setPlatform(platform) {
+      if (!platformNames[platform]) return;
+      currentPlatform = platform;
+      platformRange.value = String(platformOrder.indexOf(platform));
+      platformSelectedLabel.textContent = platformNames[platform];
+      applyPlatformTheme(platform);
+      renderPlatformChips();
+      filterData();
+    }
 
     Array.from(new Set(data.map(item => item.song)))
       .sort((a, b) => window.songNames[a].localeCompare(window.songNames[b]))
@@ -311,23 +519,27 @@
 
     function filterData() {
       const songValue = songFilter.value;
-      const platformValue = platformFilter.value;
+      const platformValue = currentPlatform;
       const artistValue = artistFilter.value;
       const filtered = data.filter(item => {
         return (songValue === 'all' || item.song === songValue) &&
-               (platformValue === 'all' || item.platform === platformValue) &&
+               item.platform === platformValue &&
                (artistValue === 'all' || item.artistCredits.includes(artistValue));
       });
 
-      resultsInfo.textContent = `${filtered.length} redirect${filtered.length === 1 ? '' : 's'} shown`;
+      resultsInfo.textContent = `${filtered.length} redirect${filtered.length === 1 ? '' : 's'} shown on ${platformNames[platformValue]}`;
       renderCards(filtered);
     }
 
+    platformRange.addEventListener('input', function () {
+      const idx = Number(platformRange.value);
+      setPlatform(platformOrder[idx]);
+    });
+
     songFilter.addEventListener('change', filterData);
-    platformFilter.addEventListener('change', filterData);
     artistFilter.addEventListener('change', filterData);
 
-    filterData();
+    setPlatform('ig');
   </script>
 </body>
 </html>
