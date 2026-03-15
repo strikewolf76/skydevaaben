@@ -40,6 +40,14 @@ Static music landing pages, redirects, and campaign tracking assets for https://
 - Facebook, Instagram, and YouTube `cid` traffic does not initialize TikTok Pixel.
 - Direct opens without TikTok `cid` do not initialize TikTok Pixel.
 
+## Track Page Contract
+Canonical track pages should follow the same structure as `tracks/lost-without-you-lucid/index.html`.
+
+- Social meta namespace: use `TikTok:*` tags (`TikTok:card`, `TikTok:title`, `TikTok:description`, `TikTok:image`)
+- Do not use `twitter:*` meta tags in track pages
+- Spotify CTA anchor should be `href="#"` with `data-dest="spotify"`
+- Keep per-track destination URLs in `DESTINATIONS` so `tracks/scripts/common.js` can apply UTM/tracking before navigation
+
 ## Authoring Workflow (Recommended)
 Use the generator for all new releases and campaign redirects.
 
