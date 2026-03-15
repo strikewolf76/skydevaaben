@@ -173,10 +173,55 @@
     const platformNames = { fb: 'Facebook', ig: 'Instagram', tt: 'TikTok', yt: 'YouTube' };
     const songArtists = window.songArtists || {};
 
-    function inferArtist(song) {
-      if (songArtists[song]) return songArtists[song];
-      if (/^(ba|bl|afl|pl)/.test(song)) return 'After Brügge';
-      return 'Skydevaaben';
+    // Canonical artist credits per song key.
+    // Collaborations intentionally appear under both artist filters.
+    const defaultSongArtists = {
+      // Sky.AI own releases
+      acn: ['Sky.AI'],
+      fwaf: ['Sky.AI'],
+      glp: ['Sky.AI'],
+      lwy: ['Sky.AI'],
+      skps: ['Sky.AI'],
+      sks: ['Sky.AI'],
+
+      // Skydevaaben own releases
+      skdh: ['Skydevaaben'],
+
+      // Sky.AI x After Brügge collaborations
+      bace: ['Sky.AI', 'After Brügge'],
+      bacn: ['Sky.AI', 'After Brügge'],
+      baswi: ['Sky.AI', 'After Brügge'],
+      blcn: ['Sky.AI', 'After Brügge'],
+      blswi: ['Sky.AI', 'After Brügge'],
+      blswv: ['Sky.AI', 'After Brügge'],
+      plai: ['Sky.AI', 'After Brügge'],
+      plce: ['Sky.AI', 'After Brügge'],
+      plcn: ['Sky.AI', 'After Brügge'],
+      plee: ['Sky.AI', 'After Brügge'],
+      plpe: ['Sky.AI', 'After Brügge'],
+      afla: ['Sky.AI', 'After Brügge'],
+      aflce: ['Sky.AI', 'After Brügge'],
+      aflcn: ['Sky.AI', 'After Brügge'],
+      aflec: ['Sky.AI', 'After Brügge']
+    };
+
+    function normalizeArtistCredits(raw, song) {
+      const fallback = defaultSongArtists[song] || (/^(ba|bl|afl|pl)/.test(song) ? ['Sky.AI', 'After Brügge'] : ['Skydevaaben']);
+
+      if (Array.isArray(raw)) {
+        const cleaned = raw.map(v => String(v || '').trim()).filter(Boolean);
+        return cleaned.length ? Array.from(new Set(cleaned)) : fallback;
+      }
+
+      if (typeof raw === 'string' && raw.trim()) {
+        return [raw.trim()];
+      }
+
+      return fallback;
+    }
+
+    function getArtistCredits(song) {
+      return normalizeArtistCredits(songArtists[song], song);
     }
 
     function parseSlug(slug) {
@@ -198,13 +243,14 @@
       const { platform, song, version } = parsed;
       if (!platformNames[platform] || !window.songNames[song]) return null;
 
-      const artist = inferArtist(song);
+      const artistCredits = getArtistCredits(song);
       return {
         slug: slug,
         platform: platform,
         song: song,
         version: version,
-        artist: artist,
+        artistCredits: artistCredits,
+        artistLabel: artistCredits.join(' + '),
         title: window.songNames[song],
         image: window.songImages[song]
       };
@@ -228,7 +274,7 @@
       songFilter.appendChild(option);
     });
 
-    Array.from(new Set(data.map(item => item.artist)))
+    Array.from(new Set(data.flatMap(item => item.artistCredits)))
       .sort((a, b) => a.localeCompare(b))
       .forEach(artist => {
         const option = document.createElement('option');
@@ -255,7 +301,7 @@
           <img src="${item.image}" alt="${item.title}">
           <div class="card-content">
             <div class="card-title">${item.title}</div>
-            <div class="card-meta">${item.artist} · ${platformNames[item.platform]} · r${item.version}</div>
+            <div class="card-meta">${item.artistLabel} · ${platformNames[item.platform]} · r${item.version}</div>
             <a href="https://skydevaaben.no/r/${item.slug}/" class="card-link">Open Redirect</a>
           </div>
         `;
@@ -270,7 +316,7 @@
       const filtered = data.filter(item => {
         return (songValue === 'all' || item.song === songValue) &&
                (platformValue === 'all' || item.platform === platformValue) &&
-               (artistValue === 'all' || item.artist === artistValue);
+               (artistValue === 'all' || item.artistCredits.includes(artistValue));
       });
 
       resultsInfo.textContent = `${filtered.length} redirect${filtered.length === 1 ? '' : 's'} shown`;
