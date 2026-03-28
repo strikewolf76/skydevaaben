@@ -1,7 +1,8 @@
 // Data for Skydevaaben redirects
-window.songs = ['acn', 'blcn', 'blswi', 'blswv', 'bace', 'bacn', 'baswi', 'skdh', 'fwaf', 'glp', 'afkesrce', 'afkesrh', 'lwy', 'afla', 'aflce', 'aflcn', 'aflec', 'skps', 'plai', 'plce', 'plcn', 'plee', 'plpe', 'sks'];
-window.songNames = { 'acn': 'All Clear Now', 'bace': 'Born Again (Crimson Echo)', 'bacn': 'Born Again (Crimson Noise)', 'baswi': 'Born Again (Synthwave Instrumental)', 'blcn': 'Bleeding (Crimson Noise)', 'blswi': 'Bleeding (Synthwave Instrumental)', 'blswv': 'Bleeding (Synthwave Vocal)', 'fwaf': 'Fire Without a Flame', 'glp': 'Glass People', 'lwy': 'Lost Without You Lucid', 'plai': 'Please (Afterimage)', 'plce': 'Please (Crimson Echo)', 'plcn': 'Please (Crimson Noise)', 'plee': 'Please (Echoexe)', 'plpe': 'Please (Pleaexe)', 'aflcn': 'Low (Crimson Noise)', 'aflce': 'Low (Crimson Echo)', 'afla': 'Low (Annihilate)', 'aflec': 'Low (End Credits)', 'skdh': 'Digital Heartbeat', 'sks': 'Stillform', 'skps': 'Phase Shift', 'afkesrh': 'King Egosentric (Sky.AI Remix Highscore)', 'afkesrce': 'King Egosentric (Sky.AI Remix Crimson Echo)' };
-window.songImages = { 'acn': 'https://skydevaaben.no/assets/og/ba467427-ce13-4f29-a348-c1470180a425-1.jpg', 'bace': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'bacn': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'baswi': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'blcn': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'blswi': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'blswv': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'fwaf': 'https://skydevaaben.no/assets/og/fire-album-cover.jpg', 'glp': 'https://skydevaaben.no/assets/og/glasspeople-cover-3000-sharpened.jpg', 'lwy': 'https://skydevaaben.no/assets/og/lost-song-cover.jpg', 'plai': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plce': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plcn': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plee': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plpe': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'aflcn': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'aflce': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'afla': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'aflec': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'skdh': 'https://skydevaaben.no/assets/og/digital-heartbeat-cover.jpg', 'sks': 'https://skydevaaben.no/assets/og/stillform-1.jpg', 'skps': 'https://skydevaaben.no/assets/og/phase-shift.jpg', 'afkesrh': 'https://skydevaaben.no/assets/og/chatgpt-image-dec-13-2025-05-31-19-pm.jpg', 'afkesrce': 'https://skydevaaben.no/assets/og/king-egocentric-4000x4000.jpg' };
+window.songs = ['acn', 'skbl', 'blcn', 'blswi', 'blswv', 'bace', 'bacn', 'baswi', 'skdh', 'fwaf', 'glp', 'afkesrce', 'afkesrh', 'lwy', 'afla', 'aflce', 'aflcn', 'aflec', 'skps', 'plai', 'plce', 'plcn', 'plee', 'plpe', 'sks'];
+window.songNames = { 'acn': 'All Clear Now', 'bace': 'Born Again (Crimson Echo)', 'bacn': 'Born Again (Crimson Noise)', 'baswi': 'Born Again (Synthwave Instrumental)', 'blcn': 'Bleeding (Crimson Noise)', 'blswi': 'Bleeding (Synthwave Instrumental)', 'blswv': 'Bleeding (Synthwave Vocal)', 'fwaf': 'Fire Without a Flame', 'glp': 'Glass People', 'lwy': 'Lost Without You Lucid', 'plai': 'Please (Afterimage)', 'plce': 'Please (Crimson Echo)', 'plcn': 'Please (Crimson Noise)', 'plee': 'Please (Echoexe)', 'plpe': 'Please (Pleaexe)', 'aflcn': 'Low (Crimson Noise)', 'aflce': 'Low (Crimson Echo)', 'afla': 'Low (Annihilate)', 'aflec': 'Low (End Credits)', 'skdh': 'Digital Heartbeat', 'sks': 'Stillform', 'skps': 'Phase Shift', 'afkesrh': 'King Egosentric (Sky.AI Remix Highscore)', 'afkesrce': 'King Egosentric (Sky.AI Remix Crimson Echo)', 'skbl': 'Beggar\'s Lament' };
+window.songImages = { 'acn': 'https://skydevaaben.no/assets/og/ba467427-ce13-4f29-a348-c1470180a425-1.jpg', 'bace': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'bacn': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'baswi': 'https://skydevaaben.no/assets/og/born-again-ab-cover.jpg', 'blcn': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'blswi': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'blswv': 'https://skydevaaben.no/assets/og/bleeding-ab-cover.jpg', 'fwaf': 'https://skydevaaben.no/assets/og/fire-album-cover.jpg', 'glp': 'https://skydevaaben.no/assets/og/glasspeople-cover-3000-sharpened.jpg', 'lwy': 'https://skydevaaben.no/assets/og/lost-song-cover.jpg', 'plai': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plce': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plcn': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plee': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'plpe': 'https://skydevaaben.no/assets/og/please-ab-cover-1.jpg', 'aflcn': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'aflce': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'afla': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'aflec': 'https://skydevaaben.no/assets/og/low-ab-cover.jpg', 'skdh': 'https://skydevaaben.no/assets/og/digital-heartbeat-cover.jpg', 'sks': 'https://skydevaaben.no/assets/og/stillform-1.jpg', 'skps': 'https://skydevaaben.no/assets/og/phase-shift.jpg', 'afkesrh': 'https://skydevaaben.no/assets/og/chatgpt-image-dec-13-2025-05-31-19-pm.jpg', 'afkesrce': 'https://skydevaaben.no/assets/og/king-egocentric-4000x4000.jpg', 'skbl': 'https://skydevaaben.no/assets/og/beggars-lament-1.jpg' };
+window.songArtists = { 'skbl': ['Skydevaaben'] };
 window.slugs = [
   'fbacn1',
   'fbacn2',
@@ -34,6 +35,7 @@ window.slugs = [
   'fbplcn1',
   'fbplee1',
   'fbplpe1',
+  'fbskbl1',
   'fbskdh1',
   'fbskps1',
   'fbsks1',
@@ -68,6 +70,7 @@ window.slugs = [
   'igplcn1',
   'igplee1',
   'igplpe1',
+  'igskbl1',
   'igskdh1',
   'igskps1',
   'igsks1',
@@ -102,6 +105,7 @@ window.slugs = [
   'ttplcn1',
   'ttplee1',
   'ttplpe1',
+  'ttskbl1',
   'ttskdh1',
   'ttskps1',
   'ttsks1',
@@ -136,6 +140,7 @@ window.slugs = [
   'ytplcn1',
   'ytplee1',
   'ytplpe1',
+  'ytskbl1',
   'ytskdh1',
   'ytskps1',
   'ytsks1'
