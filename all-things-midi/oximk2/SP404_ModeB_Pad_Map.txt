@@ -1,0 +1,36 @@
+SP-404MKII MIDI Mode B Pad Note Map
+
+Default note offset. Mode B uses MIDI channel 1 for banks A-E and channel 2 for banks F-J.
+This note map is separate from the OXI instrument definition parameter list.
+
+LANE_1 = 24
+LANE_2 = 25
+LANE_3 = 26
+LANE_4 = 27
+LANE_5 = 20
+LANE_6 = 21
+LANE_7 = 22
+LANE_8 = 23
+LANE_9 = 16
+LANE_10 = 17
+LANE_11 = 18
+LANE_12 = 19
+LANE_13 = 12
+LANE_14 = 13
+LANE_15 = 14
+LANE_16 = 15
+
+Use the lane note plus the bank offset below. Select the bank group by MIDI channel.
+
+Bank A = channel 1, offset 0
+Bank B = channel 1, offset 16
+Bank C = channel 1, offset 32
+Bank D = channel 1, offset 48
+Bank E = channel 1, offset 64
+Bank F = channel 2, offset 0
+Bank G = channel 2, offset 16
+Bank H = channel 2, offset 32
+Bank I = channel 2, offset 48
+Bank J = channel 2, offset 64
+
+NAMES = Pad 1, Pad 2, Pad 3, Pad 4, Pad 5, Pad 6, Pad 7, Pad 8, Pad 9, Pad 10, Pad 11, Pad 12, Pad 13, Pad 14, Pad 15, Pad 16

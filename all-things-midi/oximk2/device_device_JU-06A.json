@@ -1,0 +1,1673 @@
+{
+    "id":  "roland_ju_06a_v2",
+    "name":  "JU-06A v2",
+    "abbr":  "RJ-0",
+    "manufacturer":  "Roland",
+    "parameters":  [
+                       {
+                           "type":  "cc",
+                           "name":  "Modwheel",
+                           "abbr":  "Modw",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  1,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "LFO Rate",
+                           "abbr":  "LfRa",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  3,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "Portamento Time",
+                           "abbr":  "PoTm",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  5,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "LFO Delay",
+                           "abbr":  "LfDl",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  9,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "Expr PDL",
+                           "abbr":  "ExPd",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  11,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "DCO Range",
+                           "abbr":  "DcRn",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  12,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "DCO LFO Depth",
+                           "abbr":  "DLDp",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  13,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "DCO PWM",
+                           "abbr":  "DcPw",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  14,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "DCO LFO Target",
+                           "abbr":  "DLTa",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  15,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "DCO SQR Switch",
+                           "abbr":  "DSSw",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  16,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "DCO SAW Switch",
+                           "abbr":  "DSSw",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  17,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "DCO SUB LVL",
+                           "abbr":  "DSLv",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  18,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "DCO NSE LVL",
+                           "abbr":  "DNLv",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  19,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "HPF Freq",
+                           "abbr":  "HpFr",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  20,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "VCF ENV Polarity",
+                           "abbr":  "VEPo",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  21,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "VCF ENV Depth",
+                           "abbr":  "VEDp",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  22,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "VCF LFO",
+                           "abbr":  "VcLf",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  23,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "VCF Keytrack",
+                           "abbr":  "VcKe",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  24,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "VCA ENV",
+                           "abbr":  "VcEn",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  25,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "VCA LVL",
+                           "abbr":  "VcLv",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  26,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "ENV SUS",
+                           "abbr":  "EnSu",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  27,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "DCO SUB Switch",
+                           "abbr":  "DSSw",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  28,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "LFO Wave",
+                           "abbr":  "LfWv",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  29,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "LFO Trig",
+                           "abbr":  "LfTr",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  30,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "Sustain",
+                           "abbr":  "Su",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  64,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "Portamento",
+                           "abbr":  "Port",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  65,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "VCF RES",
+                           "abbr":  "VcRe",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  71,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "ENV REL",
+                           "abbr":  "EnRe",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  72,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "ENV ATK",
+                           "abbr":  "EnAt",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  73,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "VCF FRQ",
+                           "abbr":  "VcFr",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  74,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "ENV DEC",
+                           "abbr":  "EnDe",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  75,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "DLY Time",
+                           "abbr":  "DlTm",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  82,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "DLY Fdbk",
+                           "abbr":  "DlFd",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  83,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "Poly Mono Unison",
+                           "abbr":  "PMUn",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  86,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "Bend Range",
+                           "abbr":  "BeRn",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  87,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "Clck Sync",
+                           "abbr":  "ClSy",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  88,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "DLY SW",
+                           "abbr":  "DlSw",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  89,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "DLY LVL",
+                           "abbr":  "DlLv",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  91,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "Chorus Type",
+                           "abbr":  "ChTy",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  93,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "0 - notinuse",
+                           "abbr":  "0",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  0,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "2 - notinuse",
+                           "abbr":  "2",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  2,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "4 - notinuse",
+                           "abbr":  "4",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  4,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "6 - notinuse",
+                           "abbr":  "6",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  6,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "7 - notinuse",
+                           "abbr":  "7",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  7,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "8 - notinuse",
+                           "abbr":  "8",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  8,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "10 - notinuse",
+                           "abbr":  "10",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  10,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "31 - notinuse",
+                           "abbr":  "31",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  31,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "32 - notinuse",
+                           "abbr":  "32",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  32,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "33 - notinuse",
+                           "abbr":  "33",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  33,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "34 - notinuse",
+                           "abbr":  "34",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  34,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "35 - notinuse",
+                           "abbr":  "35",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  35,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "36 - notinuse",
+                           "abbr":  "36",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  36,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "37 - notinuse",
+                           "abbr":  "37",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  37,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "38 - notinuse",
+                           "abbr":  "38",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  38,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "39 - notinuse",
+                           "abbr":  "39",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  39,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "40 - notinuse",
+                           "abbr":  "40",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  40,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "41 - notinuse",
+                           "abbr":  "41",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  41,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "42 - notinuse",
+                           "abbr":  "42",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  42,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "43 - notinuse",
+                           "abbr":  "43",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  43,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "44 - notinuse",
+                           "abbr":  "44",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  44,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "45 - notinuse",
+                           "abbr":  "45",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  45,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "46 - notinuse",
+                           "abbr":  "46",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  46,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "47 - notinuse",
+                           "abbr":  "47",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  47,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "48 - notinuse",
+                           "abbr":  "48",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  48,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "49 - notinuse",
+                           "abbr":  "49",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  49,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "50 - notinuse",
+                           "abbr":  "50",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  50,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "51 - notinuse",
+                           "abbr":  "51",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  51,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "52 - notinuse",
+                           "abbr":  "52",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  52,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "53 - notinuse",
+                           "abbr":  "53",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  53,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "54 - notinuse",
+                           "abbr":  "54",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  54,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "55 - notinuse",
+                           "abbr":  "55",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  55,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "56 - notinuse",
+                           "abbr":  "56",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  56,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "57 - notinuse",
+                           "abbr":  "57",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  57,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "58 - notinuse",
+                           "abbr":  "58",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  58,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "59 - notinuse",
+                           "abbr":  "59",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  59,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "60 - notinuse",
+                           "abbr":  "60",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  60,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "61 - notinuse",
+                           "abbr":  "61",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  61,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "62 - notinuse",
+                           "abbr":  "62",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  62,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "63 - notinuse",
+                           "abbr":  "63",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  63,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "66 - notinuse",
+                           "abbr":  "66",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  66,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "67 - notinuse",
+                           "abbr":  "67",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  67,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "68 - notinuse",
+                           "abbr":  "68",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  68,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "69 - notinuse",
+                           "abbr":  "69",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  69,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "70 - notinuse",
+                           "abbr":  "70",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  70,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "76 - notinuse",
+                           "abbr":  "76",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  76,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "77 - notinuse",
+                           "abbr":  "77",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  77,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "78 - notinuse",
+                           "abbr":  "78",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  78,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "79 - notinuse",
+                           "abbr":  "79",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  79,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "80 - notinuse",
+                           "abbr":  "80",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  80,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "81 - notinuse",
+                           "abbr":  "81",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  81,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "84 - notinuse",
+                           "abbr":  "84",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  84,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "85 - notinuse",
+                           "abbr":  "85",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  85,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "90 - notinuse",
+                           "abbr":  "90",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  90,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "92 - notinuse",
+                           "abbr":  "92",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  92,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "94 - notinuse",
+                           "abbr":  "94",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  94,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "95 - notinuse",
+                           "abbr":  "95",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  95,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "96 - notinuse",
+                           "abbr":  "96",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  96,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "97 - notinuse",
+                           "abbr":  "97",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  97,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "98 - notinuse",
+                           "abbr":  "98",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  98,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "99 - notinuse",
+                           "abbr":  "99",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  99,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "100 - notinuse",
+                           "abbr":  "100",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  100,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "101 - notinuse",
+                           "abbr":  "101",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  101,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "102 - notinuse",
+                           "abbr":  "102",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  102,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "103 - notinuse",
+                           "abbr":  "103",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  103,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "104 - notinuse",
+                           "abbr":  "104",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  104,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "105 - notinuse",
+                           "abbr":  "105",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  105,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "106 - notinuse",
+                           "abbr":  "106",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  106,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "107 - notinuse",
+                           "abbr":  "107",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  107,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "108 - notinuse",
+                           "abbr":  "108",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  108,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "109 - notinuse",
+                           "abbr":  "109",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  109,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "110 - notinuse",
+                           "abbr":  "110",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  110,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "111 - notinuse",
+                           "abbr":  "111",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  111,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "112 - notinuse",
+                           "abbr":  "112",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  112,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "113 - notinuse",
+                           "abbr":  "113",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  113,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "114 - notinuse",
+                           "abbr":  "114",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  114,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "115 - notinuse",
+                           "abbr":  "115",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  115,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "116 - notinuse",
+                           "abbr":  "116",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  116,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "117 - notinuse",
+                           "abbr":  "117",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  117,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "118 - notinuse",
+                           "abbr":  "118",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  118,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "119 - notinuse",
+                           "abbr":  "119",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  119,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "120 - notinuse",
+                           "abbr":  "120",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  120,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "121 - notinuse",
+                           "abbr":  "121",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  121,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "122 - notinuse",
+                           "abbr":  "122",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  122,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "123 - notinuse",
+                           "abbr":  "123",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  123,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "124 - notinuse",
+                           "abbr":  "124",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  124,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "125 - notinuse",
+                           "abbr":  "125",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  125,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "126 - notinuse",
+                           "abbr":  "126",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  126,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       },
+                       {
+                           "type":  "cc",
+                           "name":  "127 - notinuse",
+                           "abbr":  "127",
+                           "minimum":  0,
+                           "maximum":  127,
+                           "default_value":  0,
+                           "nr1":  127,
+                           "nr2":  0,
+                           "value_labels":  [
+
+                                            ]
+                       }
+                   ],
+    "script":  null
+}
