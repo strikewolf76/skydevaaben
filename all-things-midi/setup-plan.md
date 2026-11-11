@@ -58,13 +58,17 @@ Full note map: `oximk2/SP404_ModeB_Pad_Map.txt`.
 
 | Sequencer | Type | Output | Use |
 | --- | --- | --- | --- |
-| 1 | Multitrack | Out B ch 1 | SP-404 drums, plus mod lanes for FX |
+| 1 | Multitrack | Out B ch 1 | Optional SP-404 drums, plus mod lanes for FX |
 | 2 | Mono | Out A ch 4 | Model D |
 | 3 | Mono | Out A ch 1 | Typhon |
 | 4 | Poly / Chord | Out A ch 2 | JU-06A |
 | 5 | Poly | Out A ch 3 | Nymphes |
+| 7 | Multitrack | Out B ch 1 | SP-404 main drum kit, pads A1-A8 |
+| 8 | Multitrack | Out B ch 1 | SP-404 percussion and fills, pads A9-A16 |
 
-Sequencers 6-8 are free. Chord mode on sequencer 4 can be harmonised to the others.
+Sequencer 6 is free. Sequencer 1 can also control SP drums and FX, but sequencers
+7 and 8 are the standard 16-pad layout; see the [drum palette guide](sp-404mk2/README.md).
+Chord mode on sequencer 4 can be harmonised to the others.
 
 ## Instrument definitions
 
