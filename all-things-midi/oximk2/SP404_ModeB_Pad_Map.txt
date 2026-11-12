@@ -2,6 +2,8 @@ SP-404MKII MIDI Mode B Pad Note Map
 
 Default note offset. Mode B uses MIDI channel 1 for banks A-E and channel 2 for banks F-J.
 This note map is separate from the OXI instrument definition parameter list.
+LANE numbers below identify SP pad numbers, not OXI track numbers. For the
+OBRST sequencer track assignments, see ../sp-404mk2/README.md.
 
 LANE_1 = 24
 LANE_2 = 25

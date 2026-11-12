@@ -19,36 +19,40 @@ This document is a setup reference, not a preconfigured SP or OXI project.
   tracks; every track sends to **Out B, channel 1**.
 - The MIDI note numbers below are absolute MIDI numbers, not pad numbers.
   Octave names can differ between devices, so check by triggering the pad.
-- Seq 7 tracks 1-8 play SP pads A1-A8. Seq 8 tracks 1-8 play SP pads A9-A16.
-  For example, Seq 8 track 1 plays pad A9; it is not OXI track 9.
+- Use descending track order: track 8 is the first instrument and track 1 is
+  the last. Seq 8 tracks 8-1 play A1-A8 respectively; Seq 7 tracks 8-1 play
+  A9-A16 respectively. OXI track numbers are not SP pad numbers.
+- Seq 8 track 8 plays A1 (kick), track 7 plays A2 (snare), and track 1
+  plays A8 (ride). Seq 7 track 8 plays A9 (cabasa), and track 1 plays A16
+  (high tom).
 
 ## Standard pad assignments
 
-### Seq 7: main drum kit
+### Seq 8: main drum kit
 
 | OXI track | SP pad | MIDI note | Instrument | Role | LinnDrum example WAV |
 | --- | --- | ---: | --- | --- | --- |
-| 1 | A1 | 24 | Bass drum | Foundation | `BD Lindrum Orig.wav` |
-| 2 | A2 | 25 | Snare | Backbeat | `SD Lindrum Orig 17.wav` |
-| 3 | A3 | 26 | Closed hi-hat | Timekeeping | `CH Lindrum Orig Decay 06.wav` |
-| 4 | A4 | 27 | Open hi-hat | Accent | `OH Lindrum Orig.wav` |
-| 5 | A5 | 20 | Clap | Snare layer | `Clap Lindrum Orig.wav` |
-| 6 | A6 | 21 | Side stick | Variation | `SS Lindrum Orig 11.wav` |
-| 7 | A7 | 22 | Crash | Transition | `Crash Lindrum Orig.wav` |
-| 8 | A8 | 23 | Ride | Drive | `Ride Lindrum Orig.wav` |
+| 8 | A1 | 24 | Bass drum | Foundation | `BD Lindrum Orig.wav` |
+| 7 | A2 | 25 | Snare | Backbeat | `SD Lindrum Orig 17.wav` |
+| 6 | A3 | 26 | Closed hi-hat | Timekeeping | `CH Lindrum Orig Decay 06.wav` |
+| 5 | A4 | 27 | Open hi-hat | Accent | `OH Lindrum Orig.wav` |
+| 4 | A5 | 20 | Clap | Snare layer | `Clap Lindrum Orig.wav` |
+| 3 | A6 | 21 | Side stick | Variation | `SS Lindrum Orig 11.wav` |
+| 2 | A7 | 22 | Crash | Transition | `Crash Lindrum Orig.wav` |
+| 1 | A8 | 23 | Ride | Drive | `Ride Lindrum Orig.wav` |
 
-### Seq 8: percussion and fills
+### Seq 7: percussion and fills
 
 | OXI track | SP pad | MIDI note | Instrument | Role | LinnDrum example WAV |
 | --- | --- | ---: | --- | --- | --- |
-| 1 | A9 | 16 | Cabasa | Subdivision | `Cabasa Lindrum Orig.wav` |
-| 2 | A10 | 17 | Tambourine | Groove | `Tamb Lindrum Orig.wav` |
-| 3 | A11 | 18 | Low conga | Syncopation | `Conga Lindrum Orig 24 F#3.wav` |
-| 4 | A12 | 19 | High conga | Response | `Conga Lindrum Orig 36 F#4.wav` |
-| 5 | A13 | 12 | Cowbell | Accent | `Cowbell Lindrum Orig.wav` |
-| 6 | A14 | 13 | Low tom | Fill | `Tom Lindrum Orig 09.wav` |
-| 7 | A15 | 14 | Mid tom | Fill | `Tom Lindrum Orig 18.wav` |
-| 8 | A16 | 15 | High tom | Fill | `Tom Lindrum Orig 22.wav` |
+| 8 | A9 | 16 | Cabasa | Subdivision | `Cabasa Lindrum Orig.wav` |
+| 7 | A10 | 17 | Tambourine | Groove | `Tamb Lindrum Orig.wav` |
+| 6 | A11 | 18 | Low conga | Syncopation | `Conga Lindrum Orig 24 F#3.wav` |
+| 5 | A12 | 19 | High conga | Response | `Conga Lindrum Orig 36 F#4.wav` |
+| 4 | A13 | 12 | Cowbell | Accent | `Cowbell Lindrum Orig.wav` |
+| 3 | A14 | 13 | Low tom | Fill | `Tom Lindrum Orig 09.wav` |
+| 2 | A15 | 14 | Mid tom | Fill | `Tom Lindrum Orig 18.wav` |
+| 1 | A16 | 15 | High tom | Fill | `Tom Lindrum Orig 22.wav` |
 
 The example files are in the local `Lindrum From Mars\WAV\02. Kits\01. OG Clean
 Kit` folder. They are not included in this repository. The conga filenames
@@ -58,12 +62,13 @@ include `F#3` and `F#4`; select the exact files shown above.
 
 1. Connect the devices and set the SP MIDI mode and note offset as described
    under **Fixed routing**.
-2. Hold **SHIFT + 7** and select **Multitrack**. Repeat for **SHIFT + 8**.
+2. Hold **SHIFT + 8** and select **Multitrack**. Repeat for **SHIFT + 7**.
 3. For each of the 16 tracks, open its track menu by holding the sequencer
    button and pressing the first-column pad for that track, or by pressing
    **TRACK** and then that pad. Set its output to **B** and MIDI channel to
-   **1**. Set **Ofs** (knob 2) to the note corresponding to its SP pad in the
-   tables. Use preview and confirm the actual pad triggered.
+   **1**. Set **Ofs** (knob 2) to the MIDI note for that sequencer and track
+   in the tables. Configure tracks 8 down to 1; do not match track numbers
+   to SP pad numbers. Use preview and confirm the actual pad triggered.
 4. Save the configured OXI project as your starting point. When creating new
    patterns or projects, retain these track settings and base notes. Step note
    changes or transposition can send a different note, so check them if a track
@@ -99,8 +104,9 @@ other banks. The numbers in this guide are specifically for bank A.
    intended. Do not remove the card or power off while the SP shows
    **Working...**.
 7. **Check the sounds.** Play each SP pad directly, then trigger each OXI track:
-   Seq 7 tracks 1-8 must play A1-A8, and Seq 8 tracks 1-8 must play A9-A16.
-   Check levels, starts, tails and any playback settings as needed for the kit.
+   In descending track order, Seq 8 tracks 8-1 must play A1-A8 respectively,
+   and Seq 7 tracks 8-1 must play A9-A16 respectively. Check each track against
+   the tables, as well as levels, starts, tails and playback settings.
 8. **Keep a reusable starting point.** Note the SP project slot and palette
    name, save the OXI project, and back up the SP project. When switching to a
    new SP palette or OXI pattern, run the trigger check again.
