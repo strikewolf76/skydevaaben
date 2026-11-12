@@ -122,10 +122,10 @@ file is a reference, not a configured project.
 
 Load these in the OXI app (the device holds 8 slots):
 
-- `oximk2/device_device_SP-404MK2.oxiindef`
-- `oximk2/device_device_JU-06A.oxiindef`
-- `oximk2/device_device_Nymphes.oxiindef`
-- `oximk2/device_device_Typhon.oxiindef`
+- `oximk2/SP-404MKII_v1.oxiindef`
+- `oximk2/JU-06A_v1.oxiindef`
+- `oximk2/Nymphes_v1.oxiindef`
+- `oximk2/Typhon_v1.oxiindef`
 
 The Typhon definition targets firmware 4.2.1's revised CC mapping, based on the
 [MIDI Guide list](https://midi.guide/d/dreadbox/typhon/). Check its CC numbers
@@ -135,6 +135,19 @@ and looper stop all samples requires four quick triggers.
 These definitions control CC parameters; configure pad note offsets separately.
 
 There is no definition for the Model D (no public MIDI map found). It will work for notes and pitch bend.
+
+### Blank instrument definition
+
+`oximk2/blank.oxiindef` is an empty definition intended as a placeholder for
+an unwanted instrument definition. In the OXI App, import it into Instruments
+and transfer it to the desired device slot, replacing the unwanted definition
+if the app offers that choice. Back up the existing definition first.
+
+The empty parameter list is valid JSON, but acceptance by the OXI App and device
+has not been verified. If it is rejected or cannot replace the desired slot,
+use the app's instrument management controls instead. The blank definition does
+not reset the unit, erase a project, or clear existing modulation destinations.
+Check the sequencer's lane settings separately before sending MIDI.
 
 ## Keystep
 
