@@ -154,6 +154,45 @@ Check the sequencer's lane settings separately before sending MIDI.
 - Keystep plays whichever OXI track is selected, so you can play and record any instrument.
 - Turn the Keystep's own sequencer and arpeggiator off, and let OXI send the clock.
 
+## Synido TempoPAD C16 MK2 and FL Studio
+
+The C16 connects to the mioXM USB host. Its transport buttons are set to MMC.
+In Auracle X, the C16 USB Host input must not filter SysEx: MMC is SysEx, so
+filtering it blocks transport while pad notes can still work. The transport
+also works with FL Studio's Generic Controller when SysEx is allowed.
+
+The optional [FL Studio MIDI script](synido-tempopad-c16-mk2/device_TempoPAD_C16_MK2_Mixer.py)
+controls four Mixer tracks or Channel Rack channels, depending on which window
+is focused. Copy it into a dedicated folder under the FL Studio user data
+folder's `Settings/Hardware`, restart FL Studio, and select **Synido TempoPAD
+C16 MK2 Mixer (user)** for the enabled C16 input in MIDI Settings. The X-Touch
+can instead handle mixing, leaving the C16 for pads and instruments.
+
+Use CTRL bank B, MIDI channel 1:
+
+| Control | MIDI configuration | Mixer focus | Channel Rack focus |
+| --- | --- | --- | --- |
+| K1 | CC 9, Relative 1 | Move frame by two tracks | Move frame by two channels |
+| K2 | CC 10, Relative 1 | Selected track stereo separation | Not mapped by script |
+| K3-K4 | Not mapped by script | Available for other mappings | Available for other mappings |
+| K5-K8 | CC 13-16, Relative 1 | Pan the four framed tracks | Pan the four framed channels |
+| F1-F4 | CC 37-40, absolute | Volume of framed tracks | Volume of framed channels |
+| M1-M4 | CC 61, 64, 67, 70, momentary | Mute framed tracks | Mute framed channels |
+| S1-S4 | CC 62, 65, 68, 71, momentary | Solo framed tracks | Solo framed channels |
+| R1-R4 | CC 63, 66, 69, 72, momentary | Arm tracks for audio recording | Select a channel |
+
+The faders use pickup: move a fader through the current FL level before it
+takes control. Knobs in Relative 1 mode must send 65 clockwise and 63
+counterclockwise for one step. The script passes unused MIDI through, including
+pads and MMC; other banks using the same CCs on channel 1 will also match.
+The red frame uses FL Studio's standard overlay; the script cannot set its
+colour. Button LEDs are not synchronized with FL Studio.
+
+Mixer control and MMC were tested on the hardware. Channel Rack control was
+tested with simulated FL Studio APIs and still needs an on-device check.
+Synido and FL Studio may label the same note one octave apart: compare MIDI
+note numbers rather than octave labels.
+
 ## To confirm on the hardware
 
 - How to set the Model D's MIDI channel, and whether it responds to CC.
