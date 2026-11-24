@@ -188,8 +188,7 @@ pads and MMC; other banks using the same CCs on channel 1 will also match.
 The red frame uses FL Studio's standard overlay; the script cannot set its
 colour. Button LEDs are not synchronized with FL Studio.
 
-Mixer control and MMC were tested on the hardware. Channel Rack control was
-tested with simulated FL Studio APIs and still needs an on-device check.
+Mixer control, Channel Rack control and MMC were tested on the hardware.
 Synido and FL Studio may label the same note one octave apart: compare MIDI
 note numbers rather than octave labels.
 
